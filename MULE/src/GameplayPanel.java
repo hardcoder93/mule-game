@@ -4,37 +4,39 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 
-
+/**
+ * 
+ * @author John Certusi (jcertusi3)
+ *
+ */
 public class GameplayPanel extends JPanel {
 
-	JTextArea textArea_1 = new JTextArea();
-	JTextArea textArea = new JTextArea();
-
-
+	JTextArea mapTextArea = new JTextArea();
+	JTextArea playerTextArea = new JTextArea();
 
 	/**
 	 * Create the panel.
 	 */
 	public GameplayPanel() {
 		setLayout(null);
-		textArea_1.setTabSize(4);
 		
-		textArea_1.setEditable(false);
-		textArea_1.setBounds(12, 193, 426, 95);
-		add(textArea_1);
+		mapTextArea.setTabSize(4);
+		mapTextArea.setEditable(false);
+		mapTextArea.setBounds(12, 193, 426, 95);
+		add(mapTextArea);
 		
-		textArea.setEditable(false);
-		textArea.setBounds(12, 12, 426, 139);
-		add(textArea);
+		playerTextArea.setEditable(false);
+		playerTextArea.setBounds(12, 12, 426, 139);
+		add(playerTextArea);
 	}
 	
 	public void setPanel(Player[] playerArray, MULEMap myMap){
+		
 		String playerInfo = new String();
 		String mapInfo = new String();
 		ArrayList<Tile> tileInfo = myMap.getTiles();
 		Tile tmpTile;
 
-		
 		for (int i = 0; i < playerArray.length; i++){
 			playerInfo = playerInfo.concat("Player: ".concat(Integer.toString(i)));
 			playerInfo = playerInfo.concat("\tName: ".concat(playerArray[i].getName()));
@@ -52,7 +54,7 @@ public class GameplayPanel extends JPanel {
 			mapInfo = mapInfo.concat("\n");
 		}	
 		
-		textArea.setText(playerInfo);
-		textArea_1.setText(mapInfo);
+		playerTextArea.setText(playerInfo);
+		mapTextArea.setText(mapInfo);
 	}
 }
