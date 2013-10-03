@@ -24,7 +24,8 @@ public class PlayerSetup extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
-	
+	private JButton btnNewButton;
+
 	/**
 	 * Launch the application.
 	 */
@@ -41,8 +42,10 @@ public class PlayerSetup extends JFrame {
 		});
 	}
 
-	
-	
+	public JButton getButton(){
+		return btnNewButton;
+	}
+
 	/**
 	 * Create the frame.
 	 * @throws IOException 
@@ -55,50 +58,50 @@ public class PlayerSetup extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		textField = new JTextField();
 		textField.setBounds(185, 178, 153, 28);
 		contentPane.add(textField);
 		textField.setColumns(10);
-		
-		JButton btnNewButton = new JButton("Next");
+
+		btnNewButton = new JButton("Next");
 		btnNewButton.setFont(new Font("American Typewriter", Font.PLAIN, 13));
 		btnNewButton.setBounds(950, 686, 117, 29);
 		contentPane.add(btnNewButton);
-				
-				JLabel lblNameOfPlayer = new JLabel("Name of Player");
-				lblNameOfPlayer.setFont(new Font("American Typewriter", Font.BOLD, 17));
-				lblNameOfPlayer.setBounds(196, 150, 182, 29);
-				contentPane.add(lblNameOfPlayer);
-				
-				JComboBox comboBox = new JComboBox();
-				comboBox.setToolTipText("");
-				comboBox.setFont(new Font("American Typewriter", Font.PLAIN, 13));
-				comboBox.setBounds(196, 314, 124, 27);
-				contentPane.add(comboBox);
-				
-				JLabel lblColor = new JLabel("Color");
-				lblColor.setFont(new Font("American Typewriter", Font.BOLD, 17));
-				lblColor.setBounds(225, 286, 153, 29);
-				contentPane.add(lblColor);
-				
-				JComboBox comboBox_1 = new JComboBox();
-				comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Flapper", "Human", "Others"}));
-				comboBox_1.setFont(new Font("American Typewriter", Font.PLAIN, 13));
-				comboBox_1.setBounds(208, 247, 104, 27);
-				contentPane.add(comboBox_1);
-				
-				JLabel lblRace = new JLabel("Race\n");
-				lblRace.setFont(new Font("American Typewriter", Font.BOLD, 17));
-				lblRace.setBounds(229, 218, 53, 29);
-				contentPane.add(lblRace);
-				
-				JLabel label = new JLabel("");
-				label.setIcon(new ImageIcon("GameEngineImage.png"));
-				label.setBounds(0, 0, 900, 575);
-				contentPane.add(label);
-		
-	
-		
+
+		JLabel lblNameOfPlayer = new JLabel("Name of Player");
+		lblNameOfPlayer.setFont(new Font("American Typewriter", Font.BOLD, 17));
+		lblNameOfPlayer.setBounds(196, 150, 182, 29);
+		contentPane.add(lblNameOfPlayer);
+
+		JComboBox comboBox = new JComboBox();
+		comboBox.setToolTipText("");
+		comboBox.setFont(new Font("American Typewriter", Font.PLAIN, 13));
+		comboBox.setBounds(196, 314, 124, 27);
+		contentPane.add(comboBox);
+
+		JLabel lblColor = new JLabel("Color");
+		lblColor.setFont(new Font("American Typewriter", Font.BOLD, 17));
+		lblColor.setBounds(225, 286, 153, 29);
+		contentPane.add(lblColor);
+
+		JComboBox comboBox_1 = new JComboBox();
+		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Flapper", "Human", "Others"}));
+		comboBox_1.setFont(new Font("American Typewriter", Font.PLAIN, 13));
+		comboBox_1.setBounds(208, 247, 104, 27);
+		contentPane.add(comboBox_1);
+
+		JLabel lblRace = new JLabel("Race\n");
+		lblRace.setFont(new Font("American Typewriter", Font.BOLD, 17));
+		lblRace.setBounds(229, 218, 53, 29);
+		contentPane.add(lblRace);
+
+		JLabel label = new JLabel("");
+		label.setIcon(new ImageIcon("GameEngineImage.png"));
+		label.setBounds(0, 0, 900, 575);
+		contentPane.add(label);
+
+
+
 	}
 }
