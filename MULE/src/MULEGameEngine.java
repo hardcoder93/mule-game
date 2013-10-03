@@ -62,12 +62,13 @@ public class MULEGameEngine {
 	 */
 	public int getNextPlayerSlot(){
 		int i=0;
-		try{
-			while(players[i]!=null) //Get the player number (ie. next open slot in player array)
+		/*try{*/
+			while(players[i]!=null && i<players.length) //Get the player number (ie. next open slot in player array)
 				i++;
+			if(i==players.length) return -1;
 			return i;
-		}catch(IndexOutOfBoundsException e){
+		/*}catch(IndexOutOfBoundsException e){
 			return -1;
-		}
+		}*/
 	}
 }
