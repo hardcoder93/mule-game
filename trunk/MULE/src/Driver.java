@@ -11,7 +11,7 @@ public class Driver {
 		
 		StartScreen start = new StartScreen();
 		GameSetup setup = new GameSetup();
-		GameEngine engine = new GameEngine();
+		PlayerSetup engine = new PlayerSetup();
 		
 		engine.setVisible(true);
 		setup.setVisible(true);
