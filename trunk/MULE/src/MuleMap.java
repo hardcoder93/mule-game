@@ -101,5 +101,15 @@ public class MuleMap {
 	public ArrayList<Tile> getTiles(){
 		return tileList;
 	}
+	
+	/**
+	 * Get the tile at a specific location
+	 * @param xCoord	x coordinate
+	 * @param yCoord	y coordinate
+	 * @return			tile at (x,y)
+	 */
+	public Tile getTile(int xCoord, int yCoord){
+		return tileList.get(WIDTH*yCoord + xCoord);
+	}
 
 }
