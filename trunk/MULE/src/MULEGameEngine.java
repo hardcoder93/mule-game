@@ -7,8 +7,8 @@
  */
 public class MULEGameEngine {
 	//Instance Data
-	private int difficulty;
-	private MULEMap map;
+	private String difficulty;
+	private MuleMap map;
 	private Player[] players;
 	private Player store;
 		
@@ -20,20 +20,20 @@ public class MULEGameEngine {
 	 * @param mapType The map upon which the game is to be played.
 	 * @param numPlayers The number of players in the game.
 	 */
-	public MULEGameEngine(int difficulty, String mapType, int numPlayers){
+	public MULEGameEngine(String difficulty, String mapType, int numPlayers){
 		this.difficulty = difficulty;
 		
 		switch(mapType){
 		case "Standard": 
-			map = new MULEMap(true); //Assuming class MULEMap has constructor with boolean 
+			map = new MuleMap(mapType); //Assuming class MULEMap has constructor with boolean 
 			break;			
 		case "Random": 
-			map = new MULEMap(false);	  //where true=standard and false=random
+			map = new MuleMap(mapType);	  //where true=standard and false=random
 			break;
 		}
 		
 		players = new Player[numPlayers];
-		store = new Player("STORE", "", "");
+		store = new Player("STORE", difficulty, "", "");
 	}
 	
 	/**
@@ -48,14 +48,26 @@ public class MULEGameEngine {
 	 * @return True if player was inserted, false if the list is full.
 	 */
 	public boolean addPlayer(String name, String color, String race){
+		int index = getNextPlayerSlot();
+		if(index==-1) return false;
+		players[index] = new Player(name, difficulty, race, color);
+		return true;
+	}
+	
+	/**
+	 * Gets the next open position in the list of players and returns that
+	 * index. If the list is full, it returns -1.
+	 * 
+	 * @return The index of the next slot, or -1 if full.
+	 */
+	public int getNextPlayerSlot(){
 		int i=0;
 		try{
 			while(players[i]!=null) //Get the player number (ie. next open slot in player array)
 				i++;
-			players[i] = new Player(name, color, race);
-			return true;
+			return i;
 		}catch(IndexOutOfBoundsException e){
-			return false;
+			return -1;
 		}
 	}
 }
