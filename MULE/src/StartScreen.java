@@ -17,6 +17,7 @@ public class StartScreen extends JFrame {
 	private JPanel contentPane;
 	private JButton click;
 	private JButton btnQuit;
+	private boolean yes;
 
 	/**
 	 * Launch the application.
@@ -34,6 +35,10 @@ public class StartScreen extends JFrame {
 		});
 	}
 
+	public JButton getButton(){
+		return btnQuit;
+	}
+
 	/**
 	 * Create the frame.
 	 */
@@ -49,7 +54,6 @@ public class StartScreen extends JFrame {
 		btnQuit.setFont(new Font("American Typewriter", Font.PLAIN, 13));
 		btnQuit.setBounds(777, 543, 117, 29);
 		contentPane.add(btnQuit);
-		btnQuit.addActionListener(new addListener());
 
 		ImageIcon image = new ImageIcon("StartImage.png");
 		JLabel lblNewLabel = new JLabel(image);
@@ -58,22 +62,13 @@ public class StartScreen extends JFrame {
 		contentPane.add(lblNewLabel);
 	}
 
-	private class addListener implements ActionListener{
-		/*
-		 * @param e ActionEvent
-		 */
-		public void actionPerformed (ActionEvent e){
-			click = (JButton)e.getSource();
-			go(click.equals(btnQuit));				
-		}
-		
-		private boolean go(boolean yes){
-			System.out.println("ds");
-			return yes;
-	}
-	
-}
+
+
+
+
+
 
 
 
 }
+
