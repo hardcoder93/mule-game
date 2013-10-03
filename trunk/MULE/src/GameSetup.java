@@ -41,6 +41,7 @@ public class GameSetup extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public GameSetup() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 600);
