@@ -15,7 +15,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.ImageIcon;
+
 import java.awt.Color;
+
 import javax.swing.JLayeredPane;
 import javax.swing.JTextField;
 
@@ -51,6 +53,7 @@ public class PlayerSetup extends JFrame {
 	 * @throws IOException 
 	 * @throws HeadlessException 
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public PlayerSetup() throws HeadlessException, IOException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 600);
