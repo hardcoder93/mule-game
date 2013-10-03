@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="JC AntLab" basedir="." default="all">	
+
+	<target name="init">
+		<property name="src.dir" value="src"/>
+		<property name="build.dir" value="build"/>
+		<property name="lib.dir" value="lib"/>
+		<property name="apidoc.dir" value="apidoc"/>
+		<path id="classpath">
+			<fileset dir="${lib.dir}" includes="resources.jar" />
+		</path>
+	</target>
+	<target name="prepare" depends="init, clean">
+		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${apidoc.dir}"/>
+	</target>
+	<target name="compile" depends="prepare">
+		<javac srcdir="${src.dir}"
+				   destdir="${build.dir}" 
+				   classpathref="classpath"
+				   includeAntRuntime="false"/>	
+	</target>
+	<target name="javadoc" depends="init">
+		<javadoc sourcepath="${src.dir}" destdir="${apidoc.dir}" classpathref="classpath"/>
+	</target>
+	
+	<target name="jar" depends="compile">
+		<jar destfile="${build.dir}/AntLabMain.jar" basedir="${build.dir}">
+			 <manifest>
+			 	<attribute name="Main-Class" value="edu.gatech.oad.antlab.pkg1.AntLabMain"/>
+				<attribute name="Class-Path" value="../${lib.dir}/resources.jar" />
+			 </manifest>
+		</jar>
+	</target>
+	
+	<target name="run" depends="jar">
+		<java classname="edu.gatech.oad.antlab.pkg1.AntLabMain">
+			<classpath>
+				<path refid="classpath" />
+				<path location="${build}/AntLabRun.jar" />
+			</classpath>
+		</java>
+	</target>
+	
+	<target name="all" depends="init, prepare, compile, javadoc, jar, run">
+	</target>
+	
+	<target name="clean">
+		<delete dir="${build.dir}"/>
+		<delete dir="${apidoc.dir}"/>
+	</target>
+	
+</project>
