@@ -15,6 +15,8 @@ import javax.swing.border.EmptyBorder;
 public class StartScreen extends JFrame {
 
 	private JPanel contentPane;
+	private JButton click;
+	private JButton btnQuit;
 
 	/**
 	 * Launch the application.
@@ -42,16 +44,36 @@ public class StartScreen extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		JButton btnQuit = new JButton("START");
+
+		btnQuit = new JButton("START");
 		btnQuit.setFont(new Font("American Typewriter", Font.PLAIN, 13));
 		btnQuit.setBounds(777, 543, 117, 29);
 		contentPane.add(btnQuit);
-		
+		btnQuit.addActionListener(new addListener());
+
 		ImageIcon image = new ImageIcon("StartImage.png");
 		JLabel lblNewLabel = new JLabel(image);
 
 		lblNewLabel.setBounds(6, 6, 900, 575);
 		contentPane.add(lblNewLabel);
 	}
+
+	private class addListener implements ActionListener{
+		/*
+		 * @param e ActionEvent
+		 */
+		public void actionPerformed (ActionEvent e){
+			click = (JButton)e.getSource();
+			go(click.equals(btnQuit));				
+		}
+		
+		private boolean go(boolean yes){
+			System.out.println("ds");
+			return yes;
+	}
+	
+}
+
+
+
 }
