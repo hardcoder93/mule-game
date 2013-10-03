@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="SW" default="all" basedir=".">
+       
+        <target name="init">
+                <property name="src.dir" value="src" />
+                <property name="build.dir" value="build" />
+                <property name="classpath.dir" value="lib/resources.jar" />
+                <property name="output.jar" value="AntLabRun.jar" />
+                <property name="javadoc.dir" value="apidoc" />
+        </target>
+        <target name="prepare" depends="init">
+                <mkdir dir="${build.dir}" />
+                <mkdir dir="${javadoc.dir}" />
+        </target>
+        <target name="compile" depends="prepare">
+                <javac srcdir="${src.dir}" destdir="${build.dir}" includeantruntime="false" classpath="${classpath.dir}" />
+        </target>
+        <target name="javadoc" depends="compile">
+                <javadoc access="public" sourcepath="${src.dir}" destdir="${javadoc.dir}" classpath="${classpath.dir}">
+                        <packageset dir="${src.dir}">
+                                <include name="edu.gatech.oad.antlab.person" />
+                                <include name="edu.gatech.oad.antlab.pkg1" />
+                                <include name="edu.gatech.oad.antlab.pkg2" />
+                        </packageset>
+                
+                </javadoc>
+        </target>
+        <target name="jar" depends="javadoc">
+                <jar destfile="${output.jar}" basedir="${build.dir}">
+                        <manifest>
+                                
+                        </manifest>
+                </jar>
+        </target>
+        <target name="run" depends="jar">
+                <!-- need to add classname -->
+                <java jar="${output.jar}" fork="true">
+                        <classpath>
+                                <pathelement location="${build.dir}" />
+                        </classpath>
+                </java>
+        </target>
+        <target name="all">
+                <antcall target="run" />
+        </target>
+        <target name="clean" depends="init">
+                <delete dir="${build.dir}" />
+                <delete file="${output.jar}" />
+                <delete dir="${javadoc.dir}" />
+        </target>
+</project>
