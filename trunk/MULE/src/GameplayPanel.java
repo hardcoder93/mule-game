@@ -2,6 +2,9 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.JTable;
+import javax.swing.table.TableModel;
+import javax.swing.table.DefaultTableModel;
 
 
 /**
@@ -10,9 +13,13 @@ import javax.swing.JTextArea;
  *
  */
 public class GameplayPanel extends JPanel {
+	JTextArea playerTextArea1 = new JTextArea();
+	JTextArea playerTextArea2 = new JTextArea();
+	JTextArea playerTextArea3 = new JTextArea();
+	JTextArea playerTextArea4 = new JTextArea();
+	JTextArea[] playerText = {playerTextArea1, playerTextArea2, playerTextArea3, playerTextArea4};
 
-	JTextArea mapTextArea = new JTextArea();
-	JTextArea playerTextArea = new JTextArea();
+	private JTable table;
 
 	/**
 	 * Create the panel.
@@ -20,41 +27,68 @@ public class GameplayPanel extends JPanel {
 	public GameplayPanel() {
 		setLayout(null);
 		
-		mapTextArea.setTabSize(4);
-		mapTextArea.setEditable(false);
-		mapTextArea.setBounds(12, 193, 426, 95);
-		add(mapTextArea);
+		playerTextArea1.setEditable(false);
+		playerTextArea1.setBounds(12, 12, 106, 139);
+		add(playerTextArea1);
 		
-		playerTextArea.setEditable(false);
-		playerTextArea.setBounds(12, 12, 426, 139);
-		add(playerTextArea);
+		playerTextArea2.setEditable(false);
+		playerTextArea2.setBounds(119, 12, 106, 139);
+		add(playerTextArea2);
+		
+		playerTextArea3.setEditable(false);
+		playerTextArea3.setBounds(227, 12, 106, 139);
+		add(playerTextArea3);
+		
+		playerTextArea4.setEditable(false);
+		playerTextArea4.setBounds(332, 12, 106, 139);
+		add(playerTextArea4);
+				
+		table = new JTable();
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null},
+			},
+			new String[] {
+				"New column", "New column", "New column", "New column", "New column", "New column", "New column", "New column", "New column"
+			}
+		));
+		table.setBounds(12, 183, 426, 80);
+		add(table);
 	}
 	
 	public void setPanel(Player[] playerArray, MULEMap myMap){
 		
-		String playerInfo = new String();
+		TableModel tblModel = table.getModel();
+		String[] playerInfo = new String[4];
 		String mapInfo = new String();
 		ArrayList<Tile> tileInfo = myMap.getTiles();
 		Tile tmpTile;
-
-		for (int i = 0; i < playerArray.length; i++){
-			playerInfo = playerInfo.concat("Player: ".concat(Integer.toString(i)));
-			playerInfo = playerInfo.concat("\tName: ".concat(playerArray[i].getName()));
-			playerInfo = playerInfo.concat("\tDifficulty: ".concat(playerArray[i].getLevel()));
-			playerInfo = playerInfo.concat("\tRace: ".concat(playerArray[i].getRace()));
-			playerInfo = playerInfo.concat("\tColor: ".concat(playerArray[i].getColor()));
-			playerInfo = playerInfo.concat("\n\n");
+		
+		for (int i = 0; i < 4; i++){
+			if (playerArray[i] != null){
+				playerInfo[i] = "Player: ".concat(Integer.toString(i));
+				playerInfo[i] = playerInfo[i].concat("\nName: ".concat(playerArray[i].getName()));
+				playerInfo[i] = playerInfo[i].concat("\nDifficulty: \n    ".concat(playerArray[i].getLevel()));
+				playerInfo[i] = playerInfo[i].concat("\nRace: ".concat(playerArray[i].getRace()));
+				playerInfo[i] = playerInfo[i].concat("\nColor: ".concat(playerArray[i].getColor()));
+			} else 
+				playerInfo[i] = "No Player";
 		}
 		
 		for (int i = 0; i < 5; i++){
 			for (int j = 0; j < 9; j++){
 				tmpTile = tileInfo.get(i*9 + j);
-				mapInfo = mapInfo.concat(tmpTile.getType().concat("\t"));
+				tblModel.setValueAt(tmpTile.getType(), i, j);
 			}
-			mapInfo = mapInfo.concat("\n");
 		}	
 		
-		playerTextArea.setText(playerInfo);
-		mapTextArea.setText(mapInfo);
+		playerTextArea1.setText(playerInfo[0]);
+		playerTextArea2.setText(playerInfo[1]);
+		playerTextArea3.setText(playerInfo[2]);
+		playerTextArea4.setText(playerInfo[3]);
 	}
 }
