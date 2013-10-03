@@ -74,7 +74,7 @@ public class GameSetup extends JFrame {
 		
 		JComboBox comboBox_2 = new JComboBox();
 		comboBox_2.setFont(new Font("American Typewriter", Font.PLAIN, 13));
-		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"River", "Plain", "1 Mountain", "2 Mountain", "3 Mountain"}));
+		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"Standard","Random"}));
 		comboBox_2.setBounds(191, 247, 133, 27);
 		contentPane.add(comboBox_2);
 		
