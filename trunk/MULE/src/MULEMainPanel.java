@@ -1,4 +1,6 @@
 import java.awt.CardLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -14,10 +16,10 @@ public class MULEMainPanel extends JPanel{
 	//Instance Data
 	MULEGameEngine engine;
 	
-	private StartScreen startPanel = new StartScreen(); //Change this later to startPanel class?
-	private GameSetup gameSetupPanel = new GameSetup(); //Change this later to gameSetupPanel class?
-	private PlayerSetup playerSetupPanel = new PlayerSetup(); //Change this later to playerSetupPanel class?
-	private JPanel gameplayPanel = new JPanel(); //Change this later to gamePlayPanel class?
+	private StartScreen startPanel = new StartScreen();
+	private GameSetup gameSetupPanel = new GameSetup();
+	private PlayerSetup playerSetupPanel = new PlayerSetup();
+	private JPanel gameplayPanel = new JPanel();
 	private CardLayout cardLayout = new CardLayout();
 	
 	private final String startID = "START";
@@ -33,18 +35,15 @@ public class MULEMainPanel extends JPanel{
 		add(playerSetupPanel, playerSetupID);
 		add(gameplayPanel, gameplayID);
 		
-		JButton startBtn = startPanel.getNextButton();
-		JButton gameSetupBtn = startPanel.getNextButton();
-		JButton playerSetupBtn = startPanel.getNextButton();
+		JButton startBtn = startPanel.getButton();
+		JButton gameSetupBtn = gameSetupPanel.getButton();
+		JButton playerSetupBtn = playerSetupPanel.getButton();
 
-		startBtn.add(new NextListener(startID));		
-		gameSetupBtn.add(new NextListener(gameSetupID));
-		playerSetupBtn.add(new NextListener(playerSetupID));
+		startBtn.addActionListener(new NextListener(startID));		
+		gameSetupBtn.addActionListener(new NextListener(gameSetupID));
+		playerSetupBtn.addActionListener(new NextListener(playerSetupID));
 		
-		cardLayout.show(startPanel, startID);
-		//decide how to handle button listeners - if separate classes will be 
-		//more difficult, if we build the panels as inner classes it will 
-		//probably be easier - pros and cons?
+		//cardLayout.show(startPanel, startID);
 	}
 	
 	private class NextListener implements ActionListener{
@@ -52,25 +51,29 @@ public class MULEMainPanel extends JPanel{
 		
 		public NextListener(String id){
 			ID = id;
+			System.out.println(toString());
 		}
 		
 		public void actionPerformed(ActionEvent e){
 			switch(ID){
 			case startID:
-				cardLayout.show(gameSetupPanel, gameSetupID);
+				cardLayout.show(MULEMainPanel.this, gameSetupID);
 				break;
 			case gameSetupID:
 				engine = new MULEGameEngine(gameSetupPanel.getDifficulty(), 
 											gameSetupPanel.getMapType(), 
 											gameSetupPanel.getPlayerCount());
-				cardLayout.show(playerSetupPanel, playerSetupID);
+				cardLayout.show(MULEMainPanel.this, playerSetupID);
 				break;
 			case playerSetupID:
+				/*engine.addPlayer(playerSetupPanel.getPlayerName(), 
+								 playerSetupPanel.getColor(), 
+								 playerSetupPanel.getRace());*/
 				int currPlayer = engine.getNextPlayerSlot();
 				if(currPlayer!=-1){
 					//May need to reset the fields on the player setup screen here.
-					cardLayout.show(playerSetupPanel, playerSetupID);
-				}else cardLayout.show(gameplayPanel, gameplayID);
+					cardLayout.show(MULEMainPanel.this, playerSetupID);
+				}else cardLayout.show(MULEMainPanel.this, gameplayID);
 				break;
 			}
 		}
