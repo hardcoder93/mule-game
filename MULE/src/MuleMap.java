@@ -29,7 +29,7 @@ public class MuleMap {
 	 */
 	public MuleMap(String type) {
 		tileList = new ArrayList<Tile>();
-		String[] mapArea = type == "Random" ? createRandomMap() : createStandardMap();
+		String[] mapArea = type.equals("Random") ? createRandomMap() : createStandardMap();
 		for (int i = 0; i < NUM_TILES; i++)
 			tileList.add(new Tile(mapArea[i], i));
 	}
@@ -67,13 +67,13 @@ public class MuleMap {
 		//Set up Rivers
 		for (int i = randGen.nextInt(MAX_RIVERS + 1); i > 0; i--){
 			type = randGen.nextDouble() < .5 ? V : H;
-			randInt = type == V ? randGen.nextInt(WIDTH) : randGen.nextInt(HEIGHT) * WIDTH;
-			for (int j = (type == V ? HEIGHT : WIDTH); j > 0; j--){
+			randInt = type.equals(V) ? randGen.nextInt(WIDTH) : randGen.nextInt(HEIGHT) * WIDTH;
+			for (int j = (type.equals(V) ? HEIGHT : WIDTH); j > 0; j--){
 				if (mapArea[randInt] == null)
 					mapArea[randInt] = type;
 				else if ((mapArea[randInt] != TOWN) && (mapArea[randInt] != type))
 					mapArea[randInt] = B;
-				randInt += type == V ? WIDTH : 1;
+				randInt += type.equals(V) ? WIDTH : 1;
 			}
 		}
 		
