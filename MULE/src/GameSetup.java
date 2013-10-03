@@ -15,6 +15,7 @@ import javax.swing.ImageIcon;
 public class GameSetup extends JFrame {
 
 	private JPanel contentPane;
+	private JButton btnNewButton;
 
 	/**
 	 * Launch the application.
@@ -32,6 +33,9 @@ public class GameSetup extends JFrame {
 		});
 	}
 
+	public JButton getButton(){
+		return btnNewButton;
+	}
 	/**
 	 * Create the frame.
 	 */
@@ -78,7 +82,7 @@ public class GameSetup extends JFrame {
 		comboBox_2.setBounds(191, 247, 133, 27);
 		contentPane.add(comboBox_2);
 		
-		JButton btnNewButton = new JButton("Next");
+		btnNewButton = new JButton("Next");
 		btnNewButton.setFont(new Font("American Typewriter", Font.PLAIN, 13));
 		btnNewButton.setBounds(777, 543, 117, 29);
 		contentPane.add(btnNewButton);
