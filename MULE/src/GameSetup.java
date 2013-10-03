@@ -14,11 +14,12 @@ import javax.swing.ImageIcon;
 
 
 @SuppressWarnings("serial")
-public class GameSetup extends JFrame {
+public class GameSetup extends JPanel {
 
-	private JPanel contentPane;
 	private JButton btnNewButton;
-
+	private JComboBox playerCountBox;
+	private JComboBox difficultyBox;
+	private JComboBox mapTypeBox;
 	/**
 	 * Launch the application.
 	 */
@@ -39,60 +40,72 @@ public class GameSetup extends JFrame {
 		return btnNewButton;
 	}
 	/**
-	 * Create the frame.
+	 * Create the panel.
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public GameSetup() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		/*setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		contentPane.setLayout(null);*/
 		
-		JLabel lblNumberOfPlayer = new JLabel("Number of Player");
+		JLabel lblNumberOfPlayer = new JLabel("Number of Players:");
 		lblNumberOfPlayer.setFont(new Font("American Typewriter", Font.BOLD, 17));
 		lblNumberOfPlayer.setBounds(185, 150, 182, 29);
-		contentPane.add(lblNumberOfPlayer);
+		add(lblNumberOfPlayer);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setFont(new Font("American Typewriter", Font.PLAIN, 13));
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"2", "3", "4"}));
-		comboBox.setToolTipText("");
-		comboBox.setBounds(214, 180, 82, 27);
-		contentPane.add(comboBox);
+		playerCountBox = new JComboBox();
+		playerCountBox.setFont(new Font("American Typewriter", Font.PLAIN, 13));
+		playerCountBox.setModel(new DefaultComboBoxModel(new String[] {"2", "3", "4"}));
+		playerCountBox.setToolTipText("");
+		playerCountBox.setBounds(214, 180, 82, 27);
+		add(playerCountBox);
 		
-		JLabel lblDifficulty = new JLabel("Difficulty\n");
+		JLabel lblDifficulty = new JLabel("Difficulty:");
 		lblDifficulty.setFont(new Font("American Typewriter", Font.BOLD, 17));
 		lblDifficulty.setBounds(214, 286, 153, 29);
-		contentPane.add(lblDifficulty);
+		add(lblDifficulty);
 		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setFont(new Font("American Typewriter", Font.PLAIN, 13));
-		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Beginner", "Standard", "Tournament"}));
-		comboBox_1.setToolTipText("");
-		comboBox_1.setBounds(200, 315, 124, 27);
-		contentPane.add(comboBox_1);
+		difficultyBox = new JComboBox();
+		difficultyBox.setFont(new Font("American Typewriter", Font.PLAIN, 13));
+		difficultyBox.setModel(new DefaultComboBoxModel(new String[] {"Beginner", "Standard", "Tournament"}));
+		difficultyBox.setToolTipText("");
+		difficultyBox.setBounds(200, 315, 124, 27);
+		add(difficultyBox);
 		
-		JLabel lblMapType = new JLabel("Map Type\n");
+		JLabel lblMapType = new JLabel("Map Type:");
 		lblMapType.setFont(new Font("American Typewriter", Font.BOLD, 17));
 		lblMapType.setBounds(214, 219, 153, 29);
-		contentPane.add(lblMapType);
+		add(lblMapType);
 		
-		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.setFont(new Font("American Typewriter", Font.PLAIN, 13));
-		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"Standard", "Random"}));
-		comboBox_2.setBounds(191, 247, 133, 27);
-		contentPane.add(comboBox_2);
+		mapTypeBox = new JComboBox();
+		mapTypeBox.setFont(new Font("American Typewriter", Font.PLAIN, 13));
+		mapTypeBox.setModel(new DefaultComboBoxModel(new String[] {"Standard", "Random"}));
+		mapTypeBox.setBounds(191, 247, 133, 27);
+		add(mapTypeBox);
 		
 		btnNewButton = new JButton("Next");
 		btnNewButton.setFont(new Font("American Typewriter", Font.PLAIN, 13));
 		btnNewButton.setBounds(777, 543, 117, 29);
-		contentPane.add(btnNewButton);
+		add(btnNewButton);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon("GameSetupImage.png"));
 		lblNewLabel.setBounds(0, 0, 900, 575);
-		contentPane.add(lblNewLabel);
+		add(lblNewLabel);
+	}
+	
+	public int getPlayerCount(){
+		return Integer.parseInt((String)playerCountBox.getSelectedItem());
+	}
+	
+	public String getDifficulty(){
+		return (String)difficultyBox.getSelectedItem();
+	}
+	
+	public String getMapType(){
+		return (String)mapTypeBox.getSelectedItem();
 	}
 }
