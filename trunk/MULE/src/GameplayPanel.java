@@ -64,7 +64,6 @@ public class GameplayPanel extends JPanel {
 		
 		TableModel tblModel = table.getModel();
 		String[] playerInfo = new String[4];
-		String mapInfo = new String();
 		ArrayList<Tile> tileInfo = myMap.getTiles();
 		Tile tmpTile;
 		
