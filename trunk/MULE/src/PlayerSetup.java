@@ -1,12 +1,8 @@
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.HeadlessException;
-import java.awt.Image;
-import java.io.File;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -16,12 +12,10 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.ImageIcon;
 
-import java.awt.Color;
-
-import javax.swing.JLayeredPane;
 import javax.swing.JTextField;
 
 
+@SuppressWarnings("serial")
 public class PlayerSetup extends JFrame {
 
 	private JPanel contentPane;
