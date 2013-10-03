@@ -26,7 +26,7 @@ public class Player {
 	}
 
 	public void setMoney() {
-		switch (race) {
+		switch (getRace()) {
 		case "Flapper": 
 			money = 1600;
 			break;
@@ -42,7 +42,7 @@ public class Player {
 	}
 
 	public void setResources() {
-		switch (level) {
+		switch (getLevel()) {
 		case "Beginner":
 			food = 8;
 			energy = 4;
