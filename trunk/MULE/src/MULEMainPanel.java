@@ -1,4 +1,5 @@
 import java.awt.CardLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -29,6 +30,7 @@ public class MULEMainPanel extends JPanel{
 	
 	public MULEMainPanel(){
 		setLayout(cardLayout);
+		setPreferredSize(new Dimension(915,587));
 		
 		add(startPanel, startID);
 		add(gameSetupPanel, gameSetupID);
@@ -51,7 +53,6 @@ public class MULEMainPanel extends JPanel{
 		
 		public NextListener(String id){
 			ID = id;
-			System.out.println(toString());
 		}
 		
 		public void actionPerformed(ActionEvent e){
