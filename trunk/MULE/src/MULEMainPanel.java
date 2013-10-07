@@ -19,7 +19,7 @@ public class MULEMainPanel extends JPanel{
 	private StartScreen startPanel = new StartScreen();
 	private GameSetup gameSetupPanel = new GameSetup();
 	private PlayerSetup playerSetupPanel = new PlayerSetup();
-	private JPanel gameplayPanel = new JPanel();
+	private GameplayPanel gameplayPanel = new GameplayPanel();
 	private CardLayout cardLayout = new CardLayout();
 	
 	private final String startID = "START";
@@ -38,6 +38,7 @@ public class MULEMainPanel extends JPanel{
 		JButton startBtn = startPanel.getButton();
 		JButton gameSetupBtn = gameSetupPanel.getButton();
 		JButton playerSetupBtn = playerSetupPanel.getButton();
+		JButton noButton = new JButton();
 
 		startBtn.addActionListener(new NextListener(startID));		
 		gameSetupBtn.addActionListener(new NextListener(gameSetupID));
@@ -66,14 +67,16 @@ public class MULEMainPanel extends JPanel{
 				cardLayout.show(MULEMainPanel.this, playerSetupID);
 				break;
 			case playerSetupID:
-				/*engine.addPlayer(playerSetupPanel.getPlayerName(), 
-								 playerSetupPanel.getColor(), 
-								 playerSetupPanel.getRace());*/
+				engine.addPlayer(PlayerSetup.getPlayerName(), PlayerSetup.getPlayerColor(), 
+						PlayerSetup.getPlayerRace());
 				int currPlayer = engine.getNextPlayerSlot();
 				if(currPlayer!=-1){
 					//May need to reset the fields on the player setup screen here.
 					cardLayout.show(MULEMainPanel.this, playerSetupID);
-				}else cardLayout.show(MULEMainPanel.this, gameplayID);
+				}else {
+					gameplayPanel.setPanel(engine.getPlayers(), engine.getMap());
+					cardLayout.show(MULEMainPanel.this, gameplayID);
+				}
 				break;
 			}
 		}
