@@ -3,9 +3,11 @@ import java.util.Random;
 
 
 /**
+ * This is the map class for the M.U.L.E. game. It uses an ArrayList of Tiles to
+ * keep track of the map layout and tile location. It creates either the standard
+ * M.U.L.E. map or a random map (based on user input)
  * 
  * @author John Certusi (jcertusi3)
- *
  */
 public class MULEMap {
 
