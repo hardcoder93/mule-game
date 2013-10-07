@@ -11,6 +11,7 @@ public class Driver {
 		JFrame frame = new JFrame();
 		frame.add(new MULEMainPanel());
         frame.pack();
+		frame.setBounds(100, 100, 900, 600);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);

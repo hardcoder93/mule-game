@@ -48,8 +48,8 @@ public class GameSetup extends JPanel {
 		setBounds(100, 100, 900, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);*/
+		setContentPane(contentPane);*/
+		this.setLayout(null);
 		
 		JLabel lblNumberOfPlayer = new JLabel("Number of Players:");
 		lblNumberOfPlayer.setFont(new Font("American Typewriter", Font.BOLD, 17));
