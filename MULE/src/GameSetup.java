@@ -1,8 +1,6 @@
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 
 import java.awt.Font;
@@ -17,9 +15,9 @@ import javax.swing.ImageIcon;
 public class GameSetup extends JPanel {
 
 	private JButton btnNewButton;
-	private JComboBox playerCountBox;
-	private JComboBox difficultyBox;
-	private JComboBox mapTypeBox;
+	private JComboBox<String> playerCountBox;
+	private JComboBox<String> difficultyBox;
+	private JComboBox<String> mapTypeBox;
 	/**
 	 * Launch the application.
 	 */
