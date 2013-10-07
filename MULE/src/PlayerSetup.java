@@ -7,10 +7,8 @@ import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 
@@ -22,8 +20,7 @@ public class PlayerSetup extends JPanel {
 	private JLabel playerNumberLabel;
 	private static JTextField textField;
 	private JButton btnNewButton;
-	private JComboBox playerNameBox;
-	private static JComboBox raceBox;
+	private static JComboBox<String> raceBox;
 	private static JComboBox<String> colorBox;
 	private String[] colorOptions = {"Red", "Blue", "Green", "Yellow"};
 	private JLabel noInputLabel;
