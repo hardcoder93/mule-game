@@ -1,4 +1,3 @@
-import java.awt.EventQueue;
 import java.awt.Font;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -19,7 +18,6 @@ public class StartScreen extends JPanel {
 	 * Create the frame.
 	 */
 	public StartScreen() {
-		
 		setLayout(null);
 		
 		btnQuit = new JButton("START");
