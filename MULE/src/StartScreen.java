@@ -1,7 +1,5 @@
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.LayoutManager;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
