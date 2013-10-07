@@ -103,6 +103,11 @@ public class PlayerSetup extends JPanel {
 		add(label);
 	}
 	
+	
+	public void clearPlayerName(){
+		textField.setText("");
+	}
+	
 	/**
 	 * Removes a color from the list of color options
 	 * Used when a player selects a color
