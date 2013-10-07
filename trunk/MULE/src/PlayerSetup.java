@@ -1,4 +1,3 @@
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.io.IOException;
@@ -25,22 +24,6 @@ public class PlayerSetup extends JPanel {
 	private String[] colorOptions = {"Red", "Blue", "Green", "Yellow"};
 	private JLabel noInputLabel;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PlayerSetup frame = new PlayerSetup();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	public JButton getButton(){
 		return btnNewButton;
 	}
@@ -51,12 +34,7 @@ public class PlayerSetup extends JPanel {
 	 * @throws HeadlessException 
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public PlayerSetup(){ //throws HeadlessException, IOException {
-		/*setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 900, 600);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);*/
+	public PlayerSetup(){
 		setBounds(100, 100, 900, 600);
 		setLayout(null);
 
