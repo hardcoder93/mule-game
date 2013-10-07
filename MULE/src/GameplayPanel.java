@@ -12,6 +12,7 @@ import javax.swing.table.DefaultTableModel;
  * @author John Certusi (jcertusi3)
  *
  */
+@SuppressWarnings("serial")
 public class GameplayPanel extends JPanel {
 	JTextArea playerTextArea1 = new JTextArea();
 	JTextArea playerTextArea2 = new JTextArea();
