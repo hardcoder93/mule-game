@@ -36,7 +36,7 @@ public class MULEMainPanel extends JPanel{
 	 */
 	public MULEMainPanel(){
 		setLayout(cardLayout);
-		setPreferredSize(new Dimension(915,587));
+		setPreferredSize(new Dimension(900,600));
 		
 		
 		add(startPanel, startID);
