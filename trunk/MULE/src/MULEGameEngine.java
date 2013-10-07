@@ -25,10 +25,10 @@ public class MULEGameEngine {
 		
 		switch(mapType){
 		case "Standard": 
-			map = new MULEMap(mapType); //Assuming class MULEMap has constructor with boolean 
+			map = new MULEMap(mapType);
 			break;			
 		case "Random": 
-			map = new MULEMap(mapType);	  //where true=standard and false=random
+			map = new MULEMap(mapType);
 			break;
 		}
 		
@@ -62,20 +62,26 @@ public class MULEGameEngine {
 	 */
 	public int getNextPlayerSlot(){
 		int i=0;
-		/*try{*/
-			while(i<players.length && players[i]!=null) //Get the player number (ie. next open slot in player array)
-				i++;
-			if(i==players.length) return -1;
-			return i;
-		/*}catch(IndexOutOfBoundsException e){
-			return -1;
-		}*/
+		while(i<players.length && players[i]!=null) //Get the player number (ie. next open slot in player array)
+			i++;
+		if(i==players.length) return -1;
+		return i;
 	}
 	
+	/**
+	 * Gets the map object from the game engine.
+	 * 
+	 * @return The map.
+	 */
 	public MULEMap getMap(){
 		return map;		
 	}
 	
+	/**
+	 * Gets the players that are in the game, excluding the store.
+	 * 
+	 * @return An array of Player objects representing the players in the game.
+	 */
 	public Player[] getPlayers(){
 		return players;
 	}
