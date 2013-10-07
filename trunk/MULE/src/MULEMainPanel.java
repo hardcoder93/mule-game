@@ -13,6 +13,7 @@ import javax.swing.JPanel;
  * @author Chris
  *
  */
+@SuppressWarnings("serial")
 public class MULEMainPanel extends JPanel{
 	//Instance Data
 	MULEGameEngine engine;
