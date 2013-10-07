@@ -98,7 +98,7 @@ public class PlayerSetup extends JPanel {
 		add(lblRace);
 
 		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon("GameEngineImage.png"));
+		label.setIcon(new ImageIcon("PlayerSetupImage.png"));
 		label.setBounds(0, 0, 900, 575);
 		add(label);
 	}
