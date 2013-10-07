@@ -8,7 +8,7 @@
 public class MULEGameEngine {
 	//Instance Data
 	private String difficulty;
-	private MuleMap map;
+	private MULEMap map;
 	private Player[] players;
 	private Player store;
 		
@@ -25,10 +25,10 @@ public class MULEGameEngine {
 		
 		switch(mapType){
 		case "Standard": 
-			map = new MuleMap(mapType); //Assuming class MULEMap has constructor with boolean 
+			map = new MULEMap(mapType); //Assuming class MULEMap has constructor with boolean 
 			break;			
 		case "Random": 
-			map = new MuleMap(mapType);	  //where true=standard and false=random
+			map = new MULEMap(mapType);	  //where true=standard and false=random
 			break;
 		}
 		
@@ -63,12 +63,20 @@ public class MULEGameEngine {
 	public int getNextPlayerSlot(){
 		int i=0;
 		/*try{*/
-			while(players[i]!=null && i<players.length) //Get the player number (ie. next open slot in player array)
+			while(i<players.length && players[i]!=null) //Get the player number (ie. next open slot in player array)
 				i++;
 			if(i==players.length) return -1;
 			return i;
 		/*}catch(IndexOutOfBoundsException e){
 			return -1;
 		}*/
+	}
+	
+	public MULEMap getMap(){
+		return map;		
+	}
+	
+	public Player[] getPlayers(){
+		return players;
 	}
 }
