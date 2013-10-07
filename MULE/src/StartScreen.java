@@ -10,21 +10,6 @@ import javax.swing.JPanel;
 public class StartScreen extends JPanel {
 
 	private JButton btnQuit;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					StartScreen frame = new StartScreen();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	public JButton getButton(){
 		return btnQuit;
@@ -48,14 +33,5 @@ public class StartScreen extends JPanel {
 		lblNewLabel.setBounds(6, 6, 900, 575);
 		add(lblNewLabel);
 	}
-
-
-
-
-
-
-
-
-
 }
 
