@@ -19,12 +19,14 @@ import javax.swing.JTextField;
 public class PlayerSetup extends JPanel {
 
 	//private JPanel contentPane;
+	private JLabel playerNumberLabel;
 	private static JTextField textField;
 	private JButton btnNewButton;
 	private JComboBox playerNameBox;
 	private static JComboBox raceBox;
 	private static JComboBox<String> colorBox;
 	private String[] colorOptions = {"Red", "Blue", "Green", "Yellow"};
+	private JLabel noInputLabel;
 
 	/**
 	 * Launch the application.
@@ -57,8 +59,9 @@ public class PlayerSetup extends JPanel {
 		setBounds(100, 100, 900, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);*/
+		setContentPane(contentPane);*/
+		setBounds(100, 100, 900, 600);
+		setLayout(null);
 
 		textField = new JTextField();
 		textField.setBounds(185, 178, 153, 28);
@@ -67,7 +70,7 @@ public class PlayerSetup extends JPanel {
 
 		btnNewButton = new JButton("Next");
 		btnNewButton.setFont(new Font("American Typewriter", Font.PLAIN, 13));
-		btnNewButton.setBounds(950, 686, 117, 29);
+		btnNewButton.setBounds(777, 543, 117, 29);
 		add(btnNewButton);
 
 		JLabel lblNameOfPlayer = new JLabel("Name of Player");
@@ -96,13 +99,36 @@ public class PlayerSetup extends JPanel {
 		lblRace.setFont(new Font("American Typewriter", Font.BOLD, 17));
 		lblRace.setBounds(229, 218, 53, 29);
 		add(lblRace);
-
+		
+		playerNumberLabel = new JLabel("Player Number: X");
+		playerNumberLabel.setFont(new Font("American Typewriter", Font.BOLD, 25));
+		playerNumberLabel.setBounds(62, 47, 287, 35);
+		add(playerNumberLabel);
+		
+		noInputLabel = new JLabel("Player name cannot be blank!");
+		playerNumberLabel.setFont(new Font("American Typewriter", Font.BOLD, 12));
+		noInputLabel.setBounds(376, 184, 224, 15);
+		add(noInputLabel);
+		noInputLabel.setVisible(false);
+		
 		JLabel label = new JLabel("");
 		label.setIcon(new ImageIcon("PlayerSetupImage.png"));
 		label.setBounds(0, 0, 900, 575);
 		add(label);
 	}
 	
+	public void showNoInputLabel(){
+		noInputLabel.setVisible(true);
+	}
+	
+	public void clearNoInputLabel(){
+		noInputLabel.setVisible(false);
+	}
+	
+	public void setPlayerNumber(int number){
+		playerNumberLabel.setText("Player Number: ".concat(Integer.toString(number)));
+		playerNumberLabel.setFont(new Font("American Typewriter", Font.BOLD, 25));
+	}
 	
 	public void clearPlayerName(){
 		textField.setText("");

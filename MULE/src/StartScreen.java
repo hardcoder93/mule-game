@@ -37,6 +37,8 @@ public class StartScreen extends JPanel {
 	 */
 	public StartScreen() {
 		
+		setLayout(null);
+		
 		btnQuit = new JButton("START");
 		btnQuit.setFont(new Font("American Typewriter", Font.PLAIN, 13));
 		btnQuit.setBounds(777, 543, 117, 29);

@@ -63,15 +63,22 @@ public class MULEMainPanel extends JPanel{
 				engine = new MULEGameEngine(gameSetupPanel.getDifficulty(), 
 											gameSetupPanel.getMapType(), 
 											gameSetupPanel.getPlayerCount());
+				playerSetupPanel.setPlayerNumber(engine.getNextPlayerSlot() + 1);
 				cardLayout.show(MULEMainPanel.this, playerSetupID);
 				break;
 			case playerSetupID:
+				if (playerSetupPanel.getPlayerName().equals("")){
+					playerSetupPanel.showNoInputLabel();
+					break;
+				}
+				playerSetupPanel.clearNoInputLabel();
 				engine.addPlayer(playerSetupPanel.getPlayerName(), playerSetupPanel.getPlayerColor(), 
 						playerSetupPanel.getPlayerRace());
 				int currPlayer = engine.getNextPlayerSlot();
 				if(currPlayer!=-1){
 					playerSetupPanel.removeColor(playerSetupPanel.getPlayerColor());
 					playerSetupPanel.clearPlayerName();
+					playerSetupPanel.setPlayerNumber(engine.getNextPlayerSlot() + 1);
 					cardLayout.show(MULEMainPanel.this, playerSetupID);
 				}else {
 					gameplayPanel.setPanel(engine.getPlayers(), engine.getMap());
