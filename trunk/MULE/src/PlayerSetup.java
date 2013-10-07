@@ -2,6 +2,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -22,7 +23,8 @@ public class PlayerSetup extends JPanel {
 	private JButton btnNewButton;
 	private JComboBox playerNameBox;
 	private static JComboBox raceBox;
-	private static JComboBox colorBox;
+	private static JComboBox<String> colorBox;
+	private String[] colorOptions = {"Red", "Blue", "Green", "Yellow"};
 
 	/**
 	 * Launch the application.
@@ -74,7 +76,7 @@ public class PlayerSetup extends JPanel {
 		add(lblNameOfPlayer);
 
 		colorBox = new JComboBox();
-		colorBox.setModel(new DefaultComboBoxModel(new String[] {"Red", "Blue", "Yellow", "Green"}));
+		colorBox.setModel(new DefaultComboBoxModel(colorOptions));
 		colorBox.setFont(new Font("American Typewriter", Font.PLAIN, 13));
 		colorBox.setBounds(196, 314, 124, 27);
 		add(colorBox);
@@ -101,15 +103,33 @@ public class PlayerSetup extends JPanel {
 		add(label);
 	}
 	
-	public static String getPlayerName(){
+	/**
+	 * Removes a color from the list of color options
+	 * Used when a player selects a color
+	 * 
+	 * @param color the color to be removed
+	 */
+	public void removeColor(String color){
+		ArrayList<String> newColors = new ArrayList<String>();
+		for (String current : colorOptions)
+			if (!current.equals(color)) 
+				newColors.add(current);
+		this.colorOptions = new String[newColors.size()];
+		for (int i = 0; i < newColors.size(); i++)
+			this.colorOptions[i] = newColors.get(i);
+		colorBox.setModel(new DefaultComboBoxModel<String>(colorOptions));
+		
+	}
+	
+	public String getPlayerName(){
 		return textField.getText();
 	}
 	
-	public static String getPlayerRace(){
+	public String getPlayerRace(){
 		return raceBox.getSelectedItem().toString();
 	}
 	
-	public static String getPlayerColor(){
+	public String getPlayerColor(){
 		return colorBox.getSelectedItem().toString();
 	}
 	
