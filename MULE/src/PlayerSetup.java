@@ -81,13 +81,13 @@ public class PlayerSetup extends JPanel {
 		colorBox.setBounds(196, 314, 124, 27);
 		add(colorBox);
 
-		JLabel lblColor = new JLabel("Color");
+		JLabel lblColor = new JLabel("Color:");
 		lblColor.setFont(new Font("American Typewriter", Font.BOLD, 17));
 		lblColor.setBounds(225, 286, 153, 29);
 		add(lblColor);
 
 		raceBox = new JComboBox();
-		raceBox.setModel(new DefaultComboBoxModel(new String[] {"Flapper", "Human", "Others"}));
+		raceBox.setModel(new DefaultComboBoxModel(new String[] {"Flapper", "Human", "Bonzoid", "Ugaite", "Buzzite"}));
 		raceBox.setFont(new Font("American Typewriter", Font.PLAIN, 13));
 		raceBox.setBounds(208, 247, 104, 27);
 		add(raceBox);
