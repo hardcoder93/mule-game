@@ -67,8 +67,10 @@ public class GameplayPanel extends JPanel {
 		ArrayList<Tile> tileInfo = myMap.getTiles();
 		Tile tmpTile;
 		
-		for (int i = 0; i < 4; i++){
-			if (playerArray[i] != null){
+		System.out.print(playerArray.length);
+
+		for (int i = 0; i < 4 ; i++){
+			if (i < playerArray.length){
 				playerInfo[i] = "Player: ".concat(Integer.toString(i));
 				playerInfo[i] = playerInfo[i].concat("\nName: ".concat(playerArray[i].getName()));
 				playerInfo[i] = playerInfo[i].concat("\nDifficulty: \n    ".concat(playerArray[i].getLevel()));
