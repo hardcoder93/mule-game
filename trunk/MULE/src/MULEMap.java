@@ -1,6 +1,12 @@
 import java.util.ArrayList;
 import java.util.Random;
 
+
+/**
+ * 
+ * @author John Certusi (jcertusi3)
+ *
+ */
 public class MULEMap {
 
 	// Map Size
