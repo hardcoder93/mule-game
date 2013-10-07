@@ -67,11 +67,12 @@ public class MULEMainPanel extends JPanel{
 				cardLayout.show(MULEMainPanel.this, playerSetupID);
 				break;
 			case playerSetupID:
-				engine.addPlayer(PlayerSetup.getPlayerName(), PlayerSetup.getPlayerColor(), 
-						PlayerSetup.getPlayerRace());
+				engine.addPlayer(playerSetupPanel.getPlayerName(), playerSetupPanel.getPlayerColor(), 
+						playerSetupPanel.getPlayerRace());
 				int currPlayer = engine.getNextPlayerSlot();
 				if(currPlayer!=-1){
 					//May need to reset the fields on the player setup screen here.
+					playerSetupPanel.removeColor(playerSetupPanel.getPlayerColor());
 					cardLayout.show(MULEMainPanel.this, playerSetupID);
 				}else {
 					gameplayPanel.setPanel(engine.getPlayers(), engine.getMap());
