@@ -2,6 +2,8 @@
 /**
  * Tile class for M.U.L.E. game
  * A collection of these tiles make up the Map in the game
+ * 
+ * @author John Certusi (jcertusi3)
  */
 public class Tile {
 	int id;
