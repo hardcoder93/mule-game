@@ -54,7 +54,7 @@ public class MULEMap {
 	private String[] createRandomMap() {
 		
 		final int MAX_MOUNTAINS = 10;
-		final int MAX_RIVERS = 1;
+		final int MAX_RIVERS = 2;
 		
 		Random randGen = new Random();
 		String[] mapArea = new String[WIDTH * HEIGHT];
