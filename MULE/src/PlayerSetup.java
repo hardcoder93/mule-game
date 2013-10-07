@@ -11,7 +11,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.ImageIcon;
-
 import javax.swing.JTextField;
 
 
@@ -19,11 +18,11 @@ import javax.swing.JTextField;
 public class PlayerSetup extends JPanel {
 
 	//private JPanel contentPane;
-	private JTextField textField;
+	private static JTextField textField;
 	private JButton btnNewButton;
 	private JComboBox playerNameBox;
-	private JComboBox raceBox;
-	private JComboBox colorBox;
+	private static JComboBox raceBox;
+	private static JComboBox colorBox;
 
 	/**
 	 * Launch the application.
@@ -74,11 +73,11 @@ public class PlayerSetup extends JPanel {
 		lblNameOfPlayer.setBounds(196, 150, 182, 29);
 		add(lblNameOfPlayer);
 
-		playerNameBox = new JComboBox();
-		playerNameBox.setToolTipText("");
-		playerNameBox.setFont(new Font("American Typewriter", Font.PLAIN, 13));
-		playerNameBox.setBounds(196, 314, 124, 27);
-		add(playerNameBox);
+		colorBox = new JComboBox();
+		colorBox.setModel(new DefaultComboBoxModel(new String[] {"Red", "Blue", "Yellow", "Green"}));
+		colorBox.setFont(new Font("American Typewriter", Font.PLAIN, 13));
+		colorBox.setBounds(196, 314, 124, 27);
+		add(colorBox);
 
 		JLabel lblColor = new JLabel("Color");
 		lblColor.setFont(new Font("American Typewriter", Font.BOLD, 17));
@@ -100,6 +99,18 @@ public class PlayerSetup extends JPanel {
 		label.setIcon(new ImageIcon("GameEngineImage.png"));
 		label.setBounds(0, 0, 900, 575);
 		add(label);
+	}
+	
+	public static String getPlayerName(){
+		return textField.getText();
+	}
+	
+	public static String getPlayerRace(){
+		return raceBox.getSelectedItem().toString();
+	}
+	
+	public static String getPlayerColor(){
+		return colorBox.getSelectedItem().toString();
 	}
 	
 	public String getName(){
