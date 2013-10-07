@@ -1,4 +1,3 @@
-import java.awt.Component;
 import java.awt.HeadlessException;
 import java.io.IOException;
 
@@ -15,14 +14,5 @@ public class Driver {
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-		/*StartScreen start = new StartScreen();
-		GameSetup setup = new GameSetup();
-		PlayerSetup engine = new PlayerSetup();
-		
-		engine.setVisible(true);
-		setup.setVisible(true);
-		start.setVisible(true);*/
-		
-
 	}
 }
