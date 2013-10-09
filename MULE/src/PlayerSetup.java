@@ -35,11 +35,11 @@ public class PlayerSetup extends JPanel {
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public PlayerSetup(){
-		setBounds(100, 100, 900, 600);
+		setBounds(0, 0, 900, 600);
 		setLayout(null);
 
 		textField = new JTextField();
-		textField.setBounds(185, 178, 153, 28);
+		textField.setBounds(585, 178, 153, 28);
 		add(textField);
 		textField.setColumns(10);
 
@@ -50,29 +50,29 @@ public class PlayerSetup extends JPanel {
 
 		JLabel lblNameOfPlayer = new JLabel("Name of Player");
 		lblNameOfPlayer.setFont(new Font("American Typewriter", Font.BOLD, 17));
-		lblNameOfPlayer.setBounds(196, 150, 182, 29);
+		lblNameOfPlayer.setBounds(596, 150, 182, 29);
 		add(lblNameOfPlayer);
 
 		colorBox = new JComboBox();
 		colorBox.setModel(new DefaultComboBoxModel(colorOptions));
 		colorBox.setFont(new Font("American Typewriter", Font.PLAIN, 13));
-		colorBox.setBounds(196, 314, 124, 27);
+		colorBox.setBounds(596, 314, 124, 27);
 		add(colorBox);
 
 		JLabel lblColor = new JLabel("Color:");
 		lblColor.setFont(new Font("American Typewriter", Font.BOLD, 17));
-		lblColor.setBounds(225, 286, 153, 29);
+		lblColor.setBounds(625, 286, 153, 29);
 		add(lblColor);
 
 		raceBox = new JComboBox();
 		raceBox.setModel(new DefaultComboBoxModel(new String[] {"Flapper", "Human", "Bonzoid", "Ugaite", "Buzzite"}));
 		raceBox.setFont(new Font("American Typewriter", Font.PLAIN, 13));
-		raceBox.setBounds(208, 247, 104, 27);
+		raceBox.setBounds(608, 247, 104, 27);
 		add(raceBox);
 
 		JLabel lblRace = new JLabel("Race:");
 		lblRace.setFont(new Font("American Typewriter", Font.BOLD, 17));
-		lblRace.setBounds(229, 218, 53, 29);
+		lblRace.setBounds(629, 218, 53, 29);
 		add(lblRace);
 		
 		playerNumberLabel = new JLabel("Player Number: X");
@@ -82,13 +82,13 @@ public class PlayerSetup extends JPanel {
 		
 		noInputLabel = new JLabel("Player name cannot be blank!");
 		playerNumberLabel.setFont(new Font("American Typewriter", Font.BOLD, 12));
-		noInputLabel.setBounds(376, 184, 224, 15);
+		noInputLabel.setBounds(576, 54, 224, 15);
 		add(noInputLabel);
 		noInputLabel.setVisible(false);
 		
 		JLabel label = new JLabel("");
 		label.setIcon(new ImageIcon("PlayerSetupImage.png"));
-		label.setBounds(0, 0, 900, 575);
+		label.setBounds(0, 0, 900, 600);
 		add(label);
 	}
 	
