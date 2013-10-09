@@ -91,7 +91,7 @@ public class GameSetup extends JPanel {
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon("GameSetupImage.png"));
-		lblNewLabel.setBounds(0, 0, 900, 575);
+		lblNewLabel.setBounds(0, 0, 900, 600);
 		add(lblNewLabel);
 	}
 	
