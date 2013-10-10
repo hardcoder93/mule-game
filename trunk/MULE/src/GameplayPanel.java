@@ -25,9 +25,18 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class GameplayPanel extends JPanel {
 	
+	//Map display attributes
 	private final int MAP_X_OFFSET = 0;			//increment to move map away from left edge of screen
 	private final int MAP_Y_OFFSET = 0;			//increment to move map away from top edge of screen
 	private final int TILE_BORDER_WIDTH = 10;	//width of border for an owned tile (must be positive)
+	
+	//Image file names --- change from "tmpTile.png"
+	private final String fileMountain1 = "";
+	private final String fileMountain2 = "";
+	private final String fileMountain3 = "";
+	private final String filePlains = "";
+	private final String fileRiver = "";
+	private final String fileTown = "";
 	
 	//Images
 	private Image mountain1;
@@ -50,12 +59,12 @@ public class GameplayPanel extends JPanel {
     	
     	//Read in Tile images from files
         try {
-			mountain1 = ImageIO.read(new File("blue-box.png"));
-			mountain2 = ImageIO.read(new File("blue-box.png"));
-			mountain3 = ImageIO.read(new File("blue-box.png"));
-			plains = ImageIO.read(new File("blue-box.png"));
-			river = ImageIO.read(new File("blue-box.png"));
-			town = ImageIO.read(new File("blue-box.png"));
+			mountain1 = ImageIO.read(new File(fileMountain1));
+			mountain2 = ImageIO.read(new File(fileMountain2));
+			mountain3 = ImageIO.read(new File(fileMountain3));
+			plains = ImageIO.read(new File(filePlains));
+			river = ImageIO.read(new File(fileRiver));
+			town = ImageIO.read(new File(fileTown));
 		} catch (IOException e) {
 			System.out.print("One or more Tile Image files does not exist");
 		}
