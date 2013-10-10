@@ -56,7 +56,6 @@ public class GameplayPanel extends JPanel {
      * Makes a new gameplayPanel
      */
     public GameplayPanel() {
-    	
     	//Read in Tile images from files
         try {
 			mountain1 = ImageIO.read(new File(fileMountain1));
@@ -68,6 +67,8 @@ public class GameplayPanel extends JPanel {
 		} catch (IOException e) {
 			System.out.print("One or more Tile Image files does not exist");
 		}
+        
+        setBackground(Color.BLACK);
         
         //set tile size (based on image size)
         tileSize = new Dimension(mountain1.getWidth(null), mountain1.getHeight(null));
