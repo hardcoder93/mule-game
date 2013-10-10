@@ -93,7 +93,7 @@ public class MULEMainPanel extends JPanel{
 					playerSetupPanel.setPlayerNumber(engine.getNextPlayerSlot() + 1);
 					cardLayout.show(MULEMainPanel.this, playerSetupID);
 				}else {
-					gameplayPanel.setPanel(engine.getPlayers(), engine.getMap());
+					gameplayPanel.setMapAndPlayers(engine.getMap(), engine.getPlayers());
 					cardLayout.show(MULEMainPanel.this, gameplayID);
 				}
 				break;
