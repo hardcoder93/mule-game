@@ -31,12 +31,12 @@ public class GameplayPanel extends JPanel {
 	private final int TILE_BORDER_WIDTH = 10;	//width of border for an owned tile (must be positive)
 	
 	//Image file names --- change from "tmpTile.png"
-	private final String fileMountain1 = "";
-	private final String fileMountain2 = "";
-	private final String fileMountain3 = "";
-	private final String filePlains = "";
-	private final String fileRiver = "";
-	private final String fileTown = "";
+	private final String fileMountain1 = "tmpTile.png";
+	private final String fileMountain2 = "tmpTile.png";
+	private final String fileMountain3 = "tmpTile.png";
+	private final String filePlains = "tmpTile.png";
+	private final String fileRiver = "tmpTile.png";
+	private final String fileTown = "tmpTile.png";
 	
 	//Images
 	private Image mountain1;
