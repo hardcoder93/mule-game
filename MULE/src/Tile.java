@@ -7,8 +7,11 @@
  */
 public class Tile {
 	int id;
+	int xCoord;
+	int yCoord;
 	String type;
-	String owner;
+	String ownerColor;
+	int owner;			//player number
 	boolean vacant;
 	boolean wombat;
 	char direction;
@@ -19,21 +22,23 @@ public class Tile {
 	 * @param direction	orientation of the tile (important for river)
 	 * @param id		unique id
 	 */
-	public Tile(String type, int id){
+	public Tile(String type, int id, int xCoord, int yCoord){
 		this.type = "VHB".contains(type) ? "R" : type;
 		this.direction = "VHB".contains(type) ? type.charAt(0) : 'V';
 		this.id = id;
-		this.owner = null;
 		this.wombat = false;	
 		this.vacant = true;
+		this.xCoord = xCoord;
+		this.yCoord = yCoord;
 	}
 
 	/**
 	 * Set the owner of the tile
 	 * @param owner	name of the owner for the Tile
 	 */
-	public void setOwner(String owner){
+	public void setOwner(int owner, String color){
 		this.owner = owner;
+		this.ownerColor = color;
 		this.vacant = false;
 	}
 	
@@ -74,6 +79,46 @@ public class Tile {
 	 */
 	public boolean hasWombat(){
 		return wombat;
+	}
+	
+	/**
+	 * Determines if a tile is vacant 
+	 * @return	true if tile is vacant; false if tile is not
+	 */
+	public boolean isVacant(){
+		return vacant;
+	}
+	
+	/**
+	 * Getter for the owner
+	 * @return the owner as the player #
+	 */
+	public int getOwner(){
+		return owner;
+	}
+
+	/**
+	 * Get the y coordinate for the tile
+	 * @return	y coordinate
+	 */
+	public int getYCoord() {
+		return yCoord;
+	}
+
+	/**
+	 * Get the x coordinate for the tile
+	 * @return	x coordinate
+	 */
+	public int getXCoord() {
+		return xCoord;
+	}
+
+	/**
+	 * Get the player color for the tile's owner
+	 * @return player color (as a String)
+	 */
+	public String getOwnerColor() {
+		return ownerColor;
 	}
 
 }

@@ -3,17 +3,15 @@ import java.util.Random;
 
 
 /**
- * This is the map class for the M.U.L.E. game. It uses an ArrayList of Tiles to
- * keep track of the map layout and tile location. It creates either the standard
- * M.U.L.E. map or a random map (based on user input)
  * 
  * @author John Certusi (jcertusi3)
+ *
  */
 public class MULEMap {
 
 	// Map Size
-	private final int HEIGHT = 5;
-	private final int WIDTH = 9;
+	public final int HEIGHT = 5;
+	public final int WIDTH = 9;
 	private final int NUM_TILES = HEIGHT * WIDTH;
 	private final int TOWN_LOCATION = (HEIGHT * WIDTH) / 2;
 
@@ -28,6 +26,7 @@ public class MULEMap {
 	private final String TOWN = "Town";
 
 	private ArrayList<Tile> tileList;
+	private ArrayList<Integer> alteredTiles;
 
 	/**
 	 * Constructs the Map object based on either a standard, predefined map or a
@@ -36,10 +35,15 @@ public class MULEMap {
 	 * @param type the type of map; "Standard" or "Random"
 	 */
 	public MULEMap(String type) {
+		int ID = 0;
 		tileList = new ArrayList<Tile>();
+		alteredTiles = new ArrayList<Integer>();
 		String[] mapArea = type.equals("Random") ? createRandomMap() : createStandardMap();
-		for (int i = 0; i < NUM_TILES; i++)
-			tileList.add(new Tile(mapArea[i], i));
+		for (int x = 0; x < WIDTH; x++)
+			for (int y = 0; y < HEIGHT; y++){
+				tileList.add(new Tile(mapArea[ID], ID, x, y));
+				ID++;
+			}
 	}
 
 	/**
@@ -103,11 +107,48 @@ public class MULEMap {
 	}
 	
 	/**
+	 * Set a map tile's owner
+	 * 
+	 * @param xCoord		x coordinate location
+	 * @param yCoord		y coordinate location
+	 * @param playerNum		player number (index of player array)
+	 * @param playerColor	player color (as a String)
+	 */
+	public void setTileOwner(int xCoord, int yCoord, int playerNum, String playerColor){
+		int ID = calculateID(xCoord, yCoord);
+		tileList.get(ID).setOwner(playerNum,  playerColor);
+		alteredTiles.add(ID);
+	}
+	
+	/**
+	 * Remove the owner from a tile
+	 * 
+	 * @param xCoord	x coordinate of tile
+	 * @param yCoord	y coordinate of tile
+	 */
+	public void removeTileOwner(int xCoord, int yCoord){
+		int ID = calculateID(xCoord, yCoord);
+		getTile(ID).removeOwner();
+		System.out.print(getTile(ID).isVacant());
+		alteredTiles.add(ID);
+	}
+	
+	/**
 	 * Getter for tileList
 	 * @return	tileList
 	 */
 	public ArrayList<Tile> getTiles(){
 		return tileList;
+	}
+	
+	/**
+	 * Calculate a tiles ID based on its map position
+	 * @param xCoord	x coordinate
+	 * @param yCoord	y coordinate
+	 * @return			tile ID
+	 */
+	public int calculateID(int xCoord, int yCoord){
+		return HEIGHT*yCoord + xCoord;
 	}
 	
 	/**
@@ -117,7 +158,24 @@ public class MULEMap {
 	 * @return			tile at (x,y)
 	 */
 	public Tile getTile(int xCoord, int yCoord){
-		return tileList.get(WIDTH*yCoord + xCoord);
+		return tileList.get(HEIGHT*yCoord + xCoord);
+	}
+	
+	/**
+	 * gets a tile based on its ID
+	 * @param ID	tile ID
+	 * @return		tile with ID
+	 */
+	public Tile getTile(int ID){
+		return tileList.get(ID);
+	}
+
+	/**
+	 * Gets a list of altered Tiles. Used for updating borders on the map
+	 * @return	list of altered Tiles
+	 */
+	public ArrayList<Integer> getAlteredTiles() {
+		return alteredTiles;		
 	}
 
 }
