@@ -31,12 +31,12 @@ public class GameplayPanel extends JPanel {
 	private final int TILE_BORDER_WIDTH = 10;	//width of border for an owned tile (must be positive)
 	
 	//Image file names --- change from "tmpTile.png"
-	private final String fileMountain1 = "tmpTile.png";
-	private final String fileMountain2 = "tmpTile.png";
-	private final String fileMountain3 = "tmpTile.png";
-	private final String filePlains = "tmpTile.png";
-	private final String fileRiver = "tmpTile.png";
-	private final String fileTown = "tmpTile.png";
+	private final String IMAGE_FILE_MOUNTAIN1 = "tmpTile.png";
+	private final String IMAGE_FILE_MOUNTAIN2 = "tmpTile.png";
+	private final String IMAGE_FILE_MOUNTAIN3 = "tmpTile.png";
+	private final String IMAGE_FILE_PLAINS = "tmpTile.png";
+	private final String IMAGE_FILE_RIVER = "tmpTile.png";
+	private final String IMAGE_FILE_TOWN = "tmpTile.png";
 	
 	//Images
 	private Image mountain1;
@@ -58,12 +58,12 @@ public class GameplayPanel extends JPanel {
     public GameplayPanel() {
     	//Read in Tile images from files
         try {
-			mountain1 = ImageIO.read(new File(fileMountain1));
-			mountain2 = ImageIO.read(new File(fileMountain2));
-			mountain3 = ImageIO.read(new File(fileMountain3));
-			plains = ImageIO.read(new File(filePlains));
-			river = ImageIO.read(new File(fileRiver));
-			town = ImageIO.read(new File(fileTown));
+			mountain1 = ImageIO.read(new File(IMAGE_FILE_MOUNTAIN1));
+			mountain2 = ImageIO.read(new File(IMAGE_FILE_MOUNTAIN2));
+			mountain3 = ImageIO.read(new File(IMAGE_FILE_MOUNTAIN3));
+			plains = ImageIO.read(new File(IMAGE_FILE_PLAINS));
+			river = ImageIO.read(new File(IMAGE_FILE_RIVER));
+			town = ImageIO.read(new File(IMAGE_FILE_TOWN));
 		} catch (IOException e) {
 			System.out.print("One or more Tile Image files does not exist");
 		}
