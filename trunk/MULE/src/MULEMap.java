@@ -1,3 +1,4 @@
+import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -7,13 +8,15 @@ import java.util.Random;
  * @author John Certusi (jcertusi3)
  *
  */
-public class MULEMap {
+public class MULEMap implements Drawable{
 
 	// Map Size
 	public final int HEIGHT = 5;
 	public final int WIDTH = 9;
 	private final int NUM_TILES = HEIGHT * WIDTH;
 	private final int TOWN_LOCATION = (HEIGHT * WIDTH) / 2;
+	private final int MAP_X_OFFSET = 0;
+	private final int MAP_Y_OFFSET = 0;
 
 	// Map Elements
 	private final String M1 = "M1"; // One Mountain
@@ -39,8 +42,8 @@ public class MULEMap {
 		tileList = new ArrayList<Tile>();
 		alteredTiles = new ArrayList<Integer>();
 		String[] mapArea = type.equals("Random") ? createRandomMap() : createStandardMap();
-		for (int x = 0; x < WIDTH; x++){
-			for (int y = 0; y < HEIGHT; y++){
+		for (int y = 0; y < HEIGHT; y++){
+			for (int x = 0; x < WIDTH; x++){
 				tileList.add(new Tile(mapArea[ID], ID, x, y));
 				ID++;
 			}
@@ -116,9 +119,9 @@ public class MULEMap {
 	 * @param playerNum		player number (index of player array)
 	 * @param playerColor	player color (as a String)
 	 */
-	public void setTileOwner(int xCoord, int yCoord, int playerNum, String playerColor){
+	public void setTileOwner(int xCoord, int yCoord, Player player){
 		int ID = calculateID(xCoord, yCoord);
-		tileList.get(ID).setOwner(playerNum,  playerColor);
+		tileList.get(ID).setOwner(player);
 		alteredTiles.add(ID);
 	}
 	
@@ -178,6 +181,12 @@ public class MULEMap {
 	 */
 	public ArrayList<Integer> getAlteredTiles() {
 		return alteredTiles;		
+	}
+
+	@Override
+	public void draw(Graphics g) {
+		for (int i = 0; i < NUM_TILES; i++)
+			tileList.get(i).draw(g);
 	}
 
 }
