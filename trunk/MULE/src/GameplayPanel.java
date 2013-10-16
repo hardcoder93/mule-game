@@ -100,13 +100,13 @@ public class GameplayPanel extends JPanel {
         if (this.gameMap != null && !mapDrawn){
         	super.paintComponent(g);
         	drawMap(g);
-        	/*try {
-				g.drawImage(ImageIO.read(new File("IMAGES/bonzoid_blue.png")), 400, 450, null);
-				g.drawImage(ImageIO.read(new File("IMAGES/bonzoid_green.png")), 500, 450, null);
-			//} catch (IOException e) {
+        	try {
+				g.drawImage(ImageIO.read(new File("IMAGES/Bonzoid_blue.png")), 400, 450, null);
+				g.drawImage(ImageIO.read(new File("IMAGES/Bonzoid_green.png")), 500, 450, null);
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			//}*/
+			}
         	mapDrawn = true;
         }
         updateTiles(g);
