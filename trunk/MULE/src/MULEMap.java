@@ -150,7 +150,7 @@ public class MULEMap {
 	 * @return			tile ID
 	 */
 	public int calculateID(int xCoord, int yCoord){
-		return HEIGHT*yCoord + xCoord;
+		return WIDTH*yCoord + xCoord;
 	}
 	
 	/**
