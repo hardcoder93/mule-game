@@ -39,11 +39,12 @@ public class MULEMap {
 		tileList = new ArrayList<Tile>();
 		alteredTiles = new ArrayList<Integer>();
 		String[] mapArea = type.equals("Random") ? createRandomMap() : createStandardMap();
-		for (int x = 0; x < WIDTH; x++)
+		for (int x = 0; x < WIDTH; x++){
 			for (int y = 0; y < HEIGHT; y++){
 				tileList.add(new Tile(mapArea[ID], ID, x, y));
 				ID++;
 			}
+		}
 	}
 
 	/**

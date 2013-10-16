@@ -100,6 +100,13 @@ public class GameplayPanel extends JPanel {
         if (this.gameMap != null && !mapDrawn){
         	super.paintComponent(g);
         	drawMap(g);
+        	try {
+				g.drawImage(ImageIO.read(new File("IMAGES/bonzoid_blue.png")), 400, 450, null);
+				g.drawImage(ImageIO.read(new File("IMAGES/bonzoid_green.png")), 500, 450, null);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         	mapDrawn = true;
         }
         updateTiles(g);
@@ -149,11 +156,12 @@ public class GameplayPanel extends JPanel {
 	 */
 	private void drawMap(Graphics g) {
 		Tile tileXY;
-		for (int x = 0; x < gameMap.WIDTH; x++)				
+		for (int x = 0; x < gameMap.WIDTH; x++){				
 			for (int y = 0; y < gameMap.HEIGHT; y++){
 				tileXY = gameMap.getTile(x, y);
 				drawTile(tileXY, x, y, g);
 			}
+		}
 	}
 
 	/**
