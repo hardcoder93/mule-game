@@ -34,7 +34,7 @@ public class GameplayPanel extends JPanel {
 	private final String IMAGE_FILE_MOUNTAIN1 = "IMAGES/mountain_1.png";
 	private final String IMAGE_FILE_MOUNTAIN2 = "IMAGES/mountain_2.png";
 	private final String IMAGE_FILE_MOUNTAIN3 = "IMAGES/mountain_3.png";
-	private final String IMAGE_FILE_PLAINS = "IMAGES/grass.png";
+	private final String IMAGE_FILE_PLAINS = "IMAGES/Grass.png";
 	private final String IMAGE_FILE_RIVER = "IMAGES/River.png";
 	private final String IMAGE_FILE_TOWN = "IMAGES/techTower.png";
 	
@@ -100,13 +100,13 @@ public class GameplayPanel extends JPanel {
         if (this.gameMap != null && !mapDrawn){
         	super.paintComponent(g);
         	drawMap(g);
-        	try {
+        	/*try {
 				g.drawImage(ImageIO.read(new File("IMAGES/bonzoid_blue.png")), 400, 450, null);
 				g.drawImage(ImageIO.read(new File("IMAGES/bonzoid_green.png")), 500, 450, null);
-			} catch (IOException e) {
+			//} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			//}*/
         	mapDrawn = true;
         }
         updateTiles(g);

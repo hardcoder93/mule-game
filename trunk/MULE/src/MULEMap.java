@@ -159,7 +159,7 @@ public class MULEMap {
 	 * @return			tile at (x,y)
 	 */
 	public Tile getTile(int xCoord, int yCoord){
-		return tileList.get(HEIGHT*yCoord + xCoord);
+		return tileList.get(WIDTH*yCoord + xCoord);
 	}
 	
 	/**
