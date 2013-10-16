@@ -1,3 +1,8 @@
+import java.awt.Graphics;
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
+
 /**
  * 
  * @author Yuna Lee (ylee385)
@@ -5,7 +10,7 @@
  */
 
 
-public class Player {
+public class Player implements Drawable{
 	private String name;
 	private String level;
 	private String race;
@@ -14,6 +19,9 @@ public class Player {
 	private int food;
 	private int energy;
 	private int ore;
+	private Image pImage;
+	private int xCoord = 500;
+	private int yCoord = 250;
 
 	public Player(String name, String level, String race, String color){
 		this.name = name;
@@ -23,10 +31,11 @@ public class Player {
 		this.ore = 0;
 		setMoney();
 		setResources();
+		setImage();
 	}
 
 	public void setMoney() {
-		switch (getRace()) {
+		switch (race) {
 		case "Flapper": 
 			money = 1600;
 			break;
@@ -42,7 +51,7 @@ public class Player {
 	}
 
 	public void setResources() {
-		switch (getLevel()) {
+		switch (level) {
 		case "Beginner":
 			food = 8;
 			energy = 4;
@@ -56,6 +65,14 @@ public class Player {
 			energy = 2;
 			break;
 		}
+	}
+	
+	public void setImage(){
+		pImage = new ImageIcon("IMAGES/"+race+"_"+color.toLowerCase()+".png").getImage();
+	}
+	
+	public Image getImage(){
+		return pImage;
 	}
 	
 	public String getName(){
@@ -83,5 +100,17 @@ public class Player {
 		return ore;
 	}
 	
-
+	public void draw(Graphics g){
+		g.drawImage(pImage, xCoord, yCoord, null);
+	}
+	
+	
+	public void setLocation(int x, int y){
+		xCoord = x;
+		yCoord = y;
+	}
+	public void move(int speed, int distX, int distY){
+		xCoord+=distX;
+		yCoord+=distY;
+	}
 }
