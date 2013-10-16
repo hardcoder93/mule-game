@@ -1,3 +1,10 @@
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.lang.reflect.Field;
+
+import javax.swing.ImageIcon;
+
 
 /**
  * Tile class for M.U.L.E. game
@@ -5,16 +12,22 @@
  * 
  * @author John Certusi (jcertusi3)
  */
-public class Tile {
+public class Tile implements Drawable{
+	
+	private final int TILE_BORDER_WIDTH = 10;
+	
 	int id;
 	int xCoord;
 	int yCoord;
+	int xLoc;
+	int yLoc;
 	String type;
-	String ownerColor;
-	int owner;			//player number
+	Color ownerColor;
+	Player owner;			//player number
 	boolean vacant;
 	boolean wombat;
 	char direction;
+	Image tileImage;
 	
 	/**
 	 * Constructor for Tile class
@@ -30,15 +43,23 @@ public class Tile {
 		this.vacant = true;
 		this.xCoord = xCoord;
 		this.yCoord = yCoord;
+		this.xLoc = xCoord * tileImages.TILE_SIZE.width;
+		this.yLoc = yCoord * tileImages.TILE_SIZE.height;
+		this.setImage();
 	}
 
 	/**
 	 * Set the owner of the tile
 	 * @param owner	name of the owner for the Tile
 	 */
-	public void setOwner(int owner, String color){
+	public void setOwner(Player owner){
 		this.owner = owner;
-		this.ownerColor = color;
+		try {
+		    Field field = Color.class.getField(owner.getColor());
+		    this.ownerColor = (Color)field.get(null);
+		} catch (Exception e) {
+		    this.ownerColor = null;
+		}
 		this.vacant = false;
 	}
 	
@@ -93,7 +114,7 @@ public class Tile {
 	 * Getter for the owner
 	 * @return the owner as the player #
 	 */
-	public int getOwner(){
+	public Player getOwner(){
 		return owner;
 	}
 
@@ -112,13 +133,44 @@ public class Tile {
 	public int getXCoord() {
 		return xCoord;
 	}
+	
+	public void setImage(){
+		switch (this.type) {
+		case "M1": tileImage = tileImages.MOUNTAIN1;
+			break;
+		case "M2": tileImage = tileImages.MOUNTAIN2;
+			break;
+		case "M3": tileImage = tileImages.MOUNTAIN3;
+			break;
+		case "R": tileImage = tileImages.RIVER;
+			break;
+		case "Town": tileImage = tileImages.TOWN;
+			break;
+		default: tileImage = tileImages.PLAINS;
+			break;
+	}
+	}
 
+	@Override
+	public void draw(Graphics g) {
+		g.drawImage(tileImage, xLoc, yLoc, null);
+		if (!vacant)
+			drawBorder(g);
+	}
+	
 	/**
-	 * Get the player color for the tile's owner
-	 * @return player color (as a String)
+	 * Draws a border around a tile in a specified color. Used when a player owns a tile
+	 * 
+	 * @param color		player's color (as a String)
+	 * @param xLoc		x pixel location of left side of tile
+	 * @param yLoc		y pixel location of top of tile
+	 * @param g			graphics object
 	 */
-	public String getOwnerColor() {
-		return ownerColor;
+	private void drawBorder(Graphics g) {
+		g.setColor(ownerColor);
+		// draw rectangle
+		for (int i = 0; i < TILE_BORDER_WIDTH; i++)
+			g.drawRect(xLoc + i, yLoc + i, tileImages.TILE_SIZE.width - 2 * i, tileImages.TILE_SIZE.height - 2 * i);		
 	}
 
 }
