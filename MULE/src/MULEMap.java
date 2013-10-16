@@ -15,8 +15,6 @@ public class MULEMap implements Drawable{
 	public final int WIDTH = 9;
 	private final int NUM_TILES = HEIGHT * WIDTH;
 	private final int TOWN_LOCATION = (HEIGHT * WIDTH) / 2;
-	private final int MAP_X_OFFSET = 0;
-	private final int MAP_Y_OFFSET = 0;
 
 	// Map Elements
 	private final String M1 = "M1"; // One Mountain

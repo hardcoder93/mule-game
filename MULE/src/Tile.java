@@ -3,8 +3,6 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.lang.reflect.Field;
 
-import javax.swing.ImageIcon;
-
 
 /**
  * Tile class for M.U.L.E. game
