@@ -25,7 +25,7 @@ public class StartScreen extends JPanel {
 		btnQuit.setBounds(777, 543, 117, 29);
 		add(btnQuit);
 
-		ImageIcon image = new ImageIcon("StartImage.png");
+		ImageIcon image = new ImageIcon("IMAGES/StartImage.png");
 		JLabel lblNewLabel = new JLabel(image);
 
 		lblNewLabel.setBounds(0, 0, 900, 600);
