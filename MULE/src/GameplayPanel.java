@@ -18,10 +18,6 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class GameplayPanel extends JPanel {
 	
-	//Map display attributes
-	private final int MAP_X_OFFSET = 0;			//increment to move map away from left edge of screen
-	private final int MAP_Y_OFFSET = 0;			//increment to move map away from top edge of screen
-	
 	//Game play objects
 	private MULEMap gameMap;			//map of game
 	private Player[] playerList;		//list of players (playerList.length = # of players)
