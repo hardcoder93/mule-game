@@ -41,8 +41,8 @@ public class Tile implements Drawable{
 		this.vacant = true;
 		this.xCoord = xCoord;
 		this.yCoord = yCoord;
-		this.xLoc = xCoord * tileImages.TILE_SIZE.width;
-		this.yLoc = yCoord * tileImages.TILE_SIZE.height;
+		this.xLoc = xCoord * mapImages.TILE_SIZE.width;
+		this.yLoc = yCoord * mapImages.TILE_SIZE.height;
 		this.setImage();
 	}
 
@@ -134,17 +134,17 @@ public class Tile implements Drawable{
 	
 	public void setImage(){
 		switch (this.type) {
-		case "M1": tileImage = tileImages.MOUNTAIN1;
+		case "M1": tileImage = mapImages.MOUNTAIN1;
 			break;
-		case "M2": tileImage = tileImages.MOUNTAIN2;
+		case "M2": tileImage = mapImages.MOUNTAIN2;
 			break;
-		case "M3": tileImage = tileImages.MOUNTAIN3;
+		case "M3": tileImage = mapImages.MOUNTAIN3;
 			break;
-		case "R": tileImage = tileImages.RIVER;
+		case "R": tileImage = mapImages.RIVER;
 			break;
-		case "Town": tileImage = tileImages.TOWN;
+		case "Town": tileImage = mapImages.TOWN;
 			break;
-		default: tileImage = tileImages.PLAINS;
+		default: tileImage = mapImages.PLAINS;
 			break;
 	}
 	}
@@ -168,7 +168,7 @@ public class Tile implements Drawable{
 		g.setColor(ownerColor);
 		// draw rectangle
 		for (int i = 0; i < TILE_BORDER_WIDTH; i++)
-			g.drawRect(xLoc + i, yLoc + i, tileImages.TILE_SIZE.width - 2 * i, tileImages.TILE_SIZE.height - 2 * i);		
+			g.drawRect(xLoc + i, yLoc + i, mapImages.TILE_SIZE.width - 2 * i, mapImages.TILE_SIZE.height - 2 * i);		
 	}
 
 }

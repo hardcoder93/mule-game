@@ -5,7 +5,7 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 
-public class tileImages{
+public class mapImages{
 	
 	private final static String IMAGE_FILE_MOUNTAIN1 = "IMAGES/mountain_1.png";
 	private final static String IMAGE_FILE_MOUNTAIN2 = "IMAGES/mountain_2.png";
