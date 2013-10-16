@@ -79,7 +79,8 @@ public class MULEMap {
 		
 		//Set up Rivers
 		for (int i = randGen.nextInt(MAX_RIVERS + 1); i > 0; i--){
-			type = randGen.nextDouble() < .5 ? V : H;
+			//type = randGen.nextDouble() < .5 ? V : H;
+			type = V;
 			randInt = type.equals(V) ? randGen.nextInt(WIDTH) : randGen.nextInt(HEIGHT) * WIDTH;
 			for (int j = (type.equals(V) ? HEIGHT : WIDTH); j > 0; j--){
 				if (mapArea[randInt] == null)
