@@ -13,7 +13,7 @@ import javax.swing.JFrame;
  */
 public class Driver {
 	public static void main(String[] args) throws HeadlessException, IOException {
-		JFrame frame = new JFrame();
+		JFrame frame = new JFrame("M.U.L.E. at Georgia Tech!");
 		frame.add(new MULEMainPanel());
 		frame.setResizable(false);//Locks the size of the frame.
         frame.pack();
