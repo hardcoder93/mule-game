@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import javax.swing.Timer;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -18,6 +19,7 @@ import javax.swing.JPanel;
 public class MULEMainPanel extends JPanel{
 	//Instance Data
 	MULEGameEngine engine;
+	Timer updater;
 	
 	private StartScreen startPanel = new StartScreen(); //game startup screen.
 	private GameSetup gameSetupPanel = new GameSetup(); //The panel that allows choice of game type.
@@ -54,6 +56,12 @@ public class MULEMainPanel extends JPanel{
 		gameSetupBtn.addActionListener(new NextListener(gameSetupID));
 		playerSetupBtn.addActionListener(new NextListener(playerSetupID));
 	}
+	
+	private void runGameLoop(){
+		updater = new Timer(1000/60, new GameUpdater());
+		updater.start();
+	}
+	
 	/**
 	 * The NextListener class creates button listeners for the "Next" buttons
 	 * on the menu screens, allowing users to switch between screens and 
@@ -97,9 +105,11 @@ public class MULEMainPanel extends JPanel{
 				}else {
 					GameState.setState(GameState.PLAYING_MAP);
 					gameplayPanel.setMapAndPlayers(engine.getMap(), engine.getPlayers());
-					gameplayPanel.setFocusable(true);
-					gameplayPanel.addKeyListener(new PlayerControls());
+					gameplayPanel.setActivePlayer(engine.getActivePlayer());
+					setFocusable(true);
+					addKeyListener(new PlayerControls());					
 					cardLayout.show(MULEMainPanel.this, gameplayID);
+					runGameLoop();
 				}
 				break;
 			}
@@ -124,14 +134,26 @@ public class MULEMainPanel extends JPanel{
 					break;
 				}
 			}else if(GameState.getState()==GameState.WAITING){ 
-				/*if(!engine.getMap().inTown())
+				if(!engine.getMap().isTownTile(engine.getActivePlayer().getX(), engine.getActivePlayer().getY()))
 					GameState.setState(GameState.PLAYING_MAP);
-				else GameState.setState(GameState.PLAYING_TOWN);*/
+				else GameState.setState(GameState.PLAYING_TOWN);
 			}
 		}
 		
 		//The following methods are unused in this application but have to be implemented.
 		public void keyReleased(KeyEvent e){}
 		public void keyTyped(KeyEvent e){}
+	}
+	
+	private class GameUpdater implements ActionListener{
+		
+		@Override
+		public void actionPerformed(ActionEvent e){
+			if(GameState.playing()){
+				gameplayPanel.repaint();
+			}else{
+				updater.stop();
+			}
+		}
 	}
 }
