@@ -105,9 +105,15 @@ public class MULEGameEngine {
 		int newX = active.getX()+distX;
 		int newY = active.getY()+distY;
 		if(map.isValidLocation(newX, newY)){
+			if(GameState.getState().equals(GameState.PLAYING_TOWN) &&
+					map.isOffMap(newX, newY)){
+				GameState.setState(GameState.PLAYING_MAP);
+				active.setLocation(map.mapSwitchX(newX), newY);
+			}
 			if(GameState.getState().equals(GameState.PLAYING_MAP) &&
 					map.isTownTile(newX, newY)){
 				GameState.setState(GameState.PLAYING_TOWN);
+				active.setLocation(map.mapSwitchX(newX), newY);
 			}
 			if(onRiverTile() || onMountainTile())
 				active.move(1, distX, distY);

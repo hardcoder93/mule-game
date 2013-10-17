@@ -193,12 +193,16 @@ public class MULEMap implements Drawable{
 	}
 	
 	public boolean isRiverTile(int xLoc, int yLoc){
-		return getTileFromLocation(xLoc, yLoc).getType().equals(R);
+		if(GameState.getState().equals(GameState.PLAYING_MAP))
+			return getTileFromLocation(xLoc, yLoc).getType().equals(R);
+		return false;
 	}
 	
 	public boolean isMountainTile(int xLoc, int yLoc){
-		String type = getTileFromLocation(xLoc, yLoc).getType();
-		return (type.equals(M1) || type.equals(M2) || type.equals(M3));
+		if(GameState.getState().equals(GameState.PLAYING_MAP)){
+			String type = getTileFromLocation(xLoc, yLoc).getType();
+			return (type.equals(M1) || type.equals(M2) || type.equals(M3));
+		} return false;
 	}
 	
 	public boolean isTileVacant(int xLoc, int yLoc){
@@ -206,18 +210,57 @@ public class MULEMap implements Drawable{
 	}
 	
 	public boolean isValidLocation(int xLoc, int yLoc){
+		//If inside the town, we need to be able to exit (move off the screen to right or left)
+		if(GameState.getState().equals(GameState.PLAYING_TOWN)){
+			if(yLoc>=185 && yLoc<=415)
+				if(xLoc>=-Player.PLAYER_WIDTH/2 && 
+						xLoc<=WIDTH*MapImages.TILE_SIZE.width-Player.PLAYER_WIDTH/2)
+					return true;
+		}
 		if (xLoc >= 0 && xLoc < (WIDTH * MapImages.TILE_SIZE.width - Player.PLAYER_WIDTH))
 			if (yLoc >= 0 && yLoc < (HEIGHT * MapImages.TILE_SIZE.height - Player.PLAYER_HEIGHT))
 				return true;
+		
 		return false;
 	}
-
+	
+	/**
+	 * This method checks if the player is currently off the map; this is used
+	 * to test if the player is leaving the store.
+	 * 
+	 * @param xLoc The current x-location of the player.
+	 * @param yLoc The current y-location of the player.
+	 * @return True if off the map, false if not.
+	 */
+	public boolean isOffMap(int xLoc, int yLoc){
+		return (xLoc < 0 || xLoc+Player.PLAYER_WIDTH > WIDTH*MapImages.TILE_SIZE.width || 
+				yLoc < 0 || yLoc+Player.PLAYER_HEIGHT > HEIGHT * MapImages.TILE_SIZE.height);
+	}
+	
+	/**
+	 * This method moves the player to the appropriate new location when 
+	 * switching between maps.
+	 * 
+	 * @param xLoc The current x-location of the player.
+	 * @return The new x-location of the player.
+	 */
+	public int mapSwitchX(int xLoc){
+		if(xLoc > WIDTH*MapImages.TILE_SIZE.width/2){ //If true, player is entering/exiting on the right.
+			if(isOffMap(xLoc, 0)) //If true, player is leaving town; put player to the right of town tile.
+				return 500;
+			return (WIDTH*MapImages.TILE_SIZE.width-Player.PLAYER_WIDTH); //Player is entering town.
+		}else{ //Player is entering/exiting on the left.
+			if(isOffMap(xLoc, 0)) //If true, player is leaving town; put player to the left of town tile.
+				return (400-Player.PLAYER_WIDTH);
+			return 0; //Player is entering town.
+		}
+	}
 	
 	@Override
 	public void draw(Graphics g) {
 		switch (GameState.getState()){
 		case GameState.PLAYING_TOWN:
-			g.drawImage(MapImages.TOWN_MAP, 0, 0, null);
+			g.drawImage(MapImages.TOWN_MAP, 0, 0, 900, 500, null);
 			break;
 		default:
 			for (int i = 0; i < NUM_TILES; i++)

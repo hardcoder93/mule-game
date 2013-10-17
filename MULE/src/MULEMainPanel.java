@@ -58,7 +58,7 @@ public class MULEMainPanel extends JPanel{
 	}
 	
 	private void runGameLoop(){
-		updater = new Timer(1000/60, new GameUpdater());
+		updater = new Timer(5, new GameUpdater());//1000/60
 		updater.start();
 	}
 	
@@ -121,17 +121,24 @@ public class MULEMainPanel extends JPanel{
 			if(GameState.playing()){
 				switch(e.getKeyCode()){
 				case KeyEvent.VK_UP:
+				case KeyEvent.VK_W:
 					engine.movePlayer(0,-1); //Y coords start at upper left, so up is negative.
 					break;
 				case KeyEvent.VK_DOWN:
+				case KeyEvent.VK_S:
 					engine.movePlayer(0, 1); //Y coords start at upper left, so down is positive.
 					break;
 				case KeyEvent.VK_LEFT:
+				case KeyEvent.VK_A:
 					engine.movePlayer(-1, 0);
 					break;
 				case KeyEvent.VK_RIGHT:
+				case KeyEvent.VK_D:
 					engine.movePlayer(1, 0);
 					break;
+				case KeyEvent.VK_ESCAPE:
+					//TODO: put code here that displays the pause screen.
+					GameState.setState(GameState.WAITING);
 				}
 			}else if(GameState.getState()==GameState.WAITING){ 
 				if(!engine.getMap().isTownTile(engine.getActivePlayer().getX(), engine.getActivePlayer().getY()))
@@ -149,6 +156,7 @@ public class MULEMainPanel extends JPanel{
 		
 		@Override
 		public void actionPerformed(ActionEvent e){
+			System.out.println(GameState.getState());
 			if(GameState.playing()){
 				gameplayPanel.repaint();
 			}else{
