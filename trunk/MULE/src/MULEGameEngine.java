@@ -87,9 +87,19 @@ public class MULEGameEngine {
 		return players;
 	}
 	
+	public Player getActivePlayer(){
+		return players[activePlayerInd];
+	}
+	
 	public void movePlayer(int distX, int distY){
 		Player active = players[activePlayerInd];
-		//if(map.isValidLocation(active.getX()+distX, active.getY()+distY))
-			active.move(0, distX, distY);
+		int newX = active.getX()+distX;
+		int newY = active.getY()+distY;
+		if(map.isValidLocation(newX, newY)){
+			if(map.isRiverTile(newX, newY) || map.isMountainTile(newX, newY))
+				active.move(1, distX, distY);
+			else if(map.isValidLocation(5*distX, 5*distY))
+				active.move(50, distX, distY);
+		}
 	}
 }

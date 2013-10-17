@@ -121,7 +121,7 @@ public class Player implements Drawable{
 		yCoord = y;
 	}
 	public void move(int speed, int distX, int distY){
-		xCoord+=distX;
-		yCoord+=distY;
+		xCoord+=speed*distX;
+		yCoord+=speed*distY;
 	}
 }

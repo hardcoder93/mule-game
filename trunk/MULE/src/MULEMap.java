@@ -192,6 +192,15 @@ public class MULEMap implements Drawable{
 		return getTileFromLocation(xLoc, yLoc).getType().equals(TOWN);
 	}
 	
+	public boolean isRiverTile(int xLoc, int yLoc){
+		return getTileFromLocation(xLoc, yLoc).getType().equals(V);
+	}
+	
+	public boolean isMountainTile(int xLoc, int yLoc){
+		String type = getTileFromLocation(xLoc, yLoc).getType();
+		return (type.equals(M1) || type.equals(M2) || type.equals(M3));
+	}
+	
 	public boolean isTileVacant(int xLoc, int yLoc){
 		return getTileFromLocation(xLoc, yLoc).isVacant();
 	}
