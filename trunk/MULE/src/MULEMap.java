@@ -160,7 +160,7 @@ public class MULEMap implements Drawable{
 	 * @param yCoord	y coordinate
 	 * @return			tile at (x,y)
 	 */
-	public Tile getTile(int xCoord, int yCoord){
+	public Tile getTileFromCoords(int xCoord, int yCoord){
 		return tileList.get(WIDTH*yCoord + xCoord);
 	}
 	
@@ -180,7 +180,22 @@ public class MULEMap implements Drawable{
 	public ArrayList<Integer> getAlteredTiles() {
 		return alteredTiles;		
 	}
+	
+	private Tile getTileFromLocation(int xLoc, int yLoc){
+		int xCoord = xLoc / MapImages.TILE_SIZE.width;
+		int yCoord = yLoc / MapImages.TILE_SIZE.height;
+		return getTileFromCoords(xCoord, yCoord);
+	}
+	
+	public boolean isTownTile(int xLoc, int yLoc){
+		return getTileFromLocation(xLoc, yLoc).getType().equals(TOWN);
+	}
+	
+	public boolean isTileVacant(int xLoc, int yLoc){
+		return getTileFromLocation(xLoc, yLoc).isVacant();
+	}
 
+	
 	@Override
 	public void draw(Graphics g) {
 		switch (GameState.getState()){
