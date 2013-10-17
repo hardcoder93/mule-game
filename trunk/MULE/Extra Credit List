@@ -1,0 +1,9 @@
++--------------------+
+| EXTRA CREDIT ITEMS |
++--------------------+
+
+1)	Wampus
+2)	Random map generator
+3)	Multiple difficulty settings(beginner, standard, tournament)
+4)	Singleton class GameState implemented
+5)	Used theme for game (MULE at GT)
