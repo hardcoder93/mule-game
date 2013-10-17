@@ -109,7 +109,7 @@ public class Player implements Drawable{
 	}
 	
 	public void draw(Graphics g){
-		g.drawImage(pImage, 25, 25, xCoord, yCoord, null);
+		g.drawImage(pImage, xCoord, yCoord, null);//, 50, 50, null, null);
 	}
 	
 	
