@@ -27,10 +27,6 @@ public class Player implements Drawable{
 	private Image pImage;
 	private int xCoord = 500;
 	private int yCoord = 250;
-	
-	//
-	private int speedX = 0;
-	private int speedY = 0;
 
 	public Player(String name, String level, String race, String color){
 		this.name = name;
@@ -76,10 +72,18 @@ public class Player implements Drawable{
 		}
 	}
 	
+	/**
+	 * Sets the player's image based on the player's race and color.
+	 */
 	public void setImage(){
 		pImage = new ImageIcon("IMAGES/"+race+"_"+color.toLowerCase()+".png").getImage();
 	}
 	
+	/**
+	 * Gets the player's image.
+	 * 
+	 * @return The image associated with the player.
+	 */
 	public Image getImage(){
 		return pImage;
 	}
@@ -109,28 +113,50 @@ public class Player implements Drawable{
 		return ore;
 	}
 	
+	/**
+	 * Gets the current x-position of the player.
+	 * 
+	 * @return Current x-position.
+	 */
 	public int getX(){
 		return xCoord;
 	}
 	
+	/**
+	 * Gets the current y-position of the player.
+	 * 
+	 * @return Current y-position.
+	 */
 	public int getY(){
 		return yCoord;
 	}
 	
+	/**
+	 * Draws the player image at the current location with the set width and 
+	 * height.
+	 */
 	public void draw(Graphics g){
 		g.drawImage(pImage, xCoord, yCoord, PLAYER_WIDTH, PLAYER_HEIGHT, null, null);
 	}
 	
-	
+	/**
+	 * Sets the player's location to the input x-y coordinates.
+	 * 
+	 * @param x The new x coordinate.
+	 * @param y The new y coordinate.
+	 */
 	public void setLocation(int x, int y){
 		xCoord = x;
 		yCoord = y;
 	}
+	
 	/**
-	 * This move method is used in the "Timer" approach to player movement.
-	 * @param speed
-	 * @param distX
-	 * @param distY
+	 * Moves the player to a new location based on some input distance and 
+	 * speed.
+	 * 
+	 * @param speed Desired speed by which to move the player.
+	 * @param distX Base distance to move the player in the x-direction.
+	 * @param distY Base distance to move the player in the y-direction.
 	 */
 	public void move(int speed, int distX, int distY){
 		xCoord+=speed*distX;

@@ -4,8 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import javax.swing.Timer;
 
+import javax.swing.Timer;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -56,9 +56,12 @@ public class MULEMainPanel extends JPanel{
 		gameSetupBtn.addActionListener(new NextListener(gameSetupID));
 		playerSetupBtn.addActionListener(new NextListener(playerSetupID));
 	}
-	
+	/**
+	 * The runGameLoop method uses an ActionListener attached to a timer to 
+	 * run a continual loop allowing the player to move around the screen.  
+	 */
 	private void runGameLoop(){
-		updater = new Timer(5, new GameUpdater());//1000/60
+		updater = new Timer(1000/60, new GameUpdater()); //1000/60 means we are updating at 60 FPS.
 		updater.start();
 	}
 	
@@ -116,7 +119,16 @@ public class MULEMainPanel extends JPanel{
 		}
 	}
 	
+	/**
+	 * PlayerControls is a private inner class that acts as a KeyListener 
+	 * for the gameplayPanel; it allows the player to move around the screen 
+	 * using the arrow keys or WASD, as well as pause/un-pause the game.
+	 * 
+	 * @author Chris Jenkins (cjenkins36)
+	 *
+	 */
 	private class PlayerControls implements KeyListener{
+		@SuppressWarnings("static-access")
 		public void keyPressed(KeyEvent e){
 			if(GameState.playing()){
 				switch(e.getKeyCode()){
@@ -137,13 +149,14 @@ public class MULEMainPanel extends JPanel{
 					engine.movePlayer(1, 0);
 					break;
 				case KeyEvent.VK_ESCAPE:
-					//TODO: put code here that displays the pause screen.
 					GameState.setState(GameState.WAITING);
+					gameplayPanel.repaint();
 				}
 			}else if(GameState.getState()==GameState.WAITING){ 
-				if(!engine.getMap().isTownTile(engine.getActivePlayer().getX(), engine.getActivePlayer().getY()))
+				if(engine.getMap().getActiveMap().equals(engine.getMap().BIG_MAP))
 					GameState.setState(GameState.PLAYING_MAP);
 				else GameState.setState(GameState.PLAYING_TOWN);
+				runGameLoop();
 			}
 		}
 		
@@ -152,11 +165,19 @@ public class MULEMainPanel extends JPanel{
 		public void keyTyped(KeyEvent e){}
 	}
 	
+	/**
+	 * GameUpdater is a private inner class that acts as an ActionListener.
+	 * An instance of this class is meant to be attached to a timer that 
+	 * is used for creating a game loop.
+	 * 
+	 * @author Chris Jenkins (cjenkins36)
+	 *
+	 */
 	private class GameUpdater implements ActionListener{
 		
 		@Override
 		public void actionPerformed(ActionEvent e){
-			System.out.println(GameState.getState());
+			//System.out.println(GameState.getState());
 			if(GameState.playing()){
 				gameplayPanel.repaint();
 			}else{
