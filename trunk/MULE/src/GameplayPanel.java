@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
@@ -17,6 +18,7 @@ import javax.swing.JPanel;
  */
 @SuppressWarnings("serial")
 public class GameplayPanel extends JPanel {
+	private JLabel X;
 	
 	//Screen States
 	private final String INSIDE_TOWN = "INSIDE_TOWN";
@@ -25,13 +27,20 @@ public class GameplayPanel extends JPanel {
 	//Game play objects
 	private MULEMap gameMap;			//map of game
 	private Player[] playerList;		//list of players (playerList.length = # of players)
+	private final JLabel lblNewLabel = new JLabel("New label");
 
     /**
      * Makes a new gameplayPanel
      */
     public GameplayPanel() {
-        setBackground(Color.BLACK);
+        setBackground(Color.WHITE);
         setLayout(null);
+        X = new JLabel("Hello");
+        X.setLocation(550, 850);
+        add(X);
+        lblNewLabel.setBounds(20, 520, 121, 33);
+        
+        add(lblNewLabel);
     }
     
     /**
@@ -60,6 +69,9 @@ public class GameplayPanel extends JPanel {
     			playerList[i].draw(g);
     		}
     		/////////////////////////////////////////temporary test code<<<
+    		X.setVisible(true);
+    		add(X);
+    		
     	}
     }
 }
