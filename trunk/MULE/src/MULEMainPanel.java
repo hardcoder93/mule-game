@@ -2,6 +2,8 @@ import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -94,10 +96,41 @@ public class MULEMainPanel extends JPanel{
 					cardLayout.show(MULEMainPanel.this, playerSetupID);
 				}else {
 					gameplayPanel.setMapAndPlayers(engine.getMap(), engine.getPlayers());
+					gameplayPanel.setFocusable(true);
+					gameplayPanel.addKeyListener(new PlayerControls());
 					cardLayout.show(MULEMainPanel.this, gameplayID);
 				}
 				break;
 			}
 		}
+	}
+	
+	private class PlayerControls implements KeyListener{
+		public void keyPressed(KeyEvent e){
+			if(GameState.playing()){
+				switch(e.getKeyCode()){
+				case KeyEvent.VK_UP:
+					engine.movePlayer(0,-1); //Y coords start at upper left, so up is negative.
+					break;
+				case KeyEvent.VK_DOWN:
+					engine.movePlayer(0, 1); //Y coords start at upper left, so down is positive.
+					break;
+				case KeyEvent.VK_LEFT:
+					engine.movePlayer(-1, 0);
+					break;
+				case KeyEvent.VK_RIGHT:
+					engine.movePlayer(1, 0);
+					break;
+				}
+			}else if(GameState.getState()==GameState.WAITING){ 
+				/*if(!engine.getMap().inTown())
+					GameState.setState(GameState.PLAYING_MAP);
+				else GameState.setState(GameState.PLAYING_TOWN);*/
+			}
+		}
+		
+		//The following methods are unused in this application but have to be implemented.
+		public void keyReleased(KeyEvent e){}
+		public void keyTyped(KeyEvent e){}
 	}
 }
