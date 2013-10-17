@@ -100,8 +100,16 @@ public class Player implements Drawable{
 		return ore;
 	}
 	
+	public int getX(){
+		return xCoord;
+	}
+	
+	public int getY(){
+		return yCoord;
+	}
+	
 	public void draw(Graphics g){
-		g.drawImage(pImage, xCoord, yCoord, null);
+		g.drawImage(pImage, 25, 25, xCoord, yCoord, null);
 	}
 	
 	

@@ -10,6 +10,7 @@ public class MULEGameEngine {
 	private String difficulty;
 	private MULEMap map;
 	private Player[] players;
+	private int activePlayerInd = 0;
 	private Player store;
 		
 	/**
@@ -84,5 +85,11 @@ public class MULEGameEngine {
 	 */
 	public Player[] getPlayers(){
 		return players;
+	}
+	
+	public void movePlayer(int distX, int distY){
+		Player active = players[activePlayerInd];
+		//if(map.isValidLocation(active.getX()+distX, active.getY()+distY))
+			active.move(0, distX, distY);
 	}
 }
