@@ -25,6 +25,7 @@ public class MULEMap implements Drawable{
 	private final String H = "H"; // Horizontal River
 	private final String B = "B"; // Intersecting Rivers
 	private final String TOWN = "Town";
+	private final int PLAYER_WIDTH = 50;
 
 	private ArrayList<Tile> tileList;
 	private ArrayList<Integer> alteredTiles;
@@ -193,6 +194,13 @@ public class MULEMap implements Drawable{
 	
 	public boolean isTileVacant(int xLoc, int yLoc){
 		return getTileFromLocation(xLoc, yLoc).isVacant();
+	}
+	
+	public boolean isValidLocation(int xLoc, int yLoc){
+		if (xLoc >= 0 && xLoc < (WIDTH * MapImages.TILE_SIZE.width - PLAYER_WIDTH))
+			if (yLoc >= 0 && yLoc < (HEIGHT * MapImages.TILE_SIZE.height - PLAYER_WIDTH))
+				return true;
+		return false;
 	}
 
 	
