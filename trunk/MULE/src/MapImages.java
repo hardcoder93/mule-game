@@ -5,7 +5,7 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 
-public class mapImages{
+public class MapImages{
 	
 	//Town Map File
 	private final static String IMAGE_FILE_TOWN_MAP = "IMAGES/townInside.png";
