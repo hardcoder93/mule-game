@@ -1,4 +1,5 @@
 import java.awt.CardLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -6,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.Timer;
 import javax.swing.JButton;
@@ -68,6 +70,19 @@ public class MULEMainPanel extends JPanel{
 		updater.start();
 	}
 	
+	private void runLandGrant() {
+		ArrayList<Integer> playerIndeces = engine.getSortedPlayerIndeces();
+		LandGrantMouse LandGrantListener = new LandGrantMouse();
+		while (!playerIndeces.isEmpty()){
+			GameState.setState(GameState.LANDGRANT);
+			engine.setActivePlayer(playerIndeces.remove(0));
+			addMouseListener(LandGrantListener);
+			while (GameState.getState().equals(GameState.LANDGRANT))
+			removeMouseListener(LandGrantListener);
+			gameplayPanel.repaint();
+		}
+	}
+	
 	/**
 	 * The NextListener class creates button listeners for the "Next" buttons
 	 * on the menu screens, allowing users to switch between screens and 
@@ -109,10 +124,12 @@ public class MULEMainPanel extends JPanel{
 					playerSetupPanel.setPlayerNumber(engine.getNextPlayerSlot() + 1);
 					cardLayout.show(MULEMainPanel.this, playerSetupID);
 				}else {
-					GameState.setState(GameState.PLAYING_MAP);
+					GameState.setState(GameState.LANDGRANT);
 					gameplayPanel.setMapAndPlayers(engine.getMap(), engine.getPlayers());
-					gameplayPanel.setActivePlayer(engine.getActivePlayer());
+					cardLayout.show(MULEMainPanel.this, gameplayID);
+					gameplayPanel.setActivePlayer(engine.getActivePlayer());	
 					setFocusable(true);
+					//runLandGrant();
 					addKeyListener(new PlayerControls());					
 					cardLayout.show(MULEMainPanel.this, gameplayID);
 					runGameLoop();
@@ -120,6 +137,7 @@ public class MULEMainPanel extends JPanel{
 				break;
 			}
 		}
+
 	}
 	
 	/**
@@ -189,19 +207,14 @@ public class MULEMainPanel extends JPanel{
 		}
 	}
 	
-	private class MouseListener implements MouseInputListener{
+	private class LandGrantMouse implements MouseInputListener{
 
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
 			Point coords = arg0.getPoint();
-			switch (GameState.getState()){
-			case GameState.LANDGRANT:
-				if (engine.getMap().isBuyable(coords)){
-					engine.purchaseProperty(coords);
-					gameplayPanel.repaint();
-				}
-				break;
-			}
+			if (engine.getMap().isBuyable(coords))
+				if (engine.purchaseProperty(coords))
+					GameState.setState(GameState.WAITING);
 		}
 
 		@Override
