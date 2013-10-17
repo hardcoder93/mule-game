@@ -24,8 +24,16 @@ public class GameplayPanel extends JPanel {
 	private Player activePlayer;
 	
 	//Screen States
-	private final String INSIDE_TOWN = "INSIDE_TOWN";
-	private final String GAME_MAP = "GAME_MAP";
+	private String panelState;
+	
+    /**
+     * Makes a new gameplayPanel
+     */
+    public GameplayPanel() {
+        setBackground(Color.WHITE);
+        setLayout(null);
+        panelState = "init";
+    }
    
 	public void setUpScoreboard () {
     	if (playerList.length == 2) {
@@ -42,7 +50,7 @@ public class GameplayPanel extends JPanel {
             
             lblNewLabel_4.setBounds(785, 460, 180, 100);
             add(lblNewLabel_4);
-    	}
+    	}else
     	if (playerList.length == 3) {
     		JLabel lblNewLabel = new JLabel(""+ playerList[0].getName()) ; 
         	JLabel lblNewLabel_1 = new JLabel(""+ playerList[1].getName()) ;
@@ -98,27 +106,23 @@ public class GameplayPanel extends JPanel {
     public void setMapAndPlayers(MULEMap gameMap, Player[] playerList){
     	this.gameMap = gameMap;
     	this.playerList = playerList;
-    	setUpScoreboard ();
+    	setUpScoreboard();
     }
     
     public void setActivePlayer(Player p){
     	activePlayer = p;
     }
     
-    /**
-     * Makes a new gameplayPanel
-     */
-    public GameplayPanel() {
-        setBackground(Color.WHITE);
-        setLayout(null);
-    }
     
     /**
      * Overrides the panel's paintComponent Method
      * This method should not be called directly. Instead use repaint()
      */
     public void paintComponent(Graphics g) {
-    	
+    	if (panelState != null && !panelState.equals(GameState.getState())){
+    		super.paintComponent(g);
+    		panelState = GameState.getState();
+    	}
     	if (this.gameMap != null){
     		super.paintComponent(g);
     		gameMap.draw(g);
