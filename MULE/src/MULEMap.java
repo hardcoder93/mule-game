@@ -24,6 +24,7 @@ public class MULEMap implements Drawable{
 	private final String V = "V"; // Vertical River
 	private final String H = "H"; // Horizontal River
 	private final String B = "B"; // Intersecting Rivers
+	private final String R = "R";
 	private final String TOWN = "Town";
 	private final int PLAYER_WIDTH = 50;
 
@@ -193,7 +194,7 @@ public class MULEMap implements Drawable{
 	}
 	
 	public boolean isRiverTile(int xLoc, int yLoc){
-		return getTileFromLocation(xLoc, yLoc).getType().equals(V);
+		return getTileFromLocation(xLoc, yLoc).getType().equals(R);
 	}
 	
 	public boolean isMountainTile(int xLoc, int yLoc){
