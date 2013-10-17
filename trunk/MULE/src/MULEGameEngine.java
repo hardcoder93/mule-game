@@ -141,9 +141,9 @@ public class MULEGameEngine {
 				active.setLocation(map.mapSwitchX(newX), newY);
 			}
 			if(onRiverTile() || onMountainTile()) //If player is on a river or mountain tile, they move slower.
-				active.move(1, distX, distY);
+				active.move(3, distX, distY);
 			else if(map.isValidLocation(active.getX()+2*distX, active.getY()+2*distY))
-				active.move(2, distX, distY);
+				active.move(7, distX, distY);
 		}
 	}
 	
