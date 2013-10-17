@@ -1,13 +1,16 @@
 import java.awt.CardLayout;
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
 
 import javax.swing.Timer;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.event.MouseInputListener;
 
 /**
  * MULEMainPanel is the main panel in the game which controls the current 
@@ -185,4 +188,57 @@ public class MULEMainPanel extends JPanel{
 			}
 		}
 	}
+	
+	private class MouseListener implements MouseInputListener{
+
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+			Point coords = arg0.getPoint();
+			switch (GameState.getState()){
+			case GameState.LANDGRANT:
+				if (engine.getMap().isBuyable(coords)){
+					engine.purchaseProperty(coords);
+					gameplayPanel.repaint();
+				}
+				break;
+			}
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseDragged(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseMoved(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+		}
+	}
 }
+
+
