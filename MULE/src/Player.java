@@ -11,9 +11,11 @@ import javax.swing.ImageIcon;
 
 
 public class Player implements Drawable{
-	private final int PLAYER_WIDTH = 50;
-	private final int PLAYER_HEIGHT = 50;
+	//Constants
+	public static final int PLAYER_WIDTH = 50;
+	public static final int PLAYER_HEIGHT = 50;
 	
+	//Instance Data
 	private String name;
 	private String level;
 	private String race;
@@ -25,6 +27,10 @@ public class Player implements Drawable{
 	private Image pImage;
 	private int xCoord = 500;
 	private int yCoord = 250;
+	
+	//
+	private int speedX = 0;
+	private int speedY = 0;
 
 	public Player(String name, String level, String race, String color){
 		this.name = name;
@@ -120,6 +126,12 @@ public class Player implements Drawable{
 		xCoord = x;
 		yCoord = y;
 	}
+	/**
+	 * This move method is used in the "Timer" approach to player movement.
+	 * @param speed
+	 * @param distX
+	 * @param distY
+	 */
 	public void move(int speed, int distX, int distY){
 		xCoord+=speed*distX;
 		yCoord+=speed*distY;
