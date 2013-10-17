@@ -1,4 +1,5 @@
 import java.awt.Graphics;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -323,6 +324,29 @@ public class MULEMap implements Drawable{
 			break;
 		}
 
+	}
+
+	public boolean isBuyable(Point coords) {
+		if (isValidMouseClick(coords))
+			if (!isTownTile(coords.x, coords.y) && isTileVacant(coords.x, coords.y))
+				return true;
+		return false;
+	}
+
+	private boolean isValidMouseClick(Point coords) {
+		return ((coords.x >= 0 && coords.x < WIDTH * MapImages.TILE_SIZE.width) &&
+				(coords.y >= 0 && coords.y < HEIGHT * MapImages.TILE_SIZE.height));
+	}
+
+	public Point calculateCoordsFromLocation(Point location){
+		int xCoord = location.x / MapImages.TILE_SIZE.width;
+		int yCoord = location.y / MapImages.TILE_SIZE.height;
+		return new Point(xCoord, yCoord);
+	}
+	
+	public void setTileOwner(Point location, Player player) {
+		Point tileCoords = calculateCoordsFromLocation(location);
+		setTileOwner(tileCoords.x, tileCoords.y, player);
 	}
 
 }

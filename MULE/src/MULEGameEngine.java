@@ -1,3 +1,5 @@
+import java.awt.Point;
+
 /**
  * The MULEGameEngine class handles the main game objects and their interactions
  * while the game is running (ie. players, store, map, etc.)
@@ -165,5 +167,22 @@ public class MULEGameEngine {
 		Player active = players[activePlayerInd];
 		return (map.isMountainTile(active.getX(), active.getY()) ||
 				map.isMountainTile(active.getX()+Player.PLAYER_WIDTH, active.getY()+Player.PLAYER_HEIGHT));
+	}
+
+	public boolean purchaseProperty(Point coords) {
+		if (currentRound < 2){
+			map.setTileOwner(coords, players[activePlayerInd]);
+			return true;
+		} else if (players[activePlayerInd].getMoney() >= 300) {
+			map.setTileOwner(coords, players[activePlayerInd]);
+			players[activePlayerInd].subtractMoney(300);
+			return true;
+		}
+		return false;		
+	}
+
+	public void runLandGrant() {
+		// TODO Auto-generated method stub
+		
 	}
 }

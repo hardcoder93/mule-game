@@ -162,4 +162,8 @@ public class Player implements Drawable{
 		xCoord+=speed*distX;
 		yCoord+=speed*distY;
 	}
+
+	public void subtractMoney(int i) {
+		money -= i;
+	}
 }

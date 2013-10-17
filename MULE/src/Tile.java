@@ -51,9 +51,11 @@ public class Tile implements Drawable{
 	 * @param owner	name of the owner for the Tile
 	 */
 	public void setOwner(Player owner){
+		String colorname = owner.getColor();
+		colorname = colorname.toUpperCase();		
 		this.owner = owner;
 		try {
-		    Field field = Color.class.getField(owner.getColor());
+		    Field field = Color.class.getField(colorname);
 		    this.ownerColor = (Color)field.get(null);
 		} catch (Exception e) {
 		    this.ownerColor = null;
