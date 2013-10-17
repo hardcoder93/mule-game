@@ -18,8 +18,11 @@ import javax.swing.JPanel;
  */
 @SuppressWarnings("serial")
 public class GameplayPanel extends JPanel {
-	private JLabel X;
-	
+	JLabel lblNewLabel = new JLabel();
+	JLabel lblNewLabel_1 = new JLabel();
+	JLabel lblNewLabel_2 = new JLabel();
+	JLabel lblNewLabel_3 = new JLabel();
+	JLabel lblNewLabel_4 = new JLabel();
 	//Screen States
 	private final String INSIDE_TOWN = "INSIDE_TOWN";
 	private final String GAME_MAP = "GAME_MAP";
@@ -27,20 +30,38 @@ public class GameplayPanel extends JPanel {
 	//Game play objects
 	private MULEMap gameMap;			//map of game
 	private Player[] playerList;		//list of players (playerList.length = # of players)
-	private final JLabel lblNewLabel = new JLabel("New label");
+	
 
+	
     /**
      * Makes a new gameplayPanel
      */
     public GameplayPanel() {
         setBackground(Color.WHITE);
         setLayout(null);
-        X = new JLabel("Hello");
-        X.setLocation(550, 850);
-        add(X);
-        lblNewLabel.setBounds(20, 520, 121, 33);
         
+       
+        lblNewLabel.setBounds(65, 460, 180, 100);
         add(lblNewLabel);
+        
+       
+        lblNewLabel_1.setBounds(245, 460, 180, 100);
+        add(lblNewLabel_1);
+        
+        
+        lblNewLabel_2.setBounds(425, 460, 180, 100);
+        add(lblNewLabel_2);
+        
+        
+        lblNewLabel_3.setBounds(605, 460, 180, 100);
+        add(lblNewLabel_3);
+        
+        
+        lblNewLabel_4.setBounds(785, 460, 180, 100);
+        add(lblNewLabel_4);
+        
+       
+        
     }
     
     /**
@@ -55,11 +76,32 @@ public class GameplayPanel extends JPanel {
     	this.playerList = playerList;
     }
     
+    
+    public void setPlayerName (Player[] playerList) {
+    	this.playerList = playerList;
+    	if (playerList[2]==null) {
+    		lblNewLabel.setText("" + playerList[0].getName());
+        	lblNewLabel.setText("" + playerList[1].getName());
+    	}
+    	if (playerList[3]==null) {
+    		lblNewLabel.setText("" + playerList[0].getName());
+        	lblNewLabel.setText("" + playerList[1].getName());
+        	lblNewLabel.setText("" + playerList[2].getName());
+    	}
+    	else {
+    		lblNewLabel.setText("" + playerList[0].getName());
+        	lblNewLabel.setText("" + playerList[1].getName());
+        	lblNewLabel.setText("" + playerList[2].getName());
+        	lblNewLabel.setText("" + playerList[3].getName());
+    	}
+    	
+    }
     /**
      * Overrides the panel's paintComponent Method
      * This method should not be called directly. Instead use repaint()
      */
     public void paintComponent(Graphics g) {
+    	
     	if (this.gameMap != null){
     		super.paintComponent(g);
     		gameMap.draw(g);
@@ -69,9 +111,7 @@ public class GameplayPanel extends JPanel {
     			playerList[i].draw(g);
     		}
     		/////////////////////////////////////////temporary test code<<<
-    		X.setVisible(true);
-    		add(X);
-    		
+    	
     	}
     }
 }
