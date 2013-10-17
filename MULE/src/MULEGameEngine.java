@@ -1,4 +1,5 @@
 import java.awt.Point;
+import java.util.ArrayList;
 
 /**
  * The MULEGameEngine class handles the main game objects and their interactions
@@ -181,8 +182,23 @@ public class MULEGameEngine {
 		return false;		
 	}
 
-	public void runLandGrant() {
-		// TODO Auto-generated method stub
-		
+	public ArrayList<Integer> getSortedPlayerIndeces(){
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		list.add(0);
+		for (int i = 1; i < players.length; i++)
+			for (int j = 0; j < list.size(); j++){
+				if (players[i].getMoney() < players[list.get(j)].getMoney()){
+					list.add(j, i);
+					break;
+				} if (j == list.size() - 1){
+					list.add(i);
+					break;
+				}
+			}
+		return list;
+	}
+
+	public void setActivePlayer(int p) {
+		activePlayerInd = p;		
 	}
 }
