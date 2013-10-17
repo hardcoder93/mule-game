@@ -217,12 +217,12 @@ public class MULEMap implements Drawable{
 	@Override
 	public void draw(Graphics g) {
 		switch (GameState.getState()){
-		case GameState.PLAYING_MAP:
-			for (int i = 0; i < NUM_TILES; i++)
-				tileList.get(i).draw(g);
-			break;
 		case GameState.PLAYING_TOWN:
 			g.drawImage(MapImages.TOWN_MAP, 0, 0, null);
+			break;
+		default:
+			for (int i = 0; i < NUM_TILES; i++)
+				tileList.get(i).draw(g);
 			break;
 		}
 
