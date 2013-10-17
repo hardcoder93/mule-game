@@ -21,22 +21,13 @@ public class GameplayPanel extends JPanel {
 	//Game play objects
 	private MULEMap gameMap;			//map of game
 	private Player[] playerList;		//list of players (playerList.length = # of players)
+	private Player activePlayer;
 	
 	//Screen States
 	private final String INSIDE_TOWN = "INSIDE_TOWN";
 	private final String GAME_MAP = "GAME_MAP";
-	
-	
-	
-
-	
    
 	public void setUpScoreboard () {
-    	
-    	
-    	
-    	
-    	
     	if (playerList.length == 2) {
     		JLabel lblNewLabel = new JLabel(""+ playerList[0].getName()) ; 
         	JLabel lblNewLabel_1 = new JLabel(""+ playerList[1].getName()) ;
@@ -96,9 +87,6 @@ public class GameplayPanel extends JPanel {
        
          
     }
-    
-
-	
 	
 	/**
      * Sets the map and player list inside the panel. Needed to display the map
@@ -113,7 +101,9 @@ public class GameplayPanel extends JPanel {
     	setUpScoreboard ();
     }
     
-	
+    public void setActivePlayer(Player p){
+    	activePlayer = p;
+    }
     
     /**
      * Makes a new gameplayPanel
@@ -122,10 +112,6 @@ public class GameplayPanel extends JPanel {
         setBackground(Color.WHITE);
         setLayout(null);
     }
-    
-    
-    
-    
     
     /**
      * Overrides the panel's paintComponent Method
@@ -136,13 +122,7 @@ public class GameplayPanel extends JPanel {
     	if (this.gameMap != null){
     		super.paintComponent(g);
     		gameMap.draw(g);
-    		/////////////////////////////////////////temporary test code<<<
-    		for(int i=0; i<playerList.length; i++){
-    			playerList[i].move(0, i*100, i*100);
-    			playerList[i].draw(g);
-    		}
-    		/////////////////////////////////////////temporary test code<<<
-    	
+    		activePlayer.draw(g);
     	}
     }
 }
