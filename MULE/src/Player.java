@@ -11,6 +11,9 @@ import javax.swing.ImageIcon;
 
 
 public class Player implements Drawable{
+	private final int PLAYER_WIDTH = 50;
+	private final int PLAYER_HEIGHT = 50;
+	
 	private String name;
 	private String level;
 	private String race;
@@ -109,7 +112,7 @@ public class Player implements Drawable{
 	}
 	
 	public void draw(Graphics g){
-		g.drawImage(pImage, xCoord, yCoord, null);//, 50, 50, null, null);
+		g.drawImage(pImage, xCoord, yCoord, PLAYER_WIDTH, PLAYER_HEIGHT, null, null);
 	}
 	
 	
