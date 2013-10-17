@@ -105,10 +105,26 @@ public class MULEGameEngine {
 		int newX = active.getX()+distX;
 		int newY = active.getY()+distY;
 		if(map.isValidLocation(newX, newY)){
-			if(map.isRiverTile(newX, newY) || map.isMountainTile(newX, newY))
+			if(GameState.getState().equals(GameState.PLAYING_MAP) &&
+					map.isTownTile(newX, newY)){
+				GameState.setState(GameState.PLAYING_TOWN);
+			}
+			if(onRiverTile() || onMountainTile())
 				active.move(1, distX, distY);
 			else if(map.isValidLocation(active.getX()+10*distX, active.getY()+10*distY))
 				active.move(10, distX, distY);
 		}
+	}
+	
+	public boolean onRiverTile(){
+		Player active = players[activePlayerInd];
+		return (map.isRiverTile(active.getX(), active.getY()) ||
+				map.isRiverTile(active.getX()+Player.PLAYER_WIDTH, active.getY()+Player.PLAYER_HEIGHT));
+	}
+	
+	public boolean onMountainTile(){
+		Player active = players[activePlayerInd];
+		return (map.isMountainTile(active.getX(), active.getY()) ||
+				map.isMountainTile(active.getX()+Player.PLAYER_WIDTH, active.getY()+Player.PLAYER_HEIGHT));
 	}
 }
