@@ -7,6 +7,11 @@ import javax.swing.ImageIcon;
 
 public class mapImages{
 	
+	//Town Map File
+	private final static String IMAGE_FILE_TOWN_MAP = "IMAGES/townInside.png";
+	public final static Image TOWN_MAP = new ImageIcon(IMAGE_FILE_TOWN_MAP).getImage();
+	
+	//Tile Files
 	private final static String IMAGE_FILE_MOUNTAIN1 = "IMAGES/mountain_1.png";
 	private final static String IMAGE_FILE_MOUNTAIN2 = "IMAGES/mountain_2.png";
 	private final static String IMAGE_FILE_MOUNTAIN3 = "IMAGES/mountain_3.png";
