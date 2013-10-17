@@ -136,7 +136,9 @@ public class Tile implements Drawable{
 		switch (this.type) {
 		case "M1": tileImage = MapImages.MOUNTAIN1;
 			break;
-		case "M2": tileImage = MapImages.MOUNTAIN3;
+		case "M2": tileImage = MapImages.MOUNTAIN2;
+			break;
+		case "M3": tileImage = MapImages.MOUNTAIN3;
 			break;
 		case "R": tileImage = MapImages.RIVER;
 			break;
