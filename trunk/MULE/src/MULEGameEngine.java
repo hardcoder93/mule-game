@@ -11,6 +11,7 @@ public class MULEGameEngine {
 	private MULEMap map;
 	private Player[] players;
 	private int activePlayerInd = 0;
+	private int currentRound = 0;
 	private Player store;
 		
 	/**
@@ -89,6 +90,14 @@ public class MULEGameEngine {
 	
 	public Player getActivePlayer(){
 		return players[activePlayerInd];
+	}
+	
+	public int getCurrentRound(){
+		return currentRound;
+	}
+	
+	public void nextRound(){
+		currentRound++;
 	}
 	
 	public void movePlayer(int distX, int distY){
