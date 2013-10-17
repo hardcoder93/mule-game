@@ -26,10 +26,14 @@ public class MULEMap implements Drawable{
 	private final String B = "B"; // Intersecting Rivers
 	private final String R = "R";
 	private final String TOWN = "Town";
-
+	public static String BIG_MAP = "BIGMAP";
+	public static String TOWN_MAP = "TOWNMAP";
+	
 	private ArrayList<Tile> tileList;
 	private ArrayList<Integer> alteredTiles;
 
+	private String activeMap = BIG_MAP;
+	
 	/**
 	 * Constructs the Map object based on either a standard, predefined map or a
 	 * randomly generated one
@@ -188,16 +192,59 @@ public class MULEMap implements Drawable{
 		return getTileFromCoords(xCoord, yCoord);
 	}
 	
+	/**
+	 * Returns the string constant specifying which map is currently active.
+	 * 
+	 * @return The active map's String constant.
+	 */
+	public String getActiveMap(){
+		return activeMap;
+	}
+	
+	/**
+	 * Sets the active map to the input String, but only if it is one of 
+	 * the accepted String constants.
+	 * 
+	 * @param inMap The desired active map.
+	 */
+	public void setActiveMap(String inMap){
+		if(inMap.equals(BIG_MAP) || inMap.equals(TOWN_MAP))
+			activeMap = inMap;
+	}
+	
+	/**
+	 * Checks to see if the input location is on the town tile in the 
+	 * center of the map.
+	 * 
+	 * @param xLoc The x-coordinate.
+	 * @param yLoc The y-coordinate.
+	 * @return True if on the town tile, false if not.
+	 */
 	public boolean isTownTile(int xLoc, int yLoc){
 		return getTileFromLocation(xLoc, yLoc).getType().equals(TOWN);
 	}
 	
+	/**
+	 * This method checks to see if the input location is on a river tile.
+	 * 
+	 * @param xLoc The x-coordinate of the position.
+	 * @param yLoc The y-coordinate of the position.
+	 * @return True if on a river, false if not.
+	 */
 	public boolean isRiverTile(int xLoc, int yLoc){
 		if(GameState.getState().equals(GameState.PLAYING_MAP))
-			return getTileFromLocation(xLoc, yLoc).getType().equals(R);
+			return (getTileFromLocation(xLoc, yLoc).getType().equals(R) ||
+					getTileFromLocation(xLoc, yLoc).getType().equals(H));
 		return false;
 	}
 	
+	/**
+	 * This method checks to see if the input location is on a mountain tile.
+	 * 
+	 * @param xLoc The x-coordinate of the position.
+	 * @param yLoc The y-coordinate of the position.
+	 * @return True if on a mountain, false if not.
+	 */
 	public boolean isMountainTile(int xLoc, int yLoc){
 		if(GameState.getState().equals(GameState.PLAYING_MAP)){
 			String type = getTileFromLocation(xLoc, yLoc).getType();
@@ -209,6 +256,14 @@ public class MULEMap implements Drawable{
 		return getTileFromLocation(xLoc, yLoc).isVacant();
 	}
 	
+	/**
+	 * This method tests whether or not the input x-y coordinates are a 
+	 * valid position for the player to have.
+	 * 
+	 * @param xLoc The x-coordinate to test.
+	 * @param yLoc The y-coordinate to test.
+	 * @return True if valid, false if not.
+	 */
 	public boolean isValidLocation(int xLoc, int yLoc){
 		//If inside the town, we need to be able to exit (move off the screen to right or left)
 		if(GameState.getState().equals(GameState.PLAYING_TOWN)){

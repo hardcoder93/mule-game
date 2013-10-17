@@ -109,6 +109,11 @@ public class GameplayPanel extends JPanel {
     	setUpScoreboard();
     }
     
+    /**
+     * Sets the activePlayer instance variable to the input player object.
+     * 
+     * @param p The player to set.
+     */
     public void setActivePlayer(Player p){
     	activePlayer = p;
     }
@@ -125,8 +130,14 @@ public class GameplayPanel extends JPanel {
     	}
     	if (this.gameMap != null){
     		super.paintComponent(g);
+    		if(GameState.getState().equals(GameState.WAITING)){
+    			g.setColor(Color.BLACK);
+    			g.fillRect(0, 0, 900, 500);
+    			g.setColor(Color.WHITE);
+    			g.drawString("PAUSED - Press any key to continue", 350, 250);
+    		}else{
     		gameMap.draw(g);
-    		activePlayer.draw(g);
+    		activePlayer.draw(g);}
     	}
     }
 }

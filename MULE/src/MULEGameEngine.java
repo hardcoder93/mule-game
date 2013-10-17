@@ -2,7 +2,7 @@
  * The MULEGameEngine class handles the main game objects and their interactions
  * while the game is running (ie. players, store, map, etc.)
  * 
- * @author Chris Jenkins
+ * @author Chris Jenkins (cjenkins36)
  *
  */
 public class MULEGameEngine {
@@ -88,46 +88,79 @@ public class MULEGameEngine {
 		return players;
 	}
 	
+	/**
+	 * Gets the player that is currently active (taking a turn).
+	 * 
+	 * @return The active player.
+	 */
 	public Player getActivePlayer(){
 		return players[activePlayerInd];
 	}
 	
+	/**
+	 * Gets the current round that the game is in.
+	 * 
+	 * @return The current round number.
+	 */
 	public int getCurrentRound(){
 		return currentRound;
 	}
 	
+	/**
+	 * Increments the currentRound variable to signify that a new round has
+	 * started.
+	 */
 	public void nextRound(){
 		currentRound++;
 	}
 	
+	/**
+	 * Moves the active player on the map an input distance according to the 
+	 * state that the game is currently in.
+	 * 
+	 * @param distX The distance to move the player in the x-direction.
+	 * @param distY The distance to move the player in the y-direction.
+	 */
 	public void movePlayer(int distX, int distY){
 		Player active = players[activePlayerInd];
 		int newX = active.getX()+distX;
 		int newY = active.getY()+distY;
 		if(map.isValidLocation(newX, newY)){
-			if(GameState.getState().equals(GameState.PLAYING_TOWN) &&
+			if(GameState.getState().equals(GameState.PLAYING_TOWN) && //Player is leaving town.
 					map.isOffMap(newX, newY)){
+				map.setActiveMap(map.BIG_MAP);
 				GameState.setState(GameState.PLAYING_MAP);
 				active.setLocation(map.mapSwitchX(newX), newY);
 			}
-			if(GameState.getState().equals(GameState.PLAYING_MAP) &&
+			if(GameState.getState().equals(GameState.PLAYING_MAP) && //Player is entering town.
 					map.isTownTile(newX, newY)){
+				map.setActiveMap(map.TOWN_MAP);
 				GameState.setState(GameState.PLAYING_TOWN);
 				active.setLocation(map.mapSwitchX(newX), newY);
 			}
-			if(onRiverTile() || onMountainTile())
+			if(onRiverTile() || onMountainTile()) //If player is on a river or mountain tile, they move slower.
 				active.move(1, distX, distY);
-			else if(map.isValidLocation(active.getX()+10*distX, active.getY()+10*distY))
-				active.move(10, distX, distY);
+			else if(map.isValidLocation(active.getX()+2*distX, active.getY()+2*distY))
+				active.move(2, distX, distY);
 		}
 	}
 	
+	/**
+	 * Checks to see if the active player is currently on a river tile.
+	 * 
+	 * @return True if on river tile, false if not.
+	 */
 	public boolean onRiverTile(){
 		Player active = players[activePlayerInd];
 		return (map.isRiverTile(active.getX(), active.getY()) ||
 				map.isRiverTile(active.getX()+Player.PLAYER_WIDTH, active.getY()+Player.PLAYER_HEIGHT));
 	}
 	
+	/**
+	 * Checks to see if the active player is currently on a mountain tile.
+	 * 
+	 * @return True if on mountain tile, false if not.
+	 */
 	public boolean onMountainTile(){
 		Player active = players[activePlayerInd];
 		return (map.isMountainTile(active.getX(), active.getY()) ||
