@@ -95,6 +95,7 @@ public class MULEMainPanel extends JPanel{
 					playerSetupPanel.setPlayerNumber(engine.getNextPlayerSlot() + 1);
 					cardLayout.show(MULEMainPanel.this, playerSetupID);
 				}else {
+					GameState.setState(GameState.PLAYING_MAP);
 					gameplayPanel.setMapAndPlayers(engine.getMap(), engine.getPlayers());
 					gameplayPanel.setFocusable(true);
 					gameplayPanel.addKeyListener(new PlayerControls());
