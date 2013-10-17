@@ -98,8 +98,8 @@ public class MULEGameEngine {
 		if(map.isValidLocation(newX, newY)){
 			if(map.isRiverTile(newX, newY) || map.isMountainTile(newX, newY))
 				active.move(1, distX, distY);
-			else if(map.isValidLocation(5*distX, 5*distY))
-				active.move(50, distX, distY);
+			else if(map.isValidLocation(active.getX()+10*distX, active.getY()+10*distY))
+				active.move(10, distX, distY);
 		}
 	}
 }
