@@ -21,7 +21,6 @@ public class GameplayPanel extends JPanel {
 	//Screen States
 	private final String INSIDE_TOWN = "INSIDE_TOWN";
 	private final String GAME_MAP = "GAME_MAP";
-	private String currentState;
 	
 	//Game play objects
 	private MULEMap gameMap;			//map of game
@@ -33,7 +32,6 @@ public class GameplayPanel extends JPanel {
     public GameplayPanel() {
         setBackground(Color.BLACK);
         setLayout(null);
-        currentState = GAME_MAP;
     }
     
     /**
@@ -48,31 +46,20 @@ public class GameplayPanel extends JPanel {
     	this.playerList = playerList;
     }
     
-    public void setState(String state){
-    	currentState = state;
-    }
-    
     /**
      * Overrides the panel's paintComponent Method
      * This method should not be called directly. Instead use repaint()
      */
     public void paintComponent(Graphics g) {
-    	switch (currentState){
-    	case GAME_MAP:
-    		if (this.gameMap != null){
-    			super.paintComponent(g);
-    			gameMap.draw(g);
-    			/////////////////////////////////////////temporary test code<<<
-    			for(int i=0; i<playerList.length; i++){
-    				playerList[i].move(0, i*100, i*100);
-    				playerList[i].draw(g);
-    			}
-    			/////////////////////////////////////////temporary test code<<<
-    		}
-    		break;
-    	case INSIDE_TOWN:
+    	if (this.gameMap != null){
     		super.paintComponent(g);
-    		break;
+    		gameMap.draw(g);
+    		/////////////////////////////////////////temporary test code<<<
+    		for(int i=0; i<playerList.length; i++){
+    			playerList[i].move(0, i*100, i*100);
+    			playerList[i].draw(g);
+    		}
+    		/////////////////////////////////////////temporary test code<<<
     	}
     }
 }
