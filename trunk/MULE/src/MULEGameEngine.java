@@ -208,4 +208,11 @@ public class MULEGameEngine {
 			activePlayerInd = playerTurnOrder.remove(0);
 		return true;
 	}
+
+	public void raiseTile(Point currentLocation, boolean raise) {
+		if (map.isBuyable(currentLocation))
+			map.raiseTile(currentLocation, raise);
+		else if (map.isValidMouseClick(currentLocation))
+			map.raiseTile(currentLocation, false);
+	}
 }

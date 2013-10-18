@@ -32,6 +32,8 @@ public class MULEMap implements Drawable{
 	
 	private ArrayList<Tile> tileList;
 	private ArrayList<Integer> alteredTiles;
+	
+	private int raisedID;
 
 	private String activeMap = BIG_MAP;
 	
@@ -45,6 +47,7 @@ public class MULEMap implements Drawable{
 		int ID = 0;
 		tileList = new ArrayList<Tile>();
 		alteredTiles = new ArrayList<Integer>();
+		raisedID = -1;
 		String[] mapArea = type.equals("Random") ? createRandomMap() : createStandardMap();
 		for (int y = 0; y < HEIGHT; y++){
 			for (int x = 0; x < WIDTH; x++){
@@ -333,7 +336,7 @@ public class MULEMap implements Drawable{
 		return false;
 	}
 
-	private boolean isValidMouseClick(Point coords) {
+	public boolean isValidMouseClick(Point coords) {
 		return ((coords.x >= 0 && coords.x < WIDTH * MapImages.TILE_SIZE.width) &&
 				(coords.y >= 0 && coords.y < HEIGHT * MapImages.TILE_SIZE.height));
 	}
@@ -347,6 +350,15 @@ public class MULEMap implements Drawable{
 	public void setTileOwner(Point location, Player player) {
 		Point tileCoords = calculateCoordsFromLocation(location);
 		setTileOwner(tileCoords.x, tileCoords.y, player);
+	}
+
+	public void raiseTile(Point currentLocation, boolean raise) {
+		Point curCoords = calculateCoordsFromLocation(currentLocation);
+		int currID = calculateID(curCoords.x, curCoords.y);
+		if (raisedID != -1)
+			tileList.get(raisedID).setRaised(false);
+		tileList.get(currID).setRaised(raise);
+		raisedID = raise ? currID : -1;
 	}
 
 }

@@ -24,6 +24,7 @@ public class Tile implements Drawable{
 	Player owner;			//player number
 	boolean vacant;
 	boolean wombat;
+	boolean raised;
 	char direction;
 	Image tileImage;
 	
@@ -44,6 +45,7 @@ public class Tile implements Drawable{
 		this.xLoc = xCoord * MapImages.TILE_SIZE.width;
 		this.yLoc = yCoord * MapImages.TILE_SIZE.height;
 		this.setImage();
+		boolean raised = false;
 	}
 
 	/**
@@ -148,7 +150,11 @@ public class Tile implements Drawable{
 			break;
 		default: tileImage = MapImages.PLAINS;
 			break;
+		}
 	}
+	
+	public void setRaised(boolean raised){
+		this.raised = raised;
 	}
 
 	@Override
@@ -156,6 +162,10 @@ public class Tile implements Drawable{
 		g.drawImage(tileImage, xLoc, yLoc, null);
 		if (!vacant)
 			drawBorder(g);
+		if (raised){
+			g.setColor(Color.BLACK);
+			g.drawRect(xLoc, yLoc, MapImages.TILE_SIZE.width - 1, MapImages.TILE_SIZE.height -1);
+		}
 	}
 	
 	/**

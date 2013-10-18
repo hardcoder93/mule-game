@@ -138,6 +138,7 @@ public class MULEMainPanel extends JPanel{
 					cardLayout.show(MULEMainPanel.this, gameplayID);
 					landGrantMouse = new Mouse();
 					addMouseListener(landGrantMouse);
+					addMouseMotionListener(landGrantMouse);
 				} else if (GameState.playing()){
 					gameplayPanel.setActivePlayer(engine.getActivePlayer());	
 					setFocusable(true);
@@ -149,6 +150,7 @@ public class MULEMainPanel extends JPanel{
 			case gameplayID: //if gameplay button is pushed
 				if (GameState.getState().equals(GameState.LANDGRANT)){
 					removeMouseListener(landGrantMouse);
+					removeMouseMotionListener(landGrantMouse);
 					if (!engine.nextActivePlayerIndex()){
 						engine.setPlayerTurnOrder();
 						engine.nextActivePlayerIndex();
@@ -235,12 +237,13 @@ public class MULEMainPanel extends JPanel{
 		
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
-			Point coords = arg0.getPoint();
+			Point location = arg0.getPoint();
 			if (!pickedTile){
-				if (engine.getMap().isBuyable(coords)){
-					if (engine.purchaseProperty(coords)){
+				if (engine.getMap().isBuyable(location)){
+					if (engine.purchaseProperty(location)){
 						pickedTile = true;
 						gameplayPanel.setButtonText("Done");
+						engine.raiseTile(location, true);
 						gameplayPanel.repaint();
 					}
 				}
@@ -257,8 +260,15 @@ public class MULEMainPanel extends JPanel{
 		public void mouseReleased(MouseEvent arg0) {}
 		@Override
 		public void mouseDragged(MouseEvent arg0) {}
+
 		@Override
-		public void mouseMoved(MouseEvent arg0) {}
+		public void mouseMoved(MouseEvent arg0) {
+			Point location = arg0.getPoint();
+			if (!pickedTile){
+				engine.raiseTile(location, true);
+				gameplayPanel.repaint();
+			}
+		}
 	}
 }
 
