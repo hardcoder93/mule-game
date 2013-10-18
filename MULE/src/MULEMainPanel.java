@@ -31,6 +31,7 @@ public class MULEMainPanel extends JPanel{
 	private PlayerSetup playerSetupPanel = new PlayerSetup(); //The panel that allows each player to make a character.
 	private GameplayPanel gameplayPanel = new GameplayPanel(); //The panel which displays main gameplay.
 	private CardLayout cardLayout = new CardLayout(); //CardLayout allows us to easily switch between screens.
+	private TurnStartPanel turnStartPanel = new TurnStartPanel();
 	
 	//The screen IDs are used to tell the CardLayout which screen to display, and to tell the 
 	//button listeners which button was pressed.
@@ -38,6 +39,9 @@ public class MULEMainPanel extends JPanel{
 	private final String gameSetupID = "GAMESETUP";
 	private final String playerSetupID = "PLAYERSETUP";
 	private final String gameplayID = "GAMEPLAY";
+	private final String turnStartID = "TURNSTART";
+	
+	private Mouse landGrantMouse;
 	
 	/**
 	 * Constructs a MULEMainPanel with a set size, adds the 4 game screens, 
@@ -52,14 +56,20 @@ public class MULEMainPanel extends JPanel{
 		add(gameSetupPanel, gameSetupID);
 		add(playerSetupPanel, playerSetupID);
 		add(gameplayPanel, gameplayID);
+		add(turnStartPanel, turnStartID);
 		
 		JButton startBtn = startPanel.getButton();
 		JButton gameSetupBtn = gameSetupPanel.getButton();
 		JButton playerSetupBtn = playerSetupPanel.getButton();
+		JButton turnStartBtn = turnStartPanel.getButton();
+		JButton gamePlayBtn = gameplayPanel.getButton();
 
 		startBtn.addActionListener(new NextListener(startID));		
 		gameSetupBtn.addActionListener(new NextListener(gameSetupID));
 		playerSetupBtn.addActionListener(new NextListener(playerSetupID));
+		turnStartBtn.addActionListener(new NextListener(turnStartID));
+		gamePlayBtn.addActionListener(new NextListener(gameplayID));
+		
 	}
 	/**
 	 * The runGameLoop method uses an ActionListener attached to a timer to 
@@ -68,19 +78,6 @@ public class MULEMainPanel extends JPanel{
 	private void runGameLoop(){
 		updater = new Timer(1000/60, new GameUpdater()); //1000/60 means we are updating at 60 FPS.
 		updater.start();
-	}
-	
-	private void runLandGrant() {
-		ArrayList<Integer> playerIndeces = engine.getSortedPlayerIndeces();
-		LandGrantMouse LandGrantListener = new LandGrantMouse();
-		while (!playerIndeces.isEmpty()){
-			GameState.setState(GameState.LANDGRANT);
-			engine.setActivePlayer(playerIndeces.remove(0));
-			addMouseListener(LandGrantListener);
-			while (GameState.getState().equals(GameState.LANDGRANT))
-			removeMouseListener(LandGrantListener);
-			gameplayPanel.repaint();
-		}
 	}
 	
 	/**
@@ -124,17 +121,42 @@ public class MULEMainPanel extends JPanel{
 					playerSetupPanel.setPlayerNumber(engine.getNextPlayerSlot() + 1);
 					cardLayout.show(MULEMainPanel.this, playerSetupID);
 				}else {
-					GameState.setState(GameState.LANDGRANT);
 					gameplayPanel.setMapAndPlayers(engine.getMap(), engine.getPlayers());
+					engine.setPlayerTurnOrder();
+					engine.nextActivePlayerIndex();
+					turnStartPanel.setPlayerLabel(engine.getActivePlayer());
+					GameState.setState(GameState.START_ROUND);
+					cardLayout.show(MULEMainPanel.this, turnStartID);
+				}
+				break;
+			case turnStartID: //if start turn button is pushed
+				if (GameState.getState().equals(GameState.START_ROUND)){
+					GameState.setState(GameState.LANDGRANT);;
+				}
+				if (GameState.getState().equals(GameState.LANDGRANT)){
+					gameplayPanel.resetButton();
 					cardLayout.show(MULEMainPanel.this, gameplayID);
+					landGrantMouse = new Mouse();
+					addMouseListener(landGrantMouse);
+				} else if (GameState.playing()){
 					gameplayPanel.setActivePlayer(engine.getActivePlayer());	
 					setFocusable(true);
-					//runLandGrant();
 					addKeyListener(new PlayerControls());					
 					cardLayout.show(MULEMainPanel.this, gameplayID);
 					runGameLoop();
 				}
 				break;
+			case gameplayID: //if gameplay button is pushed
+				if (GameState.getState().equals(GameState.LANDGRANT)){
+					removeMouseListener(landGrantMouse);
+					if (!engine.nextActivePlayerIndex()){
+						engine.setPlayerTurnOrder();
+						engine.nextActivePlayerIndex();
+						GameState.setState(GameState.PLAYING_MAP);
+					}
+					turnStartPanel.setPlayerLabel(engine.getActivePlayer());
+					cardLayout.show(MULEMainPanel.this, turnStartID);
+				}
 			}
 		}
 
@@ -207,50 +229,36 @@ public class MULEMainPanel extends JPanel{
 		}
 	}
 	
-	private class LandGrantMouse implements MouseInputListener{
+	private class Mouse implements MouseInputListener{
 
+		private boolean pickedTile = false;
+		
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
 			Point coords = arg0.getPoint();
-			if (engine.getMap().isBuyable(coords))
-				if (engine.purchaseProperty(coords))
-					GameState.setState(GameState.WAITING);
+			if (!pickedTile){
+				if (engine.getMap().isBuyable(coords)){
+					if (engine.purchaseProperty(coords)){
+						pickedTile = true;
+						gameplayPanel.setButtonText("Done");
+						gameplayPanel.repaint();
+					}
+				}
+			}	
 		}
 
 		@Override
-		public void mouseEntered(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-
+		public void mouseEntered(MouseEvent arg0) {}
 		@Override
-		public void mouseExited(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-
+		public void mouseExited(MouseEvent arg0) {}
 		@Override
-		public void mousePressed(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-
+		public void mousePressed(MouseEvent arg0) {}
 		@Override
-		public void mouseReleased(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-
+		public void mouseReleased(MouseEvent arg0) {}
 		@Override
-		public void mouseDragged(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-
+		public void mouseDragged(MouseEvent arg0) {}
 		@Override
-		public void mouseMoved(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-		}
+		public void mouseMoved(MouseEvent arg0) {}
 	}
 }
 

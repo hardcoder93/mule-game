@@ -16,6 +16,7 @@ public class MULEGameEngine {
 	private int activePlayerInd = 0;
 	private int currentRound = 0;
 	private Player store;
+	private ArrayList<Integer> playerTurnOrder;
 		
 	/**
 	 * Builds a MULEGameEngine object, setting the difficulty of the game,
@@ -39,6 +40,7 @@ public class MULEGameEngine {
 		
 		players = new Player[numPlayers];
 		store = new Player("STORE", difficulty, "", "");
+		playerTurnOrder = new ArrayList<Integer>();
 	}
 	
 	/**
@@ -182,23 +184,28 @@ public class MULEGameEngine {
 		return false;		
 	}
 
-	public ArrayList<Integer> getSortedPlayerIndeces(){
-		ArrayList<Integer> list = new ArrayList<Integer>();
-		list.add(0);
+	public void setPlayerTurnOrder() {
+		playerTurnOrder.clear();
+		playerTurnOrder.add(0);
 		for (int i = 1; i < players.length; i++)
-			for (int j = 0; j < list.size(); j++){
-				if (players[i].getMoney() < players[list.get(j)].getMoney()){
-					list.add(j, i);
-					break;
-				} if (j == list.size() - 1){
-					list.add(i);
+			for (int j = 0; j < playerTurnOrder.size(); j++){
+				if (players[i].getMoney() < players[playerTurnOrder.get(j)].getMoney()){
+					playerTurnOrder.add(j,i);
 					break;
 				}
-			}
-		return list;
+				if (j == playerTurnOrder.size() - 1){
+					playerTurnOrder.add(i);
+					break;
+				}
+			}		
 	}
 
-	public void setActivePlayer(int p) {
-		activePlayerInd = p;		
+	public boolean nextActivePlayerIndex() {
+		System.out.print(activePlayerInd);
+		if (playerTurnOrder.isEmpty())
+			return false;
+		else
+			activePlayerInd = playerTurnOrder.remove(0);
+		return true;
 	}
 }
