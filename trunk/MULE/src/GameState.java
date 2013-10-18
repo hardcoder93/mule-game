@@ -31,8 +31,9 @@ public class GameState {
 	public static final String WAITING = "WAITING";
 	public static final String PLAYING_MAP = "PLAYING_MAP";
 	public static final String PLAYING_TOWN = "PLAYING_TOWN";
-	public static final String LANDGRANT = "LAND GRANT";
+	public static final String LANDGRANT = "LAND_GRANT";
 	public static final String AUCTION = "AUCTION";
+	public static final String START_ROUND = "START_ROUND";
 	
 	//Instance Data
 	private static GameState gamestate = null;
@@ -59,6 +60,7 @@ public class GameState {
 		case PLAYING_TOWN:
 		case LANDGRANT:
 		case AUCTION:
+		case START_ROUND:
 			state = st;
 		}
 	}

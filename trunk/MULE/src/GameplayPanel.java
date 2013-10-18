@@ -1,6 +1,8 @@
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -26,6 +28,8 @@ public class GameplayPanel extends JPanel {
 	//Screen States
 	private String panelState;
 	
+	JButton nextScreenButton;
+	
     /**
      * Makes a new gameplayPanel
      */
@@ -33,6 +37,23 @@ public class GameplayPanel extends JPanel {
         setBackground(Color.WHITE);
         setLayout(null);
         panelState = "init";
+        
+        nextScreenButton = new JButton("");
+        nextScreenButton.setFont(new Font("American Typewriter", Font.PLAIN, 13));
+        nextScreenButton.setBounds(777, 543, 117, 29);
+		add(nextScreenButton);
+    }
+    
+    public JButton getButton(){
+    	return nextScreenButton;
+    }
+    
+    public void setButtonText(String text){
+    	nextScreenButton.setText(text);
+    }
+    
+    public void resetButton(){
+    	nextScreenButton.setText("Pass");
     }
    
 	public void setUpScoreboard () {
@@ -129,15 +150,20 @@ public class GameplayPanel extends JPanel {
     		panelState = GameState.getState();
     	}
     	if (this.gameMap != null){
-    		super.paintComponent(g);
     		if(GameState.getState().equals(GameState.WAITING)){
     			g.setColor(Color.BLACK);
     			g.fillRect(0, 0, 900, 500);
     			g.setColor(Color.WHITE);
     			g.drawString("PAUSED - Press any key to continue", 350, 250);
     		}else{
-    		gameMap.draw(g);
-    		activePlayer.draw(g);}
+    			super.paintComponent(g);
+    			
+    			gameMap.draw(g);
+    			if (GameState.playing()){
+    				activePlayer.draw(g);
+    			}
+    		}
     	}
     }
+
 }
