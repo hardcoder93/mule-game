@@ -34,7 +34,7 @@ public class GameplayPanel extends JPanel {
      * Makes a new gameplayPanel
      */
     public GameplayPanel() {
-        setBackground(Color.WHITE);
+        setBackground(Color.GREEN);
         setLayout(null);
         panelState = "init";
         
@@ -42,6 +42,8 @@ public class GameplayPanel extends JPanel {
         nextScreenButton.setFont(new Font("American Typewriter", Font.PLAIN, 13));
         nextScreenButton.setBounds(777, 543, 117, 29);
 		add(nextScreenButton);
+		
+		
     }
     
     public JButton getButton(){
@@ -58,60 +60,234 @@ public class GameplayPanel extends JPanel {
    
 	public void setUpScoreboard () {
     	if (playerList.length == 2) {
-    		JLabel lblNewLabel = new JLabel(""+ playerList[0].getName()) ; 
-        	JLabel lblNewLabel_1 = new JLabel(""+ playerList[1].getName()) ;
-        	JLabel lblNewLabel_4 = new JLabel("NULL");
-    		
-        	lblNewLabel.setBounds(65, 460, 180, 100);
-            add(lblNewLabel);
-             
+    		JLabel Name = new JLabel("Name:") ;
+    		JLabel Money = new JLabel("Money:") ;
+    		JLabel Energy = new JLabel("Energy:") ;
+    		JLabel Food = new JLabel("Food:") ;
+    		JLabel Ore = new JLabel("Ore:") ;
+    		JLabel playerName = new JLabel(""+ playerList[0].getName()) ; 
+        	JLabel playerName_1 = new JLabel(""+ playerList[1].getName()) ;
+        	JLabel playerMoney = new JLabel(""+""+ playerList[0].getMoney()) ; 
+        	JLabel playerMoney_1 = new JLabel(""+ playerList[1].getMoney()) ;
+        	JLabel playerEnergy = new JLabel(""+ playerList[0].getEnergy()) ; 
+        	JLabel playerEnergy_1 = new JLabel(""+ playerList[1].getEnergy()) ;
+        	JLabel playerFood = new JLabel(""+ playerList[0].getFood()) ; 
+        	JLabel playerFood_1 = new JLabel(""+ playerList[1].getFood()) ;
+        	JLabel playerOre = new JLabel(""+ playerList[0].getOre()) ; 
+        	JLabel playerOre_1 = new JLabel(""+ playerList[1].getOre()) ;
+        	
+        	Name.setFont(new Font("Narkisim", Font.BOLD, 20));
+        	Money.setFont(new Font("Narkisim", Font.BOLD, 20));
+        	Energy.setFont(new Font("Narkisim", Font.BOLD, 20));
+        	Food.setFont(new Font("Narkisim", Font.BOLD, 20));
+        	Ore.setFont(new Font("Narkisim", Font.BOLD, 20));
+        	
+        	Name.setBounds(0, 460, 180, 100);
+            add(Name);
+            Money.setBounds(0, 480, 180, 100);
+            add(Money);
+            Energy.setBounds(0, 500, 180, 100);
+            add(Energy);
+            Food.setBounds(0, 520, 180, 100);
+            add(Food);
+            Ore.setBounds(0, 540, 180, 100);
+            add(Ore);
+        	
+        	playerName.setBounds(155, 460, 180, 100);
+            add(playerName);
+            playerName_1.setBounds(335, 460, 180, 100);
+            add(playerName_1);
             
-            lblNewLabel_1.setBounds(245, 460, 180, 100);
-            add(lblNewLabel_1);
+            playerMoney.setBounds(155, 480, 180, 100);
+            add(playerMoney);
+            playerMoney_1.setBounds(335, 480, 180, 100);
+            add(playerMoney_1);
             
-            lblNewLabel_4.setBounds(785, 460, 180, 100);
-            add(lblNewLabel_4);
-    	}else
-    	if (playerList.length == 3) {
-    		JLabel lblNewLabel = new JLabel(""+ playerList[0].getName()) ; 
-        	JLabel lblNewLabel_1 = new JLabel(""+ playerList[1].getName()) ;
-        	JLabel lblNewLabel_2 = new JLabel(""+ playerList[2].getName()) ;
-        	JLabel lblNewLabel_4 = new JLabel("NULL");
-    		lblNewLabel.setBounds(65, 460, 180, 100);
-            add(lblNewLabel);
-             
+            playerEnergy.setBounds(155, 500, 180, 100);
+            add(playerEnergy);
+            playerEnergy_1.setBounds(335, 500, 180, 100);
+            add(playerEnergy_1);
             
-            lblNewLabel_1.setBounds(245, 460, 180, 100);
-            add(lblNewLabel_1);
+            playerFood.setBounds(155, 520, 180, 100);
+            add(playerFood);
+            playerFood_1.setBounds(335, 520, 180, 100);
+            add(playerFood_1);
             
-            lblNewLabel_2.setBounds(425, 460, 180, 100);
-            add(lblNewLabel_2);
+            playerOre.setBounds(155, 540, 180, 100);
+            add(playerOre);
+            playerOre_1.setBounds(335, 540, 180, 100);
+            add(playerOre_1);
             
-            lblNewLabel_4.setBounds(785, 460, 180, 100);
-            add(lblNewLabel_4);
+           
+    	}else 
+    		if (playerList.length == 3) {
+    		JLabel Name = new JLabel("Name:") ;
+        	JLabel Money = new JLabel("Money:") ;
+        	JLabel Energy = new JLabel("Energy:") ;
+        	JLabel Food = new JLabel("Food:") ;
+        	JLabel Ore = new JLabel("Ore:") ;
+    		JLabel playerName = new JLabel(""+ playerList[0].getName()) ; 
+        	JLabel playerName_1 = new JLabel(""+ playerList[1].getName()) ;
+        	JLabel playerName_2 = new JLabel(""+ playerList[2].getName()) ;
+        	JLabel playerMoney = new JLabel(""+ playerList[0].getMoney()) ; 
+        	JLabel playerMoney_1 = new JLabel(""+ playerList[1].getMoney()) ;
+        	JLabel playerMoney_2 = new JLabel(""+ playerList[2].getMoney()) ;
+        	JLabel playerEnergy = new JLabel(""+ playerList[0].getEnergy()) ; 
+        	JLabel playerEnergy_1 = new JLabel(""+ playerList[1].getEnergy()) ;
+        	JLabel playerEnergy_2 = new JLabel(""+ playerList[2].getEnergy()) ;
+        	JLabel playerFood = new JLabel(""+ playerList[0].getFood()) ; 
+        	JLabel playerFood_1 = new JLabel(""+ playerList[1].getFood()) ;
+        	JLabel playerFood_2 = new JLabel(""+ playerList[2].getFood()) ;
+        	JLabel playerOre = new JLabel(""+ playerList[0].getOre()) ; 
+        	JLabel playerOre_1 = new JLabel(""+ playerList[1].getOre()) ;
+        	JLabel playerOre_2 = new JLabel(""+ playerList[2].getOre()) ;
+        	
+        	Name.setFont(new Font("Narkisim", Font.BOLD, 20));
+        	Money.setFont(new Font("Narkisim", Font.BOLD, 20));
+        	Energy.setFont(new Font("Narkisim", Font.BOLD, 20));
+        	Food.setFont(new Font("Narkisim", Font.BOLD, 20));
+        	Ore.setFont(new Font("Narkisim", Font.BOLD, 20));
+        	
+        	Name.setBounds(0, 460, 180, 100);
+            add(Name);
+            Money.setBounds(0, 480, 180, 100);
+            add(Money);
+            Energy.setBounds(0, 500, 180, 100);
+            add(Energy);
+            Food.setBounds(0, 520, 180, 100);
+            add(Food);
+            Ore.setBounds(0, 540, 180, 100);
+            add(Ore);
+        	
+        	playerName.setBounds(155, 460, 180, 100);
+            add(playerName);
+            playerName_1.setBounds(335, 460, 180, 100);
+            add(playerName_1);
+            playerName_2.setBounds(515, 460, 180, 100);
+            add(playerName_2);
+            
+            playerMoney.setBounds(155, 480, 180, 100);
+            add(playerMoney);
+            playerMoney_1.setBounds(335, 480, 180, 100);
+            add(playerMoney_1);
+            playerMoney_2.setBounds(515, 480, 180, 100);
+            add(playerMoney_2);
+            
+            playerEnergy.setBounds(155, 500, 180, 100);
+            add(playerEnergy);
+            playerEnergy_1.setBounds(335, 500, 180, 100);
+            add(playerEnergy_1);
+            playerEnergy_2.setBounds(515, 500, 180, 100);
+            add(playerEnergy_2);
+            
+            playerFood.setBounds(155, 520, 180, 100);
+            add(playerFood);
+            playerFood_1.setBounds(335, 520, 180, 100);
+            add(playerFood_1);
+            playerFood_2.setBounds(515, 520, 180, 100);
+            add(playerFood_2);
+            
+            playerOre.setBounds(155, 540, 180, 100);
+            add(playerOre);
+            playerOre_1.setBounds(335, 540, 180, 100);
+            add(playerOre_1);
+            playerOre_2.setBounds(515, 540, 180, 100);
+            add(playerOre_2);
     	}
          
     	else {
-    		JLabel lblNewLabel = new JLabel(""+ playerList[0].getName()) ; 
-        	JLabel lblNewLabel_1 = new JLabel(""+ playerList[1].getName()) ;
-        	JLabel lblNewLabel_2 = new JLabel(""+ playerList[2].getName()) ;
-        	JLabel lblNewLabel_3 = new JLabel(""+ playerList[3].getName()) ;
-        	JLabel lblNewLabel_4 = new JLabel("NULL");
-    		lblNewLabel.setBounds(65, 460, 180, 100);
-            add(lblNewLabel);
-             
+    		JLabel Name = new JLabel("Name:") ;
+        	JLabel Money = new JLabel("Money:") ;
+        	JLabel Energy = new JLabel("Energy:") ;
+        	JLabel Food = new JLabel("Food:") ;
+        	JLabel Ore = new JLabel("Ore:") ;
+    		
+    		JLabel playerName = new JLabel(""+ playerList[0].getName()) ; 
+        	JLabel playerName_1 = new JLabel(""+ playerList[1].getName()) ;
+        	JLabel playerName_2 = new JLabel(""+ playerList[2].getName()) ;
+        	JLabel playerName_3 = new JLabel(""+ playerList[3].getName()) ;
+        	JLabel playerMoney = new JLabel(""+ playerList[0].getMoney()) ; 
+        	JLabel playerMoney_1 = new JLabel(""+ playerList[1].getMoney()) ;
+        	JLabel playerMoney_2 = new JLabel(""+ playerList[2].getMoney()) ;
+        	JLabel playerMoney_3 = new JLabel(""+ playerList[3].getMoney()) ;
+        	
+        	JLabel playerEnergy = new JLabel(""+ playerList[0].getEnergy()) ; 
+        	JLabel playerEnergy_1 = new JLabel(""+ playerList[1].getEnergy()) ;
+        	JLabel playerEnergy_2 = new JLabel(""+ playerList[2].getEnergy()) ;
+        	JLabel playerEnergy_3 = new JLabel(""+ playerList[3].getEnergy()) ;
+        	
+        	JLabel playerFood = new JLabel(""+ playerList[0].getFood()) ; 
+        	JLabel playerFood_1 = new JLabel(""+ playerList[1].getFood()) ;
+        	JLabel playerFood_2 = new JLabel(""+ playerList[2].getFood()) ;
+        	JLabel playerFood_3 = new JLabel(""+ playerList[3].getFood()) ;
+        	
+        	JLabel playerOre = new JLabel(""+ playerList[0].getOre()) ; 
+        	JLabel playerOre_1 = new JLabel(""+ playerList[1].getOre()) ;
+        	JLabel playerOre_2 = new JLabel(""+ playerList[2].getOre()) ;
+        	JLabel playerOre_3 = new JLabel(""+ playerList[3].getOre()) ;
+    		
+        	Name.setFont(new Font("Narkisim", Font.BOLD, 20));
+        	Money.setFont(new Font("Narkisim", Font.BOLD, 20));
+        	Energy.setFont(new Font("Narkisim", Font.BOLD, 20));
+        	Food.setFont(new Font("Narkisim", Font.BOLD, 20));
+        	Ore.setFont(new Font("Narkisim", Font.BOLD, 20));
+        	
+        	Name.setBounds(0, 460, 180, 100);
+            add(Name);
+            Money.setBounds(0, 480, 180, 100);
+            add(Money);
+            Energy.setBounds(0, 500, 180, 100);
+            add(Energy);
+            Food.setBounds(0, 520, 180, 100);
+            add(Food);
+            Ore.setBounds(0, 540, 180, 100);
+            add(Ore);
+        	
+        	playerName.setBounds(155, 460, 180, 100);
+            add(playerName); 
+            playerName_1.setBounds(335, 460, 180, 100);
+            add(playerName_1);
+            playerName_2.setBounds(515, 460, 180, 100);
+            add(playerName_2);
+            playerName_3.setBounds(705, 460, 180, 100);
+            add(playerName_3);
             
-            lblNewLabel_1.setBounds(245, 460, 180, 100);
-            add(lblNewLabel_1);
+            playerMoney.setBounds(155, 480, 180, 100);
+            add(playerMoney);
+            playerMoney_1.setBounds(335, 480, 180, 100);
+            add(playerMoney_1);
+            playerMoney_2.setBounds(515, 480, 180, 100);
+            add(playerMoney_2);
+            playerMoney_3.setBounds(705, 480, 180, 100);
+            add(playerMoney_3);
             
-            lblNewLabel_2.setBounds(425, 460, 180, 100);
-            add(lblNewLabel_2);
+            playerEnergy.setBounds(155, 500, 180, 100);
+            add(playerEnergy);
+            playerEnergy_1.setBounds(335, 500, 180, 100);
+            add(playerEnergy_1);
+            playerEnergy_2.setBounds(515, 500, 180, 100);
+            add(playerEnergy_2);
+            playerEnergy_3.setBounds(705, 500, 180, 100);
+            add(playerEnergy_3);
             
-            lblNewLabel_3.setBounds(605, 460, 180, 100);
-            add(lblNewLabel_3);
+            playerFood.setBounds(155, 520, 180, 100);
+            add(playerFood);
+            playerFood_1.setBounds(335, 520, 180, 100);
+            add(playerFood_1);
+            playerFood_2.setBounds(515, 520, 180, 100);
+            add(playerFood_2);
+            playerFood_3.setBounds(705, 520, 180, 100);
+            add(playerFood_3);
             
-            lblNewLabel_4.setBounds(785, 460, 180, 100);
-            add(lblNewLabel_4);
+            playerOre.setBounds(155, 540, 180, 100);
+            add(playerOre);
+            playerOre_1.setBounds(335, 540, 180, 100);
+            add(playerOre_1);
+            playerOre_2.setBounds(515, 540, 180, 100);
+            add(playerOre_2);
+            playerOre_3.setBounds(705, 540, 180, 100);
+            add(playerOre_3);
+         
     	}
        
          
@@ -165,5 +341,4 @@ public class GameplayPanel extends JPanel {
     		}
     	}
     }
-
 }
