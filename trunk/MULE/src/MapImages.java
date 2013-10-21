@@ -4,7 +4,12 @@ import java.awt.Image;
 
 import javax.swing.ImageIcon;
 
-
+/**
+ * This class contains all the images that make up the M.U.L.E. map
+ * Created to have a central location for the images
+ * 
+ * @author John Certusi
+ */
 public class MapImages{
 	
 	//Town Map File
