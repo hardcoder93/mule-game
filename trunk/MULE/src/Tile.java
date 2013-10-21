@@ -13,20 +13,20 @@ import java.lang.reflect.Field;
 public class Tile implements Drawable{
 	
 	private final int TILE_BORDER_WIDTH = 10;
-	
-	int id;
-	int xCoord;
-	int yCoord;
-	int xLoc;
-	int yLoc;
-	String type;
-	Color ownerColor;
-	Player owner;			//player number
-	boolean vacant;
-	boolean wombat;
-	boolean raised;
-	char direction;
-	Image tileImage;
+		
+	private int id;					//unique ID
+	private int xCoord;				//x coordinate location
+	private int yCoord;				//y coordinate location
+	private int xLoc;				//x pixel location	
+	private int yLoc;				//y pixel location
+	private String type;			//type of tile
+	private Color ownerColor;		//owner's color
+	private Player owner;			//player number
+	private boolean vacant;			//true if no owner
+	private boolean wombat;			//true if has wombat
+	private boolean raised;			//true if should be drawn raised
+	private char direction;			//direction (used for river)
+	private Image tileImage;		//image for tile
 	
 	/**
 	 * Constructor for Tile class
@@ -45,7 +45,7 @@ public class Tile implements Drawable{
 		this.xLoc = xCoord * MapImages.TILE_SIZE.width;
 		this.yLoc = yCoord * MapImages.TILE_SIZE.height;
 		this.setImage();
-		boolean raised = false;
+		this.raised = false;
 	}
 
 	/**
@@ -136,6 +136,10 @@ public class Tile implements Drawable{
 		return xCoord;
 	}
 	
+	/**
+	 * Set the tile's image based on it's type
+	 * Gets the tile image from MapImages.java
+	 */
 	public void setImage(){
 		switch (this.type) {
 		case "M1": tileImage = MapImages.MOUNTAIN1;
@@ -153,10 +157,15 @@ public class Tile implements Drawable{
 		}
 	}
 	
+	/**
+	 * Set whether the tile should be drawn raised
+	 * @param raised
+	 */
 	public void setRaised(boolean raised){
 		this.raised = raised;
 	}
 
+	
 	@Override
 	public void draw(Graphics g) {
 		g.drawImage(tileImage, xLoc, yLoc, null);
