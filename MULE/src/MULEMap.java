@@ -5,9 +5,10 @@ import java.util.Random;
 
 
 /**
+ * This class creates the map to be used in the M.U.L.E. game.
+ * It creates either the standard map or a random one based on user input
  * 
  * @author John Certusi (jcertusi3)
- *
  */
 public class MULEMap implements Drawable{
 
@@ -329,6 +330,11 @@ public class MULEMap implements Drawable{
 
 	}
 
+	/**
+	 * Determines if a tile can be purchased
+	 * @param coords	the coordinates of the tile as a Point
+	 * @return			true if tile can be purchased; false if not
+	 */
 	public boolean isBuyable(Point coords) {
 		if (isValidMouseClick(coords))
 			if (!isTownTile(coords.x, coords.y) && isTileVacant(coords.x, coords.y))
@@ -336,22 +342,42 @@ public class MULEMap implements Drawable{
 		return false;
 	}
 
+	/**
+	 * Determines if the mouse has been clicked on the map
+	 * @param coords	the coordinates of the mouse click as a Point
+	 * @return			true if mouse was clicked on the map; false if not
+	 */
 	public boolean isValidMouseClick(Point coords) {
 		return ((coords.x >= 0 && coords.x < WIDTH * MapImages.TILE_SIZE.width) &&
 				(coords.y >= 0 && coords.y < HEIGHT * MapImages.TILE_SIZE.height));
 	}
 
+	/**
+	 * Calculates the tile coordinates for a location on the map
+	 * @param location		the location on the map as a Point
+	 * @return				the tile coordinates as a Point
+	 */
 	public Point calculateCoordsFromLocation(Point location){
 		int xCoord = location.x / MapImages.TILE_SIZE.width;
 		int yCoord = location.y / MapImages.TILE_SIZE.height;
 		return new Point(xCoord, yCoord);
 	}
 	
+	/**
+	 * Set's the tile's owner
+	 * @param location		pixel location of a point on the map
+	 * @param player		player to set as the owner
+	 */
 	public void setTileOwner(Point location, Player player) {
 		Point tileCoords = calculateCoordsFromLocation(location);
 		setTileOwner(tileCoords.x, tileCoords.y, player);
 	}
 
+	/**
+	 * Sets a tile to be drawn raised if raise is true
+	 * @param currentLocation	pixel location to be raised
+	 * @param raise
+	 */
 	public void raiseTile(Point currentLocation, boolean raise) {
 		Point curCoords = calculateCoordsFromLocation(currentLocation);
 		int currID = calculateID(curCoords.x, curCoords.y);
