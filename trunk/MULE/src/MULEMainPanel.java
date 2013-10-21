@@ -231,6 +231,12 @@ public class MULEMainPanel extends JPanel{
 		}
 	}
 	
+	/**
+	 * This class is a mouseInputListener that is used to detect mouse actions.
+	 * Currently, it is only used for the land grant state of the game
+	 * @author John Certusi (jcertusi3)
+	 *
+	 */
 	private class Mouse implements MouseInputListener{
 
 		private boolean pickedTile = false;
