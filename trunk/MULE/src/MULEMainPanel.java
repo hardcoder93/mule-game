@@ -149,6 +149,7 @@ public class MULEMainPanel extends JPanel{
 				break;
 			case gameplayID: //if gameplay button is pushed
 				if (GameState.getState().equals(GameState.LANDGRANT)){
+					engine.raiseTile(new Point(0,0), false);
 					removeMouseListener(landGrantMouse);
 					removeMouseMotionListener(landGrantMouse);
 					if (!engine.nextActivePlayerIndex()){
