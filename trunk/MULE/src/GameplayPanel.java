@@ -1,7 +1,7 @@
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -34,14 +34,17 @@ public class GameplayPanel extends JPanel {
      * Makes a new gameplayPanel
      */
     public GameplayPanel() {
-        setBackground(Color.GREEN);
+        setBackground(Color.LIGHT_GRAY);
         setLayout(null);
         panelState = "init";
         
         nextScreenButton = new JButton("");
         nextScreenButton.setFont(new Font("American Typewriter", Font.PLAIN, 13));
-        nextScreenButton.setBounds(777, 543, 117, 29);
-		add(nextScreenButton);
+        nextScreenButton.setBounds(783, 571, 117, 29);
+        nextScreenButton.setOpaque(false);
+        nextScreenButton.setContentAreaFilled(false);
+        //nextScreenButton.setBorderPainted(false);
+        add(nextScreenButton);
 		
 		
     }
@@ -59,7 +62,16 @@ public class GameplayPanel extends JPanel {
     }
    
 	public void setUpScoreboard () {
-    	if (playerList.length == 2) {
+		
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon("IMAGES/BackGround.png"));
+		lblNewLabel.setBounds(741, 500, 159, 100);
+		add(lblNewLabel);
+		
+		
+		
+		if (playerList.length == 2) {
     		JLabel Name = new JLabel("Name:") ;
     		JLabel Money = new JLabel("Money:") ;
     		JLabel Energy = new JLabel("Energy:") ;
@@ -95,27 +107,27 @@ public class GameplayPanel extends JPanel {
         	
         	playerName.setBounds(155, 460, 180, 100);
             add(playerName);
-            playerName_1.setBounds(335, 460, 180, 100);
+            playerName_1.setBounds(305, 460, 180, 100);
             add(playerName_1);
             
             playerMoney.setBounds(155, 480, 180, 100);
             add(playerMoney);
-            playerMoney_1.setBounds(335, 480, 180, 100);
+            playerMoney_1.setBounds(305, 480, 180, 100);
             add(playerMoney_1);
             
             playerEnergy.setBounds(155, 500, 180, 100);
             add(playerEnergy);
-            playerEnergy_1.setBounds(335, 500, 180, 100);
+            playerEnergy_1.setBounds(305, 500, 180, 100);
             add(playerEnergy_1);
             
             playerFood.setBounds(155, 520, 180, 100);
             add(playerFood);
-            playerFood_1.setBounds(335, 520, 180, 100);
+            playerFood_1.setBounds(305, 520, 180, 100);
             add(playerFood_1);
             
             playerOre.setBounds(155, 540, 180, 100);
             add(playerOre);
-            playerOre_1.setBounds(335, 540, 180, 100);
+            playerOre_1.setBounds(305, 540, 180, 100);
             add(playerOre_1);
             
            
@@ -161,37 +173,37 @@ public class GameplayPanel extends JPanel {
         	
         	playerName.setBounds(155, 460, 180, 100);
             add(playerName);
-            playerName_1.setBounds(335, 460, 180, 100);
+            playerName_1.setBounds(305, 460, 180, 100);
             add(playerName_1);
-            playerName_2.setBounds(515, 460, 180, 100);
+            playerName_2.setBounds(455, 460, 180, 100);
             add(playerName_2);
             
             playerMoney.setBounds(155, 480, 180, 100);
             add(playerMoney);
-            playerMoney_1.setBounds(335, 480, 180, 100);
+            playerMoney_1.setBounds(305, 480, 180, 100);
             add(playerMoney_1);
-            playerMoney_2.setBounds(515, 480, 180, 100);
+            playerMoney_2.setBounds(455, 480, 180, 100);
             add(playerMoney_2);
             
             playerEnergy.setBounds(155, 500, 180, 100);
             add(playerEnergy);
-            playerEnergy_1.setBounds(335, 500, 180, 100);
+            playerEnergy_1.setBounds(305, 500, 180, 100);
             add(playerEnergy_1);
-            playerEnergy_2.setBounds(515, 500, 180, 100);
+            playerEnergy_2.setBounds(455, 500, 180, 100);
             add(playerEnergy_2);
             
             playerFood.setBounds(155, 520, 180, 100);
             add(playerFood);
-            playerFood_1.setBounds(335, 520, 180, 100);
+            playerFood_1.setBounds(305, 520, 180, 100);
             add(playerFood_1);
-            playerFood_2.setBounds(515, 520, 180, 100);
+            playerFood_2.setBounds(455, 520, 180, 100);
             add(playerFood_2);
             
             playerOre.setBounds(155, 540, 180, 100);
             add(playerOre);
-            playerOre_1.setBounds(335, 540, 180, 100);
+            playerOre_1.setBounds(305, 540, 180, 100);
             add(playerOre_1);
-            playerOre_2.setBounds(515, 540, 180, 100);
+            playerOre_2.setBounds(455, 540, 180, 100);
             add(playerOre_2);
     	}
          
@@ -245,47 +257,47 @@ public class GameplayPanel extends JPanel {
         	
         	playerName.setBounds(155, 460, 180, 100);
             add(playerName); 
-            playerName_1.setBounds(335, 460, 180, 100);
+            playerName_1.setBounds(305, 460, 180, 100);
             add(playerName_1);
-            playerName_2.setBounds(515, 460, 180, 100);
+            playerName_2.setBounds(455, 460, 180, 100);
             add(playerName_2);
-            playerName_3.setBounds(705, 460, 180, 100);
+            playerName_3.setBounds(610, 460, 180, 100);
             add(playerName_3);
             
             playerMoney.setBounds(155, 480, 180, 100);
             add(playerMoney);
-            playerMoney_1.setBounds(335, 480, 180, 100);
+            playerMoney_1.setBounds(305, 480, 180, 100);
             add(playerMoney_1);
-            playerMoney_2.setBounds(515, 480, 180, 100);
+            playerMoney_2.setBounds(455, 480, 180, 100);
             add(playerMoney_2);
-            playerMoney_3.setBounds(705, 480, 180, 100);
+            playerMoney_3.setBounds(610, 480, 180, 100);
             add(playerMoney_3);
             
             playerEnergy.setBounds(155, 500, 180, 100);
             add(playerEnergy);
-            playerEnergy_1.setBounds(335, 500, 180, 100);
+            playerEnergy_1.setBounds(305, 500, 180, 100);
             add(playerEnergy_1);
-            playerEnergy_2.setBounds(515, 500, 180, 100);
+            playerEnergy_2.setBounds(455, 500, 180, 100);
             add(playerEnergy_2);
-            playerEnergy_3.setBounds(705, 500, 180, 100);
+            playerEnergy_3.setBounds(610, 500, 180, 100);
             add(playerEnergy_3);
             
             playerFood.setBounds(155, 520, 180, 100);
             add(playerFood);
-            playerFood_1.setBounds(335, 520, 180, 100);
+            playerFood_1.setBounds(305, 520, 180, 100);
             add(playerFood_1);
-            playerFood_2.setBounds(515, 520, 180, 100);
+            playerFood_2.setBounds(455, 520, 180, 100);
             add(playerFood_2);
-            playerFood_3.setBounds(705, 520, 180, 100);
+            playerFood_3.setBounds(610, 520, 180, 100);
             add(playerFood_3);
             
             playerOre.setBounds(155, 540, 180, 100);
             add(playerOre);
-            playerOre_1.setBounds(335, 540, 180, 100);
+            playerOre_1.setBounds(305, 540, 180, 100);
             add(playerOre_1);
-            playerOre_2.setBounds(515, 540, 180, 100);
+            playerOre_2.setBounds(455, 540, 180, 100);
             add(playerOre_2);
-            playerOre_3.setBounds(705, 540, 180, 100);
+            playerOre_3.setBounds(610, 540, 180, 100);
             add(playerOre_3);
          
     	}
