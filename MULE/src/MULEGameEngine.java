@@ -128,8 +128,19 @@ public class MULEGameEngine {
 	 */
 	public void movePlayer(int distX, int distY){
 		Player active = players[activePlayerInd];
-		int newX = active.getX()+distX;
-		int newY = active.getY()+distY;
+		final int slowSpeed = 3;
+		final int fastSpeed = 7;
+		int newX;
+		int newY;
+		
+		if(onRiverTile() || onMountainTile()){
+			newX = active.getX()+slowSpeed*distX;
+			newY = active.getY()+slowSpeed*distY;
+		}else{
+			newX = active.getX()+fastSpeed*distX;
+			newY = active.getY()+fastSpeed*distY;
+		}
+		
 		if(map.isValidLocation(newX, newY)){
 			if(GameState.getState().equals(GameState.PLAYING_TOWN) && //Player is leaving town.
 					map.isOffMap(newX, newY)){
@@ -144,9 +155,9 @@ public class MULEGameEngine {
 				active.setLocation(map.mapSwitchX(newX), newY);
 			}
 			if(onRiverTile() || onMountainTile()) //If player is on a river or mountain tile, they move slower.
-				active.move(3, distX, distY);
+				active.move(slowSpeed, distX, distY);
 			else if(map.isValidLocation(active.getX()+2*distX, active.getY()+2*distY))
-				active.move(7, distX, distY);
+				active.move(fastSpeed, distX, distY);
 		}
 	}
 	
