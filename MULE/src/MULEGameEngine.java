@@ -200,7 +200,7 @@ public class MULEGameEngine {
 		playerTurnOrder.add(0);
 		for (int i = 1; i < players.length; i++)
 			for (int j = 0; j < playerTurnOrder.size(); j++){
-				if (players[i].getMoney() < players[playerTurnOrder.get(j)].getMoney()){
+				if (players[i].getScore() < players[playerTurnOrder.get(j)].getScore()){
 					playerTurnOrder.add(j,i);
 					break;
 				}
@@ -212,7 +212,6 @@ public class MULEGameEngine {
 	}
 
 	public boolean nextActivePlayerIndex() {
-		System.out.print(activePlayerInd);
 		if (playerTurnOrder.isEmpty())
 			return false;
 		else
@@ -225,5 +224,31 @@ public class MULEGameEngine {
 			map.raiseTile(currentLocation, raise);
 		else if (map.isValidMouseClick(currentLocation))
 			map.raiseTile(currentLocation, false);
+	}
+	
+	/**
+	 * Calculates the active player's turn time (in seconds)based on the current 
+	 * round and the amount of food the player has.
+	 * 
+	 * ROUND REQUIREMENT:
+	 * Round: 1 - 4		Food: 3
+	 * 		  5 - 8			  4
+	 * 		  9 - 12		  5
+	 * 
+	 * TIME CALCULATION:
+	 * Food: 0	 						Time = 5 seconds
+	 * 		 0 < Food < Requirement 		   30 seconds
+	 * 		 Food >= Requirement: 			   50 seconds
+	 * 
+	 * @return turn time in seconds
+	 */
+	public int calculateActivePlayerTurnTime(){
+		int activePlayersFood = players[activePlayerInd].getFood();
+		if (activePlayersFood < 1)
+			return 5;
+		else if (activePlayersFood < (((currentRound - 1) / 4) + 3))
+			return 30;
+		else 
+			return 50;
 	}
 }
