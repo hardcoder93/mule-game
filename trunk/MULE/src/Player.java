@@ -166,4 +166,8 @@ public class Player implements Drawable{
 	public void subtractMoney(int i) {
 		money -= i;
 	}
+	
+	public int getScore(){
+		return money;
+	}
 }
