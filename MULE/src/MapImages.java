@@ -13,7 +13,7 @@ import javax.swing.ImageIcon;
 public class MapImages{
 	
 	//Town Map File
-	private final static String IMAGE_FILE_TOWN_MAP = "IMAGES/townInside.png";
+	private final static String IMAGE_FILE_TOWN_MAP = "IMAGES/(new)townInside.png";
 	public final static Image TOWN_MAP = new ImageIcon(IMAGE_FILE_TOWN_MAP).getImage();
 	
 	//Tile Files
