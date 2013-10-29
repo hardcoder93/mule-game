@@ -146,13 +146,15 @@ public class MULEGameEngine {
 					map.isOffMap(newX, newY)){
 				map.setActiveMap(map.BIG_MAP);
 				GameState.setState(GameState.PLAYING_MAP);
-				active.setLocation(map.mapSwitchX(newX), newY);
+				active.setLocation(map.mapSwitch(newX));
+				//active.setLocation(map.mapSwitchX(newX), newY);
 			}
 			if(GameState.getState().equals(GameState.PLAYING_MAP) && //Player is entering town.
 					map.isTownTile(newX, newY)){
 				map.setActiveMap(map.TOWN_MAP);
 				GameState.setState(GameState.PLAYING_TOWN);
-				active.setLocation(map.mapSwitchX(newX), newY);
+				active.setLocation(map.mapSwitch(newX));
+				//active.setLocation(map.mapSwitchX(newX), newY);
 			}
 			if(onRiverTile() || onMountainTile()) //If player is on a river or mountain tile, they move slower.
 				active.move(slowSpeed, distX, distY);
