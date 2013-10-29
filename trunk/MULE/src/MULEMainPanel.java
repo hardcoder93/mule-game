@@ -153,8 +153,6 @@ public class MULEMainPanel extends JPanel{
 					removeMouseListener(landGrantMouse);
 					removeMouseMotionListener(landGrantMouse);
 					if (!engine.nextActivePlayerIndex()){
-						engine.setPlayerTurnOrder();
-						engine.nextActivePlayerIndex();
 						GameState.setState(GameState.PLAYING_MAP);
 					}
 					turnStartPanel.setPlayerLabel(engine.getActivePlayer());
