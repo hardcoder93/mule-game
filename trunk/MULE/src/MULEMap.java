@@ -274,6 +274,9 @@ public class MULEMap implements Drawable{
 	public boolean isValidLocation(int xLoc, int yLoc){
 		//If inside the town, we need to be able to exit (move off the screen to right or left)
 		if(GameState.getState().equals(GameState.PLAYING_TOWN)){
+			//Check if in a building entrance.
+			if(isInBuilding(xLoc, yLoc)>-1)
+				return true;
 			//Check if inside area below building line.
 			if(yLoc>=256 && yLoc<=HEIGHT*MapImages.TILE_SIZE.height-Player.PLAYER_HEIGHT-7){ //-7 to account for lower border thickness.
 				if(yLoc>=325 && yLoc<=476-Player.PLAYER_HEIGHT){//Check if inside area between town entrance/exit.
@@ -403,6 +406,41 @@ public class MULEMap implements Drawable{
 			tileList.get(raisedID).setRaised(false);
 		tileList.get(currID).setRaised(raise);
 		raisedID = raise ? currID : -1;
+	}
+	
+	/**
+	 * This method checks to see if the input location is in the entrance
+	 * to one of the four buildings in the town. If it is, the method will
+	 * return an int from 0-3 specifying which building; otherwise it will
+	 * return -1.
+	 * 
+	 * -1: Location not in building.
+	 * 0: Location in Assay.
+	 * 1: Location in Land.
+	 * 2: Location in Store.
+	 * 3: Location in Pub.
+	 * 
+	 * @param xLoc The x-coordinate to be checked.
+	 * @param yLoc The y-coordinate to be checked.
+	 * @return -1 if not in building; 0, 1, 2, or 3 if in Assay, Land, Store, or Pub, respectively.
+	 */
+	public int isInBuilding(int xLoc, int yLoc){
+		//Check if the location is in the vertical area.
+		if(yLoc>=256-Player.PLAYER_HEIGHT/2 && yLoc<=255){
+			//Check if in the entrance to Assay.
+			if(xLoc>=89-5 && xLoc<=148+5-Player.PLAYER_WIDTH)//+/-5 for ease of entry.
+				return 0;
+			//Check if in the entrance to Land.
+			if(xLoc>=313-5 && xLoc<=362+5-Player.PLAYER_WIDTH)//+/-5 for ease of entry.
+				return 1;
+			//Check if in the entrance to Store.
+			if(xLoc>=538-5 && xLoc<=587+5-Player.PLAYER_WIDTH)//+/-5 for ease of entry.
+				return 2;
+			//Check if in the entrance to Pub.
+			if(xLoc>=762-5 && xLoc<=811+5-Player.PLAYER_WIDTH)//+/-5 for ease of entry.
+				return 3;
+		}
+		return -1;
 	}
 
 }
