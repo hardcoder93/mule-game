@@ -318,9 +318,9 @@ public class MULEMap implements Drawable{
 	 * switching between maps.
 	 * 
 	 * @param xLoc The current x-location of the player.
-	 * @return The new x-location of the player.
+	 * @return The new location of the player as a point.
 	 */
-	public Point mapSwitchX(int xLoc){
+	public Point mapSwitch(int xLoc){
 		if(xLoc > WIDTH*MapImages.TILE_SIZE.width/2){ //If true, player is entering/exiting on the right.
 			if(isOffMap(xLoc, 0)) //If true, player is leaving town; put player to the right of town tile.
 				return new Point(500, 250-Player.PLAYER_HEIGHT/2);
