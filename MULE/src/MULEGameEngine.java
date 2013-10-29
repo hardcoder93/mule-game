@@ -17,6 +17,7 @@ public class MULEGameEngine {
 	private int currentRound = 0;
 	private Player store;
 	private ArrayList<Integer> playerTurnOrder;
+	private ArrayList<Integer> finishedPlayers;
 		
 	/**
 	 * Builds a MULEGameEngine object, setting the difficulty of the game,
@@ -41,6 +42,7 @@ public class MULEGameEngine {
 		players = new Player[numPlayers];
 		store = new Player("STORE", difficulty, "", "");
 		playerTurnOrder = new ArrayList<Integer>();
+		finishedPlayers = new ArrayList<Integer>();
 	}
 	
 	/**
@@ -198,6 +200,7 @@ public class MULEGameEngine {
 	}
 
 	public void setPlayerTurnOrder() {
+		finishedPlayers.clear();
 		playerTurnOrder.clear();
 		playerTurnOrder.add(0);
 		for (int i = 1; i < players.length; i++)
@@ -214,12 +217,21 @@ public class MULEGameEngine {
 	}
 
 	public boolean nextActivePlayerIndex() {
-		if (playerTurnOrder.isEmpty())
-			return false;
-		else
-			activePlayerInd = playerTurnOrder.remove(0);
-		return true;
+		boolean val = true;
+		if (playerTurnOrder.isEmpty()){
+			if (GameState.playing()){
+				setPlayerTurnOrder();
+			} else if (GameState.getState().equals(GameState.LANDGRANT)){
+				while (!finishedPlayers.isEmpty())
+					playerTurnOrder.add(finishedPlayers.remove(0));
+			}
+			val = false;			
+		}
+		activePlayerInd = playerTurnOrder.remove(0);
+		finishedPlayers.add(activePlayerInd);
+		return val;
 	}
+	
 
 	public void raiseTile(Point currentLocation, boolean raise) {
 		if (map.isBuyable(currentLocation))
