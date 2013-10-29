@@ -263,7 +263,9 @@ public class MULEMap implements Drawable{
 	
 	/**
 	 * This method tests whether or not the input x-y coordinates are a 
-	 * valid position for the player to have.
+	 * valid position for the player to have. For inside town, this method
+	 * is set to check valid locations for the map represented by the 
+	 * "(new)insideTown.png" image.
 	 * 
 	 * @param xLoc The x-coordinate to test.
 	 * @param yLoc The y-coordinate to test.
@@ -272,16 +274,30 @@ public class MULEMap implements Drawable{
 	public boolean isValidLocation(int xLoc, int yLoc){
 		//If inside the town, we need to be able to exit (move off the screen to right or left)
 		if(GameState.getState().equals(GameState.PLAYING_TOWN)){
-			if(yLoc>=185 && yLoc<=415)
-				if(xLoc>=-Player.PLAYER_WIDTH/2 && 
-						xLoc<=WIDTH*MapImages.TILE_SIZE.width-Player.PLAYER_WIDTH/2)
+			//Check if inside area below building line.
+			if(yLoc>=256 && yLoc<=HEIGHT*MapImages.TILE_SIZE.height-Player.PLAYER_HEIGHT-7){ //-7 to account for lower border thickness.
+				if(yLoc>=325 && yLoc<=476-Player.PLAYER_HEIGHT){//Check if inside area between town entrance/exit.
+					if(xLoc>=-Player.PLAYER_WIDTH/2 && 
+							xLoc<=WIDTH*MapImages.TILE_SIZE.width-Player.PLAYER_WIDTH/2)
+						return true;
+				}else if(yLoc>=256 && yLoc<=302){//Check if inside a building entrance area.
+					if(xLoc>=37 && xLoc<=192-Player.PLAYER_WIDTH || //Assay entrance area.
+							xLoc>=260 && xLoc<=416-Player.PLAYER_WIDTH || //Land Entrance area.
+							xLoc>=485 && xLoc<=641-Player.PLAYER_WIDTH || //Store entrance area.
+							xLoc>=710 && xLoc<=863-Player.PLAYER_WIDTH) //Pub entrance area.
+						return true;
+				}else{ //Check if inside other empty space in the lower portion of map.
+					if(xLoc>=6 && xLoc<=WIDTH*MapImages.TILE_SIZE.width-Player.PLAYER_WIDTH-7)//-7 to account for right border thickness.
+						return true;
+				}
+			}
+			return false;
+		}else{ //Player is on main map.
+			if (xLoc >= 0 && xLoc < (WIDTH * MapImages.TILE_SIZE.width-Player.PLAYER_WIDTH))
+				if (yLoc >= 0 && yLoc < (HEIGHT * MapImages.TILE_SIZE.height - Player.PLAYER_HEIGHT))
 					return true;
+			return false;
 		}
-		if (xLoc >= 0 && xLoc < (WIDTH * MapImages.TILE_SIZE.width - Player.PLAYER_WIDTH))
-			if (yLoc >= 0 && yLoc < (HEIGHT * MapImages.TILE_SIZE.height - Player.PLAYER_HEIGHT))
-				return true;
-		
-		return false;
 	}
 	
 	/**
@@ -304,15 +320,17 @@ public class MULEMap implements Drawable{
 	 * @param xLoc The current x-location of the player.
 	 * @return The new x-location of the player.
 	 */
-	public int mapSwitchX(int xLoc){
+	public Point mapSwitchX(int xLoc){
 		if(xLoc > WIDTH*MapImages.TILE_SIZE.width/2){ //If true, player is entering/exiting on the right.
 			if(isOffMap(xLoc, 0)) //If true, player is leaving town; put player to the right of town tile.
-				return 500;
-			return (WIDTH*MapImages.TILE_SIZE.width-Player.PLAYER_WIDTH); //Player is entering town.
+				return new Point(500, 250-Player.PLAYER_HEIGHT/2);
+			else //Player is entering town, put player on the right end of the road.
+				return new Point(WIDTH*MapImages.TILE_SIZE.width-Player.PLAYER_WIDTH, 400-Player.PLAYER_HEIGHT/2);
 		}else{ //Player is entering/exiting on the left.
 			if(isOffMap(xLoc, 0)) //If true, player is leaving town; put player to the left of town tile.
-				return (400-Player.PLAYER_WIDTH);
-			return 0; //Player is entering town.
+				return new Point(400-Player.PLAYER_WIDTH, 250-Player.PLAYER_HEIGHT/2);
+			else //Player is entering town, put player on the left end of the road.
+				return new Point(0, 400-Player.PLAYER_HEIGHT/2);
 		}
 	}
 	
