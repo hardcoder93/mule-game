@@ -1,5 +1,6 @@
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Point;
 
 import javax.swing.ImageIcon;
 
@@ -148,6 +149,15 @@ public class Player implements Drawable{
 	public void setLocation(int x, int y){
 		xCoord = x;
 		yCoord = y;
+	}
+	
+	/**
+	 * Set's the player's location to the input point.
+	 * 
+	 * @param p The new point at which to put the player.
+	 */
+	public void setLocation(Point p){
+		setLocation(p.x, p.y);
 	}
 	
 	/**
