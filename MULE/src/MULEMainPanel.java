@@ -234,6 +234,7 @@ public class MULEMainPanel extends JPanel{
 			//System.out.println(GameState.getState());
 			if(GameState.playing()){
 				gameplayPanel.repaint();
+				// Change to Black Screen - Lauren
 				if(3==engine.getMap().isInBuilding(engine.getActivePlayer().getX(), engine.getActivePlayer().getY())){
 					GameState.setState(GameState.WAITING);
 					turnStartPanel.setPubLabel(engine.getActivePlayer(), engine.getGambleMoney(30));
