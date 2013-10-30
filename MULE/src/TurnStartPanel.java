@@ -60,5 +60,13 @@ public class TurnStartPanel extends JPanel {
 	public JButton getButton(){
 		return startTurnButton;
 	}
+
+	public void setRoundLabel(int currentRound) {
+		playerLabel.setText("<html><div style=\"text-align: center;\">" + "Starting Round: " + currentRound + "</html>");
+	}
+
+	public void setTimeIsUpLabel() {
+		playerLabel.setText("<html><div style=\"text-align: center;\">" + "Your Turn  is Over!\nThe Timer Reached Zero!" + "</html>");		
+	}
 }
 
