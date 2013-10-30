@@ -85,7 +85,7 @@ public class MULEMainPanel extends JPanel{
 	}
 	
 	private void runTimerLoop(){
-		turnTimer =  new Timer(engine.calculateActivePlayerTurnTime(), new TurnUpdater());
+		turnTimer =  new Timer(engine.calculateActivePlayerTurnTime()*1000, new TurnUpdater());
 		turnTimer.start();
 	}
 	
@@ -240,7 +240,6 @@ public class MULEMainPanel extends JPanel{
 				gameplayPanel.repaint();
 				// Change to Black Screen - Lauren
 				if(3==engine.getMap().isInBuilding(engine.getActivePlayer().getX(), engine.getActivePlayer().getY())){
-					System.out.print("HERE");
 					updater.stop();
 					endTurn(true);
 				}
@@ -254,10 +253,9 @@ public class MULEMainPanel extends JPanel{
 
 		@Override
 		public void actionPerformed(ActionEvent e){
-			GameState.setState(GameState.WAITING);
-			
+			endTurn(false);
 		}
-		}
+	}
 	
 	/**
 	 * This class is a mouseInputListener that is used to detect mouse actions.
@@ -316,6 +314,7 @@ public class MULEMainPanel extends JPanel{
 	
 	public void endTurn(boolean gamble){
 		removeKeyListener(arrowKeys);
+		turnTimer.stop();
 		int gamblingMoney = 0;
 		engine.getActivePlayer().resetPosition();
 		if (gamble){
@@ -355,6 +354,7 @@ public class MULEMainPanel extends JPanel{
 		setFocusable(true);
 		addKeyListener(arrowKeys);					
 		cardLayout.show(MULEMainPanel.this, gameplayID);
+		runTimerLoop();
 		runGameLoop();
 	}
 	
