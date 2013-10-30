@@ -23,10 +23,9 @@ import javax.swing.event.MouseInputListener;
 @SuppressWarnings("serial")
 public class MULEMainPanel extends JPanel{
 	//Instance Data
-	 MULEGameEngine engine;
+	MULEGameEngine engine;
 	Timer updater,turnTimer;
-
-
+	
 	private StartScreen startPanel = new StartScreen(); //game startup screen.
 	private GameSetup gameSetupPanel = new GameSetup(); //The panel that allows choice of game type.
 	private PlayerSetup playerSetupPanel = new PlayerSetup(); //The panel that allows each player to make a character.
@@ -41,9 +40,10 @@ public class MULEMainPanel extends JPanel{
 	private final String playerSetupID = "PLAYERSETUP";
 	private final String gameplayID = "GAMEPLAY";
 	private final String turnStartID = "TURNSTART";
-
+	
 	private Mouse landGrantMouse;
-
+	private PlayerControls arrowKeys;
+	
 	/**
 	 * Constructs a MULEMainPanel with a set size, adds the 4 game screens, 
 	 * and assigns listeners to the necessary buttons.
@@ -51,14 +51,14 @@ public class MULEMainPanel extends JPanel{
 	public MULEMainPanel(){
 		setLayout(cardLayout);
 		setPreferredSize(new Dimension(900,600));
-
-
+		
+		
 		add(startPanel, startID);
 		add(gameSetupPanel, gameSetupID);
 		add(playerSetupPanel, playerSetupID);
 		add(gameplayPanel, gameplayID);
 		add(turnStartPanel, turnStartID);
-
+		
 		JButton startBtn = startPanel.getButton();
 		JButton gameSetupBtn = gameSetupPanel.getButton();
 		JButton playerSetupBtn = playerSetupPanel.getButton();
@@ -70,7 +70,9 @@ public class MULEMainPanel extends JPanel{
 		playerSetupBtn.addActionListener(new NextListener(playerSetupID));
 		turnStartBtn.addActionListener(new NextListener(turnStartID));
 		gamePlayBtn.addActionListener(new NextListener(gameplayID));
-
+		
+		arrowKeys = new PlayerControls();
+		
 	}
 	/**
 	 * The runGameLoop method uses an ActionListener attached to a timer to 
@@ -78,14 +80,15 @@ public class MULEMainPanel extends JPanel{
 	 */
 	private void runGameLoop(){
 		updater = new Timer(1000/60, new GameUpdater()); //1000/60 means we are updating at 60 FPS.
-		updater.start();
+		if (GameState.playing())
+			updater.start();
 	}
-
+	
 	private void runTimerLoop(){
 		turnTimer =  new Timer(engine.calculateActivePlayerTurnTime(), new TurnUpdater());
 		turnTimer.start();
 	}
-
+	
 	/**
 	 * The NextListener class creates button listeners for the "Next" buttons
 	 * on the menu screens, allowing users to switch between screens and 
@@ -95,11 +98,11 @@ public class MULEMainPanel extends JPanel{
 	 */
 	private class NextListener implements ActionListener{
 		String ID;
-
+		
 		public NextListener(String id){
 			ID = id;
 		}
-
+		
 		public void actionPerformed(ActionEvent e){
 			switch(ID){
 			case startID: //If the start button is pressed, display the game setup screen.
@@ -107,8 +110,8 @@ public class MULEMainPanel extends JPanel{
 				break;
 			case gameSetupID: //If the game setup button is pressed, create game engine and show player screen.
 				engine = new MULEGameEngine(gameSetupPanel.getDifficulty(), 
-						gameSetupPanel.getMapType(), 
-						gameSetupPanel.getPlayerCount());
+											gameSetupPanel.getMapType(), 
+											gameSetupPanel.getPlayerCount());
 				playerSetupPanel.setPlayerNumber(engine.getNextPlayerSlot() + 1);
 				cardLayout.show(MULEMainPanel.this, playerSetupID);
 				break;
@@ -127,50 +130,46 @@ public class MULEMainPanel extends JPanel{
 					playerSetupPanel.setPlayerNumber(engine.getNextPlayerSlot() + 1);
 					cardLayout.show(MULEMainPanel.this, playerSetupID);
 				}else {
-					gameplayPanel.setMapAndPlayers(engine.getMap(), engine.getPlayers());
-					engine.setPlayerTurnOrder();
-					engine.nextActivePlayerIndex();
-					turnStartPanel.setPlayerLabel(engine.getActivePlayer());
 					GameState.setState(GameState.START_ROUND);
-					cardLayout.show(MULEMainPanel.this, turnStartID);
+					gameplayPanel.setMapAndPlayers(engine.getMap(), engine.getPlayers());
+					displayNextRound();
 				}
 				break;
 			case turnStartID: //if start turn button is pushed
-				if (GameState.getState().equals(GameState.START_ROUND)){
-					GameState.setState(GameState.LANDGRANT);;
-				}
-				if (GameState.getState().equals(GameState.LANDGRANT)){
-					gameplayPanel.resetButton();
-					cardLayout.show(MULEMainPanel.this, gameplayID);
-					landGrantMouse = new Mouse();
-					addMouseListener(landGrantMouse);
-					addMouseMotionListener(landGrantMouse);
-				} else if (GameState.playing()){
-					gameplayPanel.setActivePlayer(engine.getActivePlayer());	
-					setFocusable(true);
-					addKeyListener(new PlayerControls());					
-					cardLayout.show(MULEMainPanel.this, gameplayID);
-					runGameLoop(); 
+				if (GameState.getState().equals(GameState.WAITING)){		//if the player starts his turn
+					if (engine.getNextState().equals(GameState.START_ROUND)){		//
+						GameState.setState(GameState.START_ROUND);
+						displayNextRound();
+					} else if (engine.getNextState().equals(GameState.LANDGRANT)){			//if next state is landgrant
+						GameState.setState(GameState.LANDGRANT);
+						gameplayPanel.repaint();
+						startLandGrant();
+					} else if (engine.getNextState().equals(GameState.PLAYING_MAP)){
+						GameState.setState(GameState.PLAYING_MAP);
+						startGameLoop();													//display Map and add key Listener
+					}	
+				} else {
+					engine.nextActivePlayerIndex();
+					if (engine.getNextState().equals(GameState.START_ROUND)){
+						GameState.setState(GameState.START_ROUND);
+						displayNextRound();
+					} else {
+						GameState.setState(GameState.WAITING);
+						displayNextTurn();
+					}
 				}
 				break;
 			case gameplayID: //if gameplay button is pushed
 				if (GameState.getState().equals(GameState.LANDGRANT)){
-					engine.raiseTile(new Point(0,0), false);
-					removeMouseListener(landGrantMouse);
-					removeMouseMotionListener(landGrantMouse);
-					if (!engine.nextActivePlayerIndex()){
-						engine.setPlayerTurnOrder();
-						engine.nextActivePlayerIndex();
-						GameState.setState(GameState.PLAYING_MAP);
-					}
-					turnStartPanel.setPlayerLabel(engine.getActivePlayer());
-					cardLayout.show(MULEMainPanel.this, turnStartID);
+					GameState.setState(GameState.WAITING);
+					endLandGrant();
+					engine.nextActivePlayerIndex();
+					displayNextTurn();
 				}
 			}
 		}
-
 	}
-
+	
 	/**
 	 * PlayerControls is a private inner class that acts as a KeyListener 
 	 * for the gameplayPanel; it allows the player to move around the screen 
@@ -211,7 +210,7 @@ public class MULEMainPanel extends JPanel{
 					GameState.setState(GameState.PLAYING_TOWN);
 				}
 			
-				
+				updater.stop();
 				runGameLoop();
 			
 			
@@ -219,12 +218,12 @@ public class MULEMainPanel extends JPanel{
 			
 		
 		}
-
+		
 		//The following methods are unused in this application but have to be implemented.
 		public void keyReleased(KeyEvent e){}
 		public void keyTyped(KeyEvent e){}
 	}
-
+	
 	/**
 	 * GameUpdater is a private inner class that acts as an ActionListener.
 	 * An instance of this class is meant to be attached to a timer that 
@@ -234,27 +233,23 @@ public class MULEMainPanel extends JPanel{
 	 *
 	 */
 	private class GameUpdater implements ActionListener{
-
+		
 		@Override
 		public void actionPerformed(ActionEvent e){
-			//System.out.println(GameState.getState());
 			if(GameState.playing()){
 				gameplayPanel.repaint();
 				// Change to Black Screen - Lauren
 				if(3==engine.getMap().isInBuilding(engine.getActivePlayer().getX(), engine.getActivePlayer().getY())){
-					GameState.setState(GameState.WAITING);
-					turnStartPanel.setPubLabel(engine.getActivePlayer(), engine.getGambleMoney(30));
-					cardLayout.show(MULEMainPanel.this, turnStartID);
-					
+					System.out.print("HERE");
+					updater.stop();
+					endTurn(true);
 				}
-
 			}else{
 				updater.stop();
 			}
 		}
-	}  
+	}
 	
-
 	private class TurnUpdater implements ActionListener{
 
 		@Override
@@ -264,7 +259,6 @@ public class MULEMainPanel extends JPanel{
 		}
 		}
 	
-
 	/**
 	 * This class is a mouseInputListener that is used to detect mouse actions.
 	 * Currently, it is only used for the land grant state of the game
@@ -274,7 +268,7 @@ public class MULEMainPanel extends JPanel{
 	private class Mouse implements MouseInputListener{
 
 		private boolean pickedTile = false;
-
+		
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
 			Point location = arg0.getPoint();
@@ -282,6 +276,7 @@ public class MULEMainPanel extends JPanel{
 				if (engine.getMap().isBuyable(location)){
 					if (engine.purchaseProperty(location)){
 						pickedTile = true;
+						gameplayPanel.updateScoreboard();
 						gameplayPanel.setButtonText("Done");
 						engine.raiseTile(location, true);
 						gameplayPanel.repaint();
@@ -310,6 +305,59 @@ public class MULEMainPanel extends JPanel{
 			}
 		}
 	}
+	
+	private void displayNextRound() {
+		engine.nextRound();
+		engine.setPlayerTurnOrder();
+		turnStartPanel.setRoundLabel(engine.getCurrentRound());
+		cardLayout.show(MULEMainPanel.this, turnStartID);
+		GameState.setState(GameState.START_ROUND);
+	}
+	
+	public void endTurn(boolean gamble){
+		removeKeyListener(arrowKeys);
+		int gamblingMoney = 0;
+		engine.getActivePlayer().resetPosition();
+		if (gamble){
+			gamblingMoney = engine.getGambleMoney(30);	//change 30 to amount of time left
+			engine.getActivePlayer().addMoney(gamblingMoney);
+			turnStartPanel.setPubLabel(engine.getActivePlayer(), gamblingMoney);
+		} else {
+			turnStartPanel.setTimeIsUpLabel();
+		}
+		gameplayPanel.updateScoreboard();
+		cardLayout.show(MULEMainPanel.this, turnStartID);
+	}
+	
+	private void displayNextTurn() {
+		turnStartPanel.setPlayerLabel(engine.getActivePlayer());
+		cardLayout.show(MULEMainPanel.this,turnStartID);
+	}
+	
+	private void startLandGrant(){
+		gameplayPanel.enableButton();
+		gameplayPanel.resetButton();
+		cardLayout.show(MULEMainPanel.this, gameplayID);
+		landGrantMouse = new Mouse();
+		addMouseListener(landGrantMouse);
+		addMouseMotionListener(landGrantMouse);
+	}
+	
+	private void endLandGrant(){
+		gameplayPanel.disableButton();
+		engine.raiseTile(new Point(0,0), false);
+		removeMouseListener(landGrantMouse);
+		removeMouseMotionListener(landGrantMouse);
+	}
+	
+	private void startGameLoop(){
+		gameplayPanel.setActivePlayer(engine.getActivePlayer());	
+		setFocusable(true);
+		addKeyListener(arrowKeys);					
+		cardLayout.show(MULEMainPanel.this, gameplayID);
+		runGameLoop();
+	}
+	
 }
 
 
