@@ -42,7 +42,7 @@ public class GameplayPanel extends JPanel {
         panelState = "init";
         
         nextScreenButton = new JButton("");
-        nextScreenButton.setFont(new Font("American Typewriter", Font.PLAIN, 13));
+        nextScreenButton.setFont(new Font("Narkisim", Font.BOLD, 13));
         nextScreenButton.setBounds(783, 571, 117, 29);
         nextScreenButton.setOpaque(false);
         nextScreenButton.setContentAreaFilled(false);
