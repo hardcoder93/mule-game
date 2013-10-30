@@ -50,42 +50,42 @@ public class GameSetup extends JPanel {
 		this.setLayout(null);
 		
 		JLabel lblNumberOfPlayer = new JLabel("Number of Players:");
-		lblNumberOfPlayer.setFont(new Font("American Typewriter", Font.BOLD, 17));
+		lblNumberOfPlayer.setFont(new Font("Narkisim", Font.BOLD, 17));
 		lblNumberOfPlayer.setBounds(185, 150, 182, 29);
 		add(lblNumberOfPlayer);
 		
 		playerCountBox = new JComboBox();
-		playerCountBox.setFont(new Font("American Typewriter", Font.PLAIN, 13));
+		playerCountBox.setFont(new Font("Narkisim", Font.BOLD, 13));
 		playerCountBox.setModel(new DefaultComboBoxModel(new String[] {"2", "3", "4"}));
 		playerCountBox.setToolTipText("");
 		playerCountBox.setBounds(214, 180, 82, 27);
 		add(playerCountBox);
 		
 		JLabel lblDifficulty = new JLabel("Difficulty:");
-		lblDifficulty.setFont(new Font("American Typewriter", Font.BOLD, 17));
+		lblDifficulty.setFont(new Font("Narkisim", Font.BOLD, 17));
 		lblDifficulty.setBounds(214, 286, 153, 29);
 		add(lblDifficulty);
 		
 		difficultyBox = new JComboBox();
-		difficultyBox.setFont(new Font("American Typewriter", Font.PLAIN, 13));
+		difficultyBox.setFont(new Font("Narkisim", Font.BOLD, 13));
 		difficultyBox.setModel(new DefaultComboBoxModel(new String[] {"Beginner", "Standard", "Tournament"}));
 		difficultyBox.setToolTipText("");
 		difficultyBox.setBounds(200, 315, 124, 27);
 		add(difficultyBox);
 		
 		JLabel lblMapType = new JLabel("Map Type:");
-		lblMapType.setFont(new Font("American Typewriter", Font.BOLD, 17));
+		lblMapType.setFont(new Font("Narkisim", Font.BOLD, 17));
 		lblMapType.setBounds(214, 219, 153, 29);
 		add(lblMapType);
 		
 		mapTypeBox = new JComboBox();
-		mapTypeBox.setFont(new Font("American Typewriter", Font.PLAIN, 13));
+		mapTypeBox.setFont(new Font("Narkisim", Font.BOLD, 13));
 		mapTypeBox.setModel(new DefaultComboBoxModel(new String[] {"Standard", "Random"}));
 		mapTypeBox.setBounds(191, 247, 133, 27);
 		add(mapTypeBox);
 		
 		btnNewButton = new JButton("Next");
-		btnNewButton.setFont(new Font("American Typewriter", Font.PLAIN, 13));
+		btnNewButton.setFont(new Font("Narkisim", Font.BOLD, 13));
 		btnNewButton.setBounds(777, 543, 117, 29);
 		add(btnNewButton);
 		

@@ -29,8 +29,8 @@ public class TurnStartPanel extends JPanel {
 		setLayout(null);
 		this.setBackground(BACKGROUND_COLOR);
 		
-		startTurnButton = new JButton("START TURN");
-		startTurnButton.setFont(new Font("American Typewriter", Font.PLAIN, 13));
+		startTurnButton = new JButton("Next");
+		startTurnButton.setFont(new Font("Narkisim", Font.BOLD, 14));
 		startTurnButton.setBounds(777, 543, 117, 29);
 		add(startTurnButton);
 

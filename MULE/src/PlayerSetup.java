@@ -44,44 +44,44 @@ public class PlayerSetup extends JPanel {
 		textField.setColumns(10);
 
 		btnNewButton = new JButton("Next");
-		btnNewButton.setFont(new Font("American Typewriter", Font.PLAIN, 13));
+		btnNewButton.setFont(new Font("Narkisim", Font.BOLD, 13));
 		btnNewButton.setBounds(777, 543, 117, 29);
 		add(btnNewButton);
 
 		JLabel lblNameOfPlayer = new JLabel("Name of Player");
-		lblNameOfPlayer.setFont(new Font("American Typewriter", Font.BOLD, 17));
+		lblNameOfPlayer.setFont(new Font("Narkisim", Font.BOLD, 17));
 		lblNameOfPlayer.setBounds(596, 150, 182, 29);
 		add(lblNameOfPlayer);
 
 		colorBox = new JComboBox();
 		colorBox.setModel(new DefaultComboBoxModel(colorOptions));
-		colorBox.setFont(new Font("American Typewriter", Font.PLAIN, 13));
+		colorBox.setFont(new Font("Narkisim", Font.BOLD, 13));
 		colorBox.setBounds(596, 314, 124, 27);
 		add(colorBox);
 
 		JLabel lblColor = new JLabel("Color:");
-		lblColor.setFont(new Font("American Typewriter", Font.BOLD, 17));
+		lblColor.setFont(new Font("Narkisim", Font.BOLD, 17));
 		lblColor.setBounds(625, 286, 153, 29);
 		add(lblColor);
 
 		raceBox = new JComboBox();
 		raceBox.setModel(new DefaultComboBoxModel(new String[] {"Flapper", "Human", "Bonzoid", "Ugaite", "Buzzite"}));
-		raceBox.setFont(new Font("American Typewriter", Font.PLAIN, 13));
+		raceBox.setFont(new Font("Narkisim", Font.BOLD, 13));
 		raceBox.setBounds(608, 247, 104, 27);
 		add(raceBox);
 
 		JLabel lblRace = new JLabel("Race:");
-		lblRace.setFont(new Font("American Typewriter", Font.BOLD, 17));
+		lblRace.setFont(new Font("Narkisim", Font.BOLD, 17));
 		lblRace.setBounds(629, 218, 53, 29);
 		add(lblRace);
 		
 		playerNumberLabel = new JLabel("Player Number: X");
-		playerNumberLabel.setFont(new Font("American Typewriter", Font.BOLD, 25));
+		playerNumberLabel.setFont(new Font("Narkisim", Font.BOLD, 25));
 		playerNumberLabel.setBounds(62, 47, 287, 35);
 		add(playerNumberLabel);
 		
 		noInputLabel = new JLabel("Player name cannot be blank!");
-		playerNumberLabel.setFont(new Font("American Typewriter", Font.BOLD, 12));
+		playerNumberLabel.setFont(new Font("Narkisim", Font.BOLD, 12));
 		noInputLabel.setBounds(576, 54, 224, 15);
 		add(noInputLabel);
 		noInputLabel.setVisible(false);
@@ -102,7 +102,7 @@ public class PlayerSetup extends JPanel {
 	
 	public void setPlayerNumber(int number){
 		playerNumberLabel.setText("Player Number: ".concat(Integer.toString(number)));
-		playerNumberLabel.setFont(new Font("American Typewriter", Font.BOLD, 25));
+		playerNumberLabel.setFont(new Font("Narkisim", Font.BOLD, 25));
 	}
 	
 	public void clearPlayerName(){
