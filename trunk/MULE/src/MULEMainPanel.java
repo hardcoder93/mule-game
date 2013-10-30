@@ -266,9 +266,8 @@ public class MULEMainPanel extends JPanel{
 
 			}
 			else{
-			GameState.setState(GameState.WAITING);
 			turnTimer.stop();
-			endTurn(true);}
+			endTurn(false);}
 		}
 	}
 
