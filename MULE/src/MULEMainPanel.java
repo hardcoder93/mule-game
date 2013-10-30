@@ -1,6 +1,8 @@
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,7 +13,9 @@ import java.util.ArrayList;
 
 import javax.swing.JLabel;
 import javax.swing.Timer;
+
 import java.util.TimerTask;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputListener;
@@ -62,7 +66,8 @@ public class MULEMainPanel extends JPanel{
 		add(gameplayPanel, gameplayID);
 		add(turnStartPanel, turnStartID);
 
-		
+		turnTime.setFont(new Font("Narkisim", Font.BOLD, 20));
+	    turnTime.setForeground(Color.RED);
 		gameplayPanel.addLabel(turnTime);
 
 		JButton startBtn = startPanel.getButton();
@@ -328,7 +333,7 @@ public class MULEMainPanel extends JPanel{
 		int gamblingMoney = 0;
 		engine.getActivePlayer().resetPosition();
 		if (gamble){
-			gamblingMoney = engine.getGambleMoney(30);	//change 30 to amount of time left
+			gamblingMoney = engine.getGambleMoney(countDown);	//change 30 to amount of time left
 			engine.getActivePlayer().addMoney(gamblingMoney);
 			turnStartPanel.setPubLabel(engine.getActivePlayer(), gamblingMoney);
 		} else {
