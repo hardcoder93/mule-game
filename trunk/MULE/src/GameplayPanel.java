@@ -1,6 +1,8 @@
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Panel;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -24,6 +26,7 @@ public class GameplayPanel extends JPanel {
 	private Player[] playerList;		//list of players (playerList.length = # of players)
 	private Player activePlayer;
 	private JLabel[] moneyLabels = new JLabel[4];
+	private JLabel label;
 	
 	//Screen States
 	private String panelState;
@@ -46,10 +49,16 @@ public class GameplayPanel extends JPanel {
         //nextScreenButton.setBorderPainted(false);
         add(nextScreenButton);
         
- 
-
-		
-		
+        
+    }
+    
+    public void addLabel(JLabel label){
+    	label.setBounds(0, 0, 159, 100);
+    	add(label);
+    }
+    
+    public void updateLabel(JLabel label){
+    	this.label = label;
     }
     
     public JButton getButton(){
