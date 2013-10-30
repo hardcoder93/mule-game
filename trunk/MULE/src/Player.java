@@ -184,5 +184,10 @@ public class Player implements Drawable{
 		return money;
 	}
 
+	public void resetPosition() {
+		xCoord = 500;
+		yCoord = 250;
+	}
+
 	
 }
