@@ -1,5 +1,6 @@
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * The MULEGameEngine class handles the main game objects and their interactions
@@ -18,7 +19,7 @@ public class MULEGameEngine {
 	private Player store;
 	private ArrayList<Integer> playerTurnOrder;
 	private ArrayList<Integer> finishedPlayers;
-		
+	private int roundBonus,timeBonus;
 	/**
 	 * Builds a MULEGameEngine object, setting the difficulty of the game,
 	 * creating the map, and initializing the empty player list.
@@ -158,6 +159,13 @@ public class MULEGameEngine {
 				active.setLocation(map.mapSwitch(newX));
 				//active.setLocation(map.mapSwitchX(newX), newY);
 			}
+			if(GameState.getState().equals(GameState.PLAYING_TOWN)){  //Player is entering pub
+				if (map.isInBuilding(newX,newY)==3) {
+					active.addMoney(getGambleMoney(30));			
+				}
+		    }
+
+			
 			if(onRiverTile() || onMountainTile()) //If player is on a river or mountain tile, they move slower.
 				active.move(slowSpeed, distX, distY);
 			else if(map.isValidLocation(active.getX()+2*distX, active.getY()+2*distY))
@@ -265,4 +273,24 @@ public class MULEGameEngine {
 		else 
 			return 50;
 	}
+	public int getGambleMoney(int timeLeft){
+		if (getCurrentRound()<=3 && getCurrentRound()>= 0) roundBonus = 50;
+		else if (getCurrentRound()<=7 && getCurrentRound()>=4) roundBonus = 100;
+		else if (getCurrentRound()<=11 && getCurrentRound()>=8) roundBonus = 150;
+		else roundBonus =200;
+		
+		if(timeLeft >=37 && timeLeft<= 50)
+		    timeBonus = 200;
+		else if(timeLeft >=25 && timeLeft< 37)
+		    timeBonus = 100;
+		else if(timeLeft >=0 && timeLeft< 12)
+		    timeBonus = 50;
+		
+		Random rand = new Random();
+			
+		
+		
+		return rand.nextInt(timeBonus)+ roundBonus; 
+	}
+
 }
