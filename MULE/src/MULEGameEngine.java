@@ -298,6 +298,8 @@ public class MULEGameEngine {
 		if(timeLeft >=37 && timeLeft<= 50)
 		    timeBonus = 200;
 		else if(timeLeft >=25 && timeLeft< 37)
+		    timeBonus = 150;
+		else if(timeLeft >=12 && timeLeft< 25)
 		    timeBonus = 100;
 		else if(timeLeft >=0 && timeLeft< 12)
 		    timeBonus = 50;
