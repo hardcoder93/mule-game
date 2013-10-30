@@ -50,6 +50,9 @@ public class TurnStartPanel extends JPanel {
 		playerLabel.setText("<html><div style=\"text-align: center;\">" + "It is " + player.getName() + "'s turn!" +  "</html>");
 	}
 	
+	public void setPubLabel(Player player, int money){
+		playerLabel.setText("<html><div style=\"text-align: center;\">" + player.getName() + " received $" + money + " by gambling. \n Now " + player.getName() + " has $" + player.getMoney()  + "</html>");
+	}
 	/**
 	 * Getter for the startTurnButton
 	 * @return	startTurnButton
