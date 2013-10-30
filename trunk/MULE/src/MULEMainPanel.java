@@ -153,6 +153,8 @@ public class MULEMainPanel extends JPanel{
 					removeMouseListener(landGrantMouse);
 					removeMouseMotionListener(landGrantMouse);
 					if (!engine.nextActivePlayerIndex()){
+						engine.setPlayerTurnOrder();
+						engine.nextActivePlayerIndex();
 						GameState.setState(GameState.PLAYING_MAP);
 					}
 					turnStartPanel.setPlayerLabel(engine.getActivePlayer());
@@ -196,12 +198,20 @@ public class MULEMainPanel extends JPanel{
 					GameState.setState(GameState.WAITING);
 					gameplayPanel.repaint();
 				}
-			}else if(GameState.getState()==GameState.WAITING){ 
+			}if(GameState.getState()==GameState.WAITING){ 
 				if(engine.getMap().getActiveMap().equals(engine.getMap().BIG_MAP))
 					GameState.setState(GameState.PLAYING_MAP);
-				else GameState.setState(GameState.PLAYING_TOWN);
+				else {
+					GameState.setState(GameState.PLAYING_TOWN);
+				}
+			
+				
 				runGameLoop();
+			
+			
 			}
+			
+		
 		}
 		
 		//The following methods are unused in this application but have to be implemented.
@@ -224,6 +234,13 @@ public class MULEMainPanel extends JPanel{
 			//System.out.println(GameState.getState());
 			if(GameState.playing()){
 				gameplayPanel.repaint();
+				if(3==engine.getMap().isInBuilding(engine.getActivePlayer().getX(), engine.getActivePlayer().getY())){
+					GameState.setState(GameState.WAITING);
+					turnStartPanel.setPubLabel(engine.getActivePlayer(), engine.getGambleMoney(30));
+					cardLayout.show(MULEMainPanel.this, turnStartID);
+					
+				}
+
 			}else{
 				updater.stop();
 			}
