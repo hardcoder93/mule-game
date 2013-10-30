@@ -55,7 +55,10 @@ public class Player implements Drawable{
 			break;
 		}
 	}
-
+	public void setMoney(int money) {
+		this.money = money;
+		
+	}
 	public void setResources() {
 		switch (level) {
 		case "Beginner":
@@ -180,4 +183,6 @@ public class Player implements Drawable{
 	public int getScore(){
 		return money;
 	}
+
+	
 }
