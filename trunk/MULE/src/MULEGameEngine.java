@@ -20,7 +20,7 @@ public class MULEGameEngine {
 	private ArrayList<Integer> playerTurnOrder;
 	private ArrayList<Integer> landGrantOrder;
 	private String nextState = "";
-	private int roundBonus,timeBonus;
+	private int roundBonus;
 	/**
 	 * Builds a MULEGameEngine object, setting the difficulty of the game,
 	 * creating the map, and initializing the empty player list.
@@ -289,6 +289,7 @@ public class MULEGameEngine {
 	
 	// Method for adding money after gambling - wongoo-
 	public int getGambleMoney(int timeLeft){
+		int timeBonus =0;
 		if (getCurrentRound()<=3 && getCurrentRound()>= 0) roundBonus = 50;
 		else if (getCurrentRound()<=7 && getCurrentRound()>=4) roundBonus = 100;
 		else if (getCurrentRound()<=11 && getCurrentRound()>=8) roundBonus = 150;
