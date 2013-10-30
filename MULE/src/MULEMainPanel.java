@@ -9,7 +9,9 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+import javax.swing.JLabel;
 import javax.swing.Timer;
+import java.util.TimerTask;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputListener;
@@ -23,16 +25,17 @@ import javax.swing.event.MouseInputListener;
 @SuppressWarnings("serial")
 public class MULEMainPanel extends JPanel{
 	//Instance Data
-	MULEGameEngine engine;
+	static MULEGameEngine engine;
 	Timer updater,turnTimer;
-	
+
 	private StartScreen startPanel = new StartScreen(); //game startup screen.
 	private GameSetup gameSetupPanel = new GameSetup(); //The panel that allows choice of game type.
 	private PlayerSetup playerSetupPanel = new PlayerSetup(); //The panel that allows each player to make a character.
 	private GameplayPanel gameplayPanel = new GameplayPanel(); //The panel which displays main gameplay.
 	private CardLayout cardLayout = new CardLayout(); //CardLayout allows us to easily switch between screens.
 	private TurnStartPanel turnStartPanel = new TurnStartPanel();
-	
+	private JLabel turnTime = new JLabel();
+	private int countDown;
 	//The screen IDs are used to tell the CardLayout which screen to display, and to tell the 
 	//button listeners which button was pressed.
 	private final String startID = "START";
@@ -40,10 +43,10 @@ public class MULEMainPanel extends JPanel{
 	private final String playerSetupID = "PLAYERSETUP";
 	private final String gameplayID = "GAMEPLAY";
 	private final String turnStartID = "TURNSTART";
-	
+
 	private Mouse landGrantMouse;
 	private PlayerControls arrowKeys;
-	
+
 	/**
 	 * Constructs a MULEMainPanel with a set size, adds the 4 game screens, 
 	 * and assigns listeners to the necessary buttons.
@@ -51,14 +54,17 @@ public class MULEMainPanel extends JPanel{
 	public MULEMainPanel(){
 		setLayout(cardLayout);
 		setPreferredSize(new Dimension(900,600));
-		
-		
+
+
 		add(startPanel, startID);
 		add(gameSetupPanel, gameSetupID);
 		add(playerSetupPanel, playerSetupID);
 		add(gameplayPanel, gameplayID);
 		add(turnStartPanel, turnStartID);
+
 		
+		gameplayPanel.addLabel(turnTime);
+
 		JButton startBtn = startPanel.getButton();
 		JButton gameSetupBtn = gameSetupPanel.getButton();
 		JButton playerSetupBtn = playerSetupPanel.getButton();
@@ -70,9 +76,10 @@ public class MULEMainPanel extends JPanel{
 		playerSetupBtn.addActionListener(new NextListener(playerSetupID));
 		turnStartBtn.addActionListener(new NextListener(turnStartID));
 		gamePlayBtn.addActionListener(new NextListener(gameplayID));
-		
+
 		arrowKeys = new PlayerControls();
-		
+
+
 	}
 	/**
 	 * The runGameLoop method uses an ActionListener attached to a timer to 
@@ -80,15 +87,13 @@ public class MULEMainPanel extends JPanel{
 	 */
 	private void runGameLoop(){
 		updater = new Timer(1000/60, new GameUpdater()); //1000/60 means we are updating at 60 FPS.
+		turnTimer =  new Timer(1000, new TurnUpdater());
+		turnTimer.start();
+		
 		if (GameState.playing())
 			updater.start();
 	}
-	
-	private void runTimerLoop(){
-		turnTimer =  new Timer(engine.calculateActivePlayerTurnTime()*1000, new TurnUpdater());
-		turnTimer.start();
-	}
-	
+
 	/**
 	 * The NextListener class creates button listeners for the "Next" buttons
 	 * on the menu screens, allowing users to switch between screens and 
@@ -98,11 +103,11 @@ public class MULEMainPanel extends JPanel{
 	 */
 	private class NextListener implements ActionListener{
 		String ID;
-		
+
 		public NextListener(String id){
 			ID = id;
 		}
-		
+
 		public void actionPerformed(ActionEvent e){
 			switch(ID){
 			case startID: //If the start button is pressed, display the game setup screen.
@@ -110,8 +115,8 @@ public class MULEMainPanel extends JPanel{
 				break;
 			case gameSetupID: //If the game setup button is pressed, create game engine and show player screen.
 				engine = new MULEGameEngine(gameSetupPanel.getDifficulty(), 
-											gameSetupPanel.getMapType(), 
-											gameSetupPanel.getPlayerCount());
+						gameSetupPanel.getMapType(), 
+						gameSetupPanel.getPlayerCount());
 				playerSetupPanel.setPlayerNumber(engine.getNextPlayerSlot() + 1);
 				cardLayout.show(MULEMainPanel.this, playerSetupID);
 				break;
@@ -165,7 +170,7 @@ public class MULEMainPanel extends JPanel{
 			}
 		}
 	}
-	
+
 	/**
 	 * PlayerControls is a private inner class that acts as a KeyListener 
 	 * for the gameplayPanel; it allows the player to move around the screen 
@@ -205,21 +210,20 @@ public class MULEMainPanel extends JPanel{
 				else {
 					GameState.setState(GameState.PLAYING_TOWN);
 				}
-			
+
 				updater.stop();
 				runGameLoop();
-			
-			
+
 			}
-			
-		
+
+
 		}
-		
+
 		//The following methods are unused in this application but have to be implemented.
 		public void keyReleased(KeyEvent e){}
 		public void keyTyped(KeyEvent e){}
 	}
-	
+
 	/**
 	 * GameUpdater is a private inner class that acts as an ActionListener.
 	 * An instance of this class is meant to be attached to a timer that 
@@ -229,7 +233,7 @@ public class MULEMainPanel extends JPanel{
 	 *
 	 */
 	private class GameUpdater implements ActionListener{
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e){
 			if(GameState.playing()){
@@ -244,15 +248,25 @@ public class MULEMainPanel extends JPanel{
 			}
 		}
 	}
-	
+
 	private class TurnUpdater implements ActionListener{
 
 		@Override
 		public void actionPerformed(ActionEvent e){
-			endTurn(false);
+			if (countDown>0){
+				//System.out.println(countDown);
+				
+				turnTime.setText(String.valueOf(countDown--));
+				gameplayPanel.updateLabel(turnTime);
+
+			}
+			else{
+			GameState.setState(GameState.WAITING);
+			turnTimer.stop();
+			endTurn(true);}
 		}
 	}
-	
+
 	/**
 	 * This class is a mouseInputListener that is used to detect mouse actions.
 	 * Currently, it is only used for the land grant state of the game
@@ -262,7 +276,7 @@ public class MULEMainPanel extends JPanel{
 	private class Mouse implements MouseInputListener{
 
 		private boolean pickedTile = false;
-		
+
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
 			Point location = arg0.getPoint();
@@ -299,7 +313,7 @@ public class MULEMainPanel extends JPanel{
 			}
 		}
 	}
-	
+
 	private void displayNextRound() {
 		engine.nextRound();
 		engine.setPlayerTurnOrder();
@@ -307,7 +321,7 @@ public class MULEMainPanel extends JPanel{
 		cardLayout.show(MULEMainPanel.this, turnStartID);
 		GameState.setState(GameState.START_ROUND);
 	}
-	
+
 	public void endTurn(boolean gamble){
 		removeKeyListener(arrowKeys);
 		turnTimer.stop();
@@ -323,12 +337,12 @@ public class MULEMainPanel extends JPanel{
 		gameplayPanel.updateScoreboard();
 		cardLayout.show(MULEMainPanel.this, turnStartID);
 	}
-	
+
 	private void displayNextTurn() {
 		turnStartPanel.setPlayerLabel(engine.getActivePlayer());
 		cardLayout.show(MULEMainPanel.this,turnStartID);
 	}
-	
+
 	private void startLandGrant(){
 		gameplayPanel.enableButton();
 		gameplayPanel.resetButton();
@@ -337,23 +351,23 @@ public class MULEMainPanel extends JPanel{
 		addMouseListener(landGrantMouse);
 		addMouseMotionListener(landGrantMouse);
 	}
-	
+
 	private void endLandGrant(){
 		gameplayPanel.disableButton();
 		engine.raiseTile(new Point(0,0), false);
 		removeMouseListener(landGrantMouse);
 		removeMouseMotionListener(landGrantMouse);
 	}
-	
+
 	private void startGameLoop(){
 		gameplayPanel.setActivePlayer(engine.getActivePlayer());	
 		setFocusable(true);
 		addKeyListener(arrowKeys);					
 		cardLayout.show(MULEMainPanel.this, gameplayID);
-		runTimerLoop();
+		countDown = engine.calculateActivePlayerTurnTime();
 		runGameLoop();
 	}
-	
+
 }
 
 
