@@ -23,6 +23,7 @@ public class GameplayPanel extends JPanel {
 	private MULEMap gameMap;			//map of game
 	private Player[] playerList;		//list of players (playerList.length = # of players)
 	private Player activePlayer;
+	private JLabel[] moneyLabels = new JLabel[4];
 	
 	//Screen States
 	private String panelState;
@@ -71,6 +72,13 @@ public class GameplayPanel extends JPanel {
 		lblNewLabel.setBounds(741, 500, 159, 100);
 		add(lblNewLabel);
 		
+		JLabel playerMoney = null;
+		JLabel playerMoney_1 = null;
+		JLabel playerMoney_2 = null;
+		JLabel playerMoney_3 = null;
+
+
+		
 		
 		
 		if (playerList.length == 2) {
@@ -81,8 +89,8 @@ public class GameplayPanel extends JPanel {
     		JLabel Ore = new JLabel("Ore:") ;
     		JLabel playerName = new JLabel(""+ playerList[0].getName()) ; 
         	JLabel playerName_1 = new JLabel(""+ playerList[1].getName()) ;
-        	JLabel playerMoney = new JLabel(""+""+ playerList[0].getMoney()) ; 
-        	JLabel playerMoney_1 = new JLabel(""+ playerList[1].getMoney()) ;
+        	playerMoney = new JLabel(""+""+ playerList[0].getMoney()) ; 
+        	playerMoney_1 = new JLabel(""+ playerList[1].getMoney()) ;
         	JLabel playerEnergy = new JLabel(""+ playerList[0].getEnergy()) ; 
         	JLabel playerEnergy_1 = new JLabel(""+ playerList[1].getEnergy()) ;
         	JLabel playerFood = new JLabel(""+ playerList[0].getFood()) ; 
@@ -143,9 +151,9 @@ public class GameplayPanel extends JPanel {
     		JLabel playerName = new JLabel(""+ playerList[0].getName()) ; 
         	JLabel playerName_1 = new JLabel(""+ playerList[1].getName()) ;
         	JLabel playerName_2 = new JLabel(""+ playerList[2].getName()) ;
-        	JLabel playerMoney = new JLabel(""+ playerList[0].getMoney()) ; 
-        	JLabel playerMoney_1 = new JLabel(""+ playerList[1].getMoney()) ;
-        	JLabel playerMoney_2 = new JLabel(""+ playerList[2].getMoney()) ;
+        	playerMoney = new JLabel(""+ playerList[0].getMoney()) ; 
+        	playerMoney_1 = new JLabel(""+ playerList[1].getMoney()) ;
+        	playerMoney_2 = new JLabel(""+ playerList[2].getMoney()) ;
         	JLabel playerEnergy = new JLabel(""+ playerList[0].getEnergy()) ; 
         	JLabel playerEnergy_1 = new JLabel(""+ playerList[1].getEnergy()) ;
         	JLabel playerEnergy_2 = new JLabel(""+ playerList[2].getEnergy()) ;
@@ -220,10 +228,10 @@ public class GameplayPanel extends JPanel {
         	JLabel playerName_1 = new JLabel(""+ playerList[1].getName()) ;
         	JLabel playerName_2 = new JLabel(""+ playerList[2].getName()) ;
         	JLabel playerName_3 = new JLabel(""+ playerList[3].getName()) ;
-        	JLabel playerMoney = new JLabel(""+ playerList[0].getMoney()) ; 
-        	JLabel playerMoney_1 = new JLabel(""+ playerList[1].getMoney()) ;
-        	JLabel playerMoney_2 = new JLabel(""+ playerList[2].getMoney()) ;
-        	JLabel playerMoney_3 = new JLabel(""+ playerList[3].getMoney()) ;
+        	playerMoney = new JLabel(""+ playerList[0].getMoney()) ; 
+        	playerMoney_1 = new JLabel(""+ playerList[1].getMoney()) ;
+        	playerMoney_2 = new JLabel(""+ playerList[2].getMoney()) ;
+        	playerMoney_3 = new JLabel(""+ playerList[3].getMoney()) ;
         	
         	JLabel playerEnergy = new JLabel(""+ playerList[0].getEnergy()) ; 
         	JLabel playerEnergy_1 = new JLabel(""+ playerList[1].getEnergy()) ;
@@ -304,8 +312,16 @@ public class GameplayPanel extends JPanel {
          
     	}
        
+			moneyLabels[0] = playerMoney;
+			moneyLabels[1] = playerMoney_1;
+			if (playerMoney_2 != null)
+				moneyLabels[2] = playerMoney_2;
+			if (playerMoney_3 != null)
+				moneyLabels[3] = playerMoney_3;
+
+		}
          
-    }
+    
 	
 	/**
      * Sets the map and player list inside the panel. Needed to display the map
@@ -318,6 +334,7 @@ public class GameplayPanel extends JPanel {
     	this.gameMap = gameMap;
     	this.playerList = playerList;
     	setUpScoreboard();
+    	
     }
     
     /**
@@ -327,6 +344,21 @@ public class GameplayPanel extends JPanel {
      */
     public void setActivePlayer(Player p){
     	activePlayer = p;
+    }
+    
+    public void disableButton(){
+    	if (nextScreenButton.isEnabled())
+    		nextScreenButton.setEnabled(false);
+    }
+    
+    public void enableButton(){
+    	if (!nextScreenButton.isEnabled())
+    		nextScreenButton.setEnabled(true);
+    }
+    
+    public void updateScoreboard(){
+    	for (int i = 0; i < playerList.length; i++)
+    		moneyLabels[i].setText("" + playerList[i].getMoney());
     }
     
     
