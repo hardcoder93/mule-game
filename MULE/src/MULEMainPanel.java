@@ -136,19 +136,15 @@ public class MULEMainPanel extends JPanel{
 				}
 				break;
 			case turnStartID: //if start turn button is pushed
-				if (GameState.getState().equals(GameState.WAITING)){		//if the player starts his turn
-					if (engine.getNextState().equals(GameState.START_ROUND)){		//
-						GameState.setState(GameState.START_ROUND);
-						displayNextRound();
-					} else if (engine.getNextState().equals(GameState.LANDGRANT)){			//if next state is landgrant
+				if (GameState.getState().equals(GameState.WAITING)){ //if the player starts his turn
+					if (engine.getNextState().equals(GameState.LANDGRANT)){ //if next state is landgrant
 						GameState.setState(GameState.LANDGRANT);
-						gameplayPanel.repaint();
 						startLandGrant();
-					} else if (engine.getNextState().equals(GameState.PLAYING_MAP)){
+					} else if (engine.getNextState().equals(GameState.PLAYING_MAP)){ //if next state is map
 						GameState.setState(GameState.PLAYING_MAP);
-						startGameLoop();													//display Map and add key Listener
+						startGameLoop();													
 					}	
-				} else {
+				} else { //if player's turn is over
 					engine.nextActivePlayerIndex();
 					if (engine.getNextState().equals(GameState.START_ROUND)){
 						GameState.setState(GameState.START_ROUND);
