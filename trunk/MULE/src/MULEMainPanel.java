@@ -30,7 +30,7 @@ import javax.swing.event.MouseInputListener;
 public class MULEMainPanel extends JPanel{
 	//Instance Data
 	static MULEGameEngine engine;
-	Timer updater,turnTimer;
+	Timer updater,turnTimer, screenTimer;
 
 	private StartScreen startPanel = new StartScreen(); //game startup screen.
 	private GameSetup gameSetupPanel = new GameSetup(); //The panel that allows choice of game type.
@@ -50,6 +50,8 @@ public class MULEMainPanel extends JPanel{
 
 	private Mouse landGrantMouse;
 	private PlayerControls arrowKeys;
+	
+	private JButton gamePlayBtn;
 
 	/**
 	 * Constructs a MULEMainPanel with a set size, adds the 4 game screens, 
@@ -74,7 +76,7 @@ public class MULEMainPanel extends JPanel{
 		JButton gameSetupBtn = gameSetupPanel.getButton();
 		JButton playerSetupBtn = playerSetupPanel.getButton();
 		JButton turnStartBtn = turnStartPanel.getButton();
-		JButton gamePlayBtn = gameplayPanel.getButton();
+		gamePlayBtn = gameplayPanel.getButton();
 
 		startBtn.addActionListener(new NextListener(startID));		
 		gameSetupBtn.addActionListener(new NextListener(gameSetupID));
@@ -267,7 +269,24 @@ public class MULEMainPanel extends JPanel{
 			}
 			else{
 			turnTimer.stop();
-			endTurn(false);}
+			endTurn(false);
+			}
+		}
+	}
+	
+	private class ScreenDelay implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e){
+			if (countDown>0){
+				countDown--;
+			}
+			else{
+				if (GameState.getState().equals(GameState.LANDGRANT)){
+					System.out.print("HERE");
+					endLandGrant();
+				}
+			}
 		}
 	}
 
@@ -292,6 +311,9 @@ public class MULEMainPanel extends JPanel{
 						gameplayPanel.setButtonText("Done");
 						engine.raiseTile(location, true);
 						gameplayPanel.repaint();
+						screenTimer = new Timer(1000, new ScreenDelay());
+						countDown = 1;
+						screenTimer.start();
 					}
 				}
 			}	
@@ -318,6 +340,10 @@ public class MULEMainPanel extends JPanel{
 		}
 	}
 
+	/**
+	 * displayNextRound displays the turnStartPanel, but displays which round is
+	 * about to begin. It also sets up the next round in the game engine.
+	 */
 	private void displayNextRound() {
 		engine.nextRound();
 		engine.setPlayerTurnOrder();
@@ -326,8 +352,16 @@ public class MULEMainPanel extends JPanel{
 		GameState.setState(GameState.START_ROUND);
 	}
 
+	/**
+	 * endTurn ends the player's turn while he/she is playing the map. Anytime the player's
+	 * turn should end, this should be called. It calculates and applies any money gained
+	 * from gambling if the player entered the Pub.
+	 * 
+	 * @param gamble	true if player gambled; false if otherwise (timer ran out)
+	 */
 	public void endTurn(boolean gamble){
 		removeKeyListener(arrowKeys);
+		turnTime.setText("");;
 		turnTimer.stop();
 		int gamblingMoney = 0;
 		engine.getActivePlayer().resetPosition();
@@ -342,11 +376,19 @@ public class MULEMainPanel extends JPanel{
 		cardLayout.show(MULEMainPanel.this, turnStartID);
 	}
 
+	/**
+	 * displayNextTurn displays the turnStartPanel and shows which player's turn is
+	 * about to begin.
+	 */
 	private void displayNextTurn() {
 		turnStartPanel.setPlayerLabel(engine.getActivePlayer());
 		cardLayout.show(MULEMainPanel.this,turnStartID);
 	}
 
+	/**
+	 * startLandGrant initiates the land grant stage of the turn. It must be called for
+	 * each player. It displays the map and add's the MouseListeners.
+	 */
 	private void startLandGrant(){
 		gameplayPanel.enableButton();
 		gameplayPanel.resetButton();
@@ -356,19 +398,29 @@ public class MULEMainPanel extends JPanel{
 		addMouseMotionListener(landGrantMouse);
 	}
 
+	/**
+	 * endLandGrant stops the land grant stage of a turn. It removes the MouseListeners
+	 */
 	private void endLandGrant(){
+		screenTimer.stop();
+		gamePlayBtn.doClick();
 		gameplayPanel.disableButton();
 		engine.raiseTile(new Point(0,0), false);
 		removeMouseListener(landGrantMouse);
 		removeMouseMotionListener(landGrantMouse);
 	}
-
+	
+	/**
+	 * startGameLoop initializes the game loop (player moving around map). It adds the
+	 * keyListener and displays the map. 
+	 */
 	private void startGameLoop(){
-		gameplayPanel.setActivePlayer(engine.getActivePlayer());	
+		gameplayPanel.setActivePlayer(engine.getActivePlayer());
 		setFocusable(true);
 		addKeyListener(arrowKeys);					
 		cardLayout.show(MULEMainPanel.this, gameplayID);
 		countDown = engine.calculateActivePlayerTurnTime();
+		turnTime.setText("" + countDown);;
 		runGameLoop();
 	}
 
