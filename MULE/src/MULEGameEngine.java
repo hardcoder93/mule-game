@@ -159,7 +159,10 @@ public class MULEGameEngine {
 				active.setLocation(map.mapSwitch(newX));
 				//active.setLocation(map.mapSwitchX(newX), newY);
 			}
-			if(GameState.getState().equals(GameState.PLAYING_TOWN)){  //Player is entering pub
+			//I did this just checking if player is in the pub 
+			
+			
+			if(GameState.getState().equals(GameState.PLAYING_TOWN)){  //Player is entering pub 
 				if (map.isInBuilding(newX,newY)==3) {
 					active.addMoney(getGambleMoney(30));			
 				}
@@ -273,6 +276,8 @@ public class MULEGameEngine {
 		else 
 			return 50;
 	}
+	
+	// Method for adding money after gambling - wongoo-
 	public int getGambleMoney(int timeLeft){
 		if (getCurrentRound()<=3 && getCurrentRound()>= 0) roundBonus = 50;
 		else if (getCurrentRound()<=7 && getCurrentRound()>=4) roundBonus = 100;
