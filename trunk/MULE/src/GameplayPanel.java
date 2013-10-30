@@ -5,8 +5,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-
+import javax.swing.Timer;
 
 /**
  * Jpanel object for M.U.L.E. game that displays everything that goes on during the 
@@ -45,6 +44,9 @@ public class GameplayPanel extends JPanel {
         nextScreenButton.setContentAreaFilled(false);
         //nextScreenButton.setBorderPainted(false);
         add(nextScreenButton);
+        
+ 
+
 		
 		
     }
