@@ -18,7 +18,8 @@ public class MULEGameEngine {
 	private int currentRound = 0;
 	private Player store;
 	private ArrayList<Integer> playerTurnOrder;
-	private ArrayList<Integer> finishedPlayers;
+	private ArrayList<Integer> landGrantOrder;
+	private String nextState = "";
 	private int roundBonus,timeBonus;
 	/**
 	 * Builds a MULEGameEngine object, setting the difficulty of the game,
@@ -43,7 +44,7 @@ public class MULEGameEngine {
 		players = new Player[numPlayers];
 		store = new Player("STORE", difficulty, "", "");
 		playerTurnOrder = new ArrayList<Integer>();
-		finishedPlayers = new ArrayList<Integer>();
+		landGrantOrder = new ArrayList<Integer>();
 	}
 	
 	/**
@@ -162,11 +163,11 @@ public class MULEGameEngine {
 			//I did this just checking if player is in the pub 
 			
 			
-			if(GameState.getState().equals(GameState.PLAYING_TOWN)){  //Player is entering pub 
+			/*if(GameState.getState().equals(GameState.PLAYING_TOWN)){  //Player is entering pub 
 				if (map.isInBuilding(newX,newY)==3) {
 					active.addMoney(getGambleMoney(30));			
 				}
-		    }
+		    }*/
 
 			
 			if(onRiverTile() || onMountainTile()) //If player is on a river or mountain tile, they move slower.
@@ -199,7 +200,7 @@ public class MULEGameEngine {
 	}
 
 	public boolean purchaseProperty(Point coords) {
-		if (currentRound < 2){
+		if (currentRound < 3){
 			map.setTileOwner(coords, players[activePlayerInd]);
 			return true;
 		} else if (players[activePlayerInd].getMoney() >= 300) {
@@ -211,37 +212,46 @@ public class MULEGameEngine {
 	}
 
 	public void setPlayerTurnOrder() {
-		finishedPlayers.clear();
+		landGrantOrder.clear();
 		playerTurnOrder.clear();
+		landGrantOrder.add(0);
 		playerTurnOrder.add(0);
 		for (int i = 1; i < players.length; i++)
 			for (int j = 0; j < playerTurnOrder.size(); j++){
 				if (players[i].getScore() < players[playerTurnOrder.get(j)].getScore()){
 					playerTurnOrder.add(j,i);
+					landGrantOrder.add(j,i);
 					break;
 				}
 				if (j == playerTurnOrder.size() - 1){
 					playerTurnOrder.add(i);
+					landGrantOrder.add(i);
 					break;
 				}
-			}		
+			}	
+		nextState = GameState.START_ROUND;
 	}
 
 	public boolean nextActivePlayerIndex() {
-		boolean val = true;
-		if (playerTurnOrder.isEmpty()){
-			if (GameState.playing()){
-				setPlayerTurnOrder();
-			} else if (GameState.getState().equals(GameState.LANDGRANT)){
-				while (!finishedPlayers.isEmpty())
-					playerTurnOrder.add(finishedPlayers.remove(0));
-			}
-			val = false;			
+		if (!landGrantOrder.isEmpty()){
+			activePlayerInd = landGrantOrder.remove(0);
+			nextState = GameState.LANDGRANT;
+			return true;
+		}else if (!playerTurnOrder.isEmpty()){
+			activePlayerInd = playerTurnOrder.remove(0);
+			nextState = GameState.PLAYING_MAP;
+			return true;
 		}
-		activePlayerInd = playerTurnOrder.remove(0);
-		finishedPlayers.add(activePlayerInd);
-		return val;
+		setPlayerTurnOrder();
+		nextState = GameState.START_ROUND;
+		return false;
 	}
+	
+	public String getNextState(){
+		return nextState;
+	}
+	
+		
 	
 
 	public void raiseTile(Point currentLocation, boolean raise) {
