@@ -23,9 +23,10 @@ import javax.swing.event.MouseInputListener;
 @SuppressWarnings("serial")
 public class MULEMainPanel extends JPanel{
 	//Instance Data
-	MULEGameEngine engine;
-	Timer updater;
-	
+	 MULEGameEngine engine;
+	Timer updater,turnTimer;
+
+
 	private StartScreen startPanel = new StartScreen(); //game startup screen.
 	private GameSetup gameSetupPanel = new GameSetup(); //The panel that allows choice of game type.
 	private PlayerSetup playerSetupPanel = new PlayerSetup(); //The panel that allows each player to make a character.
@@ -40,9 +41,9 @@ public class MULEMainPanel extends JPanel{
 	private final String playerSetupID = "PLAYERSETUP";
 	private final String gameplayID = "GAMEPLAY";
 	private final String turnStartID = "TURNSTART";
-	
+
 	private Mouse landGrantMouse;
-	
+
 	/**
 	 * Constructs a MULEMainPanel with a set size, adds the 4 game screens, 
 	 * and assigns listeners to the necessary buttons.
@@ -50,14 +51,14 @@ public class MULEMainPanel extends JPanel{
 	public MULEMainPanel(){
 		setLayout(cardLayout);
 		setPreferredSize(new Dimension(900,600));
-		
-		
+
+
 		add(startPanel, startID);
 		add(gameSetupPanel, gameSetupID);
 		add(playerSetupPanel, playerSetupID);
 		add(gameplayPanel, gameplayID);
 		add(turnStartPanel, turnStartID);
-		
+
 		JButton startBtn = startPanel.getButton();
 		JButton gameSetupBtn = gameSetupPanel.getButton();
 		JButton playerSetupBtn = playerSetupPanel.getButton();
@@ -69,7 +70,7 @@ public class MULEMainPanel extends JPanel{
 		playerSetupBtn.addActionListener(new NextListener(playerSetupID));
 		turnStartBtn.addActionListener(new NextListener(turnStartID));
 		gamePlayBtn.addActionListener(new NextListener(gameplayID));
-		
+
 	}
 	/**
 	 * The runGameLoop method uses an ActionListener attached to a timer to 
@@ -79,7 +80,12 @@ public class MULEMainPanel extends JPanel{
 		updater = new Timer(1000/60, new GameUpdater()); //1000/60 means we are updating at 60 FPS.
 		updater.start();
 	}
-	
+
+	private void runTimerLoop(){
+		turnTimer =  new Timer(engine.calculateActivePlayerTurnTime(), new TurnUpdater());
+		turnTimer.start();
+	}
+
 	/**
 	 * The NextListener class creates button listeners for the "Next" buttons
 	 * on the menu screens, allowing users to switch between screens and 
@@ -89,11 +95,11 @@ public class MULEMainPanel extends JPanel{
 	 */
 	private class NextListener implements ActionListener{
 		String ID;
-		
+
 		public NextListener(String id){
 			ID = id;
 		}
-		
+
 		public void actionPerformed(ActionEvent e){
 			switch(ID){
 			case startID: //If the start button is pressed, display the game setup screen.
@@ -101,8 +107,8 @@ public class MULEMainPanel extends JPanel{
 				break;
 			case gameSetupID: //If the game setup button is pressed, create game engine and show player screen.
 				engine = new MULEGameEngine(gameSetupPanel.getDifficulty(), 
-											gameSetupPanel.getMapType(), 
-											gameSetupPanel.getPlayerCount());
+						gameSetupPanel.getMapType(), 
+						gameSetupPanel.getPlayerCount());
 				playerSetupPanel.setPlayerNumber(engine.getNextPlayerSlot() + 1);
 				cardLayout.show(MULEMainPanel.this, playerSetupID);
 				break;
@@ -144,7 +150,7 @@ public class MULEMainPanel extends JPanel{
 					setFocusable(true);
 					addKeyListener(new PlayerControls());					
 					cardLayout.show(MULEMainPanel.this, gameplayID);
-					runGameLoop();
+					runGameLoop(); 
 				}
 				break;
 			case gameplayID: //if gameplay button is pushed
@@ -164,7 +170,7 @@ public class MULEMainPanel extends JPanel{
 		}
 
 	}
-	
+
 	/**
 	 * PlayerControls is a private inner class that acts as a KeyListener 
 	 * for the gameplayPanel; it allows the player to move around the screen 
@@ -213,12 +219,12 @@ public class MULEMainPanel extends JPanel{
 			
 		
 		}
-		
+
 		//The following methods are unused in this application but have to be implemented.
 		public void keyReleased(KeyEvent e){}
 		public void keyTyped(KeyEvent e){}
 	}
-	
+
 	/**
 	 * GameUpdater is a private inner class that acts as an ActionListener.
 	 * An instance of this class is meant to be attached to a timer that 
@@ -228,7 +234,7 @@ public class MULEMainPanel extends JPanel{
 	 *
 	 */
 	private class GameUpdater implements ActionListener{
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e){
 			//System.out.println(GameState.getState());
@@ -246,8 +252,19 @@ public class MULEMainPanel extends JPanel{
 				updater.stop();
 			}
 		}
-	}
+	}  
 	
+
+	private class TurnUpdater implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e){
+			GameState.setState(GameState.WAITING);
+			
+		}
+		}
+	
+
 	/**
 	 * This class is a mouseInputListener that is used to detect mouse actions.
 	 * Currently, it is only used for the land grant state of the game
@@ -257,7 +274,7 @@ public class MULEMainPanel extends JPanel{
 	private class Mouse implements MouseInputListener{
 
 		private boolean pickedTile = false;
-		
+
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
 			Point location = arg0.getPoint();
