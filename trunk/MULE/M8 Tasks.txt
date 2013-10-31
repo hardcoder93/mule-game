@@ -1,0 +1,47 @@
+M8
+-----
+REQUIRED (things from M8 that need to be done ASAP):
+	-implement store (buying supplies, mules from storehouse)
+	-put mule on land
+
+ADDITIONAL (things from M9 that we want to do now):
+	-check for random event at start of turn
+	-calculate production at start of turn
+
+OTHER (things we can add to make the game even better):
+	-add store to scoreboard
+	-display price of land before player buys (first 2 rounds free, after that $300)
+	-land buying timer
+	-if timer runs out, piece of land is auctioned to other players 
+		-how to auction:
+			-ordered, player with least land/score?
+			-competitive somehow? (different keys for different players)
+		
+		
+Below are the individual tasks for each person:
+----------------------------
+WS:
+	-Add store to scoreboard
+	-Check for random event at start of turn
+	
+----------------------------
+SHJ:
+	-Draw images for 3 buildings (farm-produces food, mining-produces ore, powerplant-produces energy)
+	-Draw image for mule that will follow player around before being placed (same size as player)
+	
+----------------------------
+CJ:
+	-Write movement methods to make mule follow player around
+	-Write code to place mule on land owned by player (change draw method in Tile class)
+	-(implement wampus if time allows)
+	
+----------------------------
+YL:
+	-Write code to calculate production from a player's buildings at the beginning of that player's turn
+	
+----------------------------
+JC:
+	-Write code to display the store menu 
+	-Write code to buy and sell resources and mules in the store
+	-Fix score calculation (based on money and resources)
+	
