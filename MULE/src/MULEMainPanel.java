@@ -305,7 +305,7 @@ public class MULEMainPanel extends JPanel{
 			Point location = arg0.getPoint();
 			if (!pickedTile){
 				if (engine.getMap().isBuyable(location)){
-					if (engine.purchaseProperty(location)){
+					if (engine.purchaseTile(location)){
 						pickedTile = true;
 						gameplayPanel.updateScoreboard();
 						gameplayPanel.setButtonText("Done");
