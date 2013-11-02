@@ -16,11 +16,11 @@ public class MULEGameEngine {
 	private Player[] players;
 	private int activePlayerInd = 0;
 	private int currentRound = 0;
-	private Player store;
 	private ArrayList<Integer> playerTurnOrder;
 	private ArrayList<Integer> landGrantOrder;
 	private String nextState = "";
 	private int roundBonus;
+	private Store store;
 	/**
 	 * Builds a MULEGameEngine object, setting the difficulty of the game,
 	 * creating the map, and initializing the empty player list.
@@ -42,7 +42,7 @@ public class MULEGameEngine {
 		}
 		
 		players = new Player[numPlayers];
-		store = new Player("STORE", difficulty, "", "");
+		store = new Store(difficulty);
 		playerTurnOrder = new ArrayList<Integer>();
 		landGrantOrder = new ArrayList<Integer>();
 	}
@@ -61,7 +61,7 @@ public class MULEGameEngine {
 	public boolean addPlayer(String name, String color, String race){
 		int index = getNextPlayerSlot();
 		if(index==-1) return false;
-		players[index] = new Player(name, difficulty, race, color);
+		players[index] = new Player(name, difficulty, race, color, store);
 		return true;
 	}
 	
@@ -199,16 +199,14 @@ public class MULEGameEngine {
 				map.isMountainTile(active.getX()+Player.PLAYER_WIDTH, active.getY()+Player.PLAYER_HEIGHT));
 	}
 
-	public boolean purchaseProperty(Point coords) {
-		if (currentRound < 3){
-			map.setTileOwner(coords, players[activePlayerInd]);
-			return true;
-		} else if (players[activePlayerInd].getMoney() >= 300) {
-			map.setTileOwner(coords, players[activePlayerInd]);
-			players[activePlayerInd].subtractMoney(300);
-			return true;
-		}
-		return false;		
+	/**
+	 * Purchases the tile for the active player.
+	 * @param location	pixel location for the tile
+	 * @return	true if the tile was purchased; false if the player did not have enough money
+	 */
+	public boolean purchaseTile(Point location) {
+		Tile tile = map.getTileFromLocation(location);
+		return players[activePlayerInd].purchaseTile(tile, currentRound);		
 	}
 
 	public void setPlayerTurnOrder() {

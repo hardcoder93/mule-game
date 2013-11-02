@@ -1,6 +1,7 @@
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 
@@ -25,20 +26,26 @@ public class Player implements Drawable{
 	private int food;
 	private int energy;
 	private int ore;
+	private int crystite;
 	private Image pImage;
 	private int xCoord = 500;
 	private int yCoord = 250;
+	private int score;
+	private ArrayList<Tile> ownedTiles;
 
-	public Player(String name, String level, String race, String color){
+	public Player(String name, String level, String race, String color, Store store){
 		this.name = name;
 		this.level = level;
 		this.race = race;
 		this.color = color;
 		this.ore = 0;
+		this.ownedTiles = new ArrayList<Tile>();
 		setMoney();
 		setResources();
 		setImage();
+		calculateScore(store);
 	}
+	
 
 	public void setMoney() {
 		switch (race) {
@@ -180,8 +187,42 @@ public class Player implements Drawable{
 		money -= i;
 	}
 	
+	/**
+	 * Purchases a tile on the map and updates the player and the purchased
+	 * tile. If the round < 2 the tile is free, if not it costs 300
+	 * @param tile	tile to be purchased
+	 * @param round	current round
+	 * @return true if player has enough money to buy the tile; false if not
+	 */
+	public boolean purchaseTile(Tile tile, int round){
+		if (money >= 300 || round < 3){
+			tile.setOwner(this);
+			ownedTiles.add(tile);
+			money = round < 2 ? money : money - 300;
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * calculateScore sets the score based on:
+	 * 		money:	$1 = 1 point
+	 * 		Land:	1 plot = 500 + outfit price;
+	 * 		Goods:	1 mule = 35 points
+	 * 				food, energy, smithore, crystite = current price
+	 * @param store is used to determine the current price
+	 */
+	public void calculateScore(Store store){
+		score =  food * store.getCurrentPrice("Food") +
+				energy * store.getCurrentPrice("Energy") +
+				ore * store.getCurrentPrice("Smithore") +
+				crystite * store.getCurrentPrice("Crystite");
+		for (int i = 0; i < ownedTiles.size(); i++)
+			score += ownedTiles.get(i).getValue();
+	}
+	
 	public int getScore(){
-		return money;
+		return score;
 	}
 
 	public void resetPosition() {

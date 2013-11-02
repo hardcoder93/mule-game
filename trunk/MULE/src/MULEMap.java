@@ -443,4 +443,8 @@ public class MULEMap implements Drawable{
 		return -1;
 	}
 
+	public Tile getTileFromLocation(Point location) {
+		return getTileFromLocation(location.x, location.y);
+	}
+
 }

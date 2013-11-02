@@ -27,6 +27,8 @@ public class Tile implements Drawable{
 	private boolean raised;			//true if should be drawn raised
 	private char direction;			//direction (used for river)
 	private Image tileImage;		//image for tile
+	private int value;
+	private String productionType;
 	
 	/**
 	 * Constructor for Tile class
@@ -46,6 +48,8 @@ public class Tile implements Drawable{
 		this.yLoc = yCoord * MapImages.TILE_SIZE.height;
 		this.setImage();
 		this.raised = false;
+		this.value = 500;
+		productionType = "None";
 	}
 
 	/**
@@ -190,6 +194,47 @@ public class Tile implements Drawable{
 		// draw rectangle
 		for (int i = 0; i < TILE_BORDER_WIDTH; i++)
 			g.drawRect(xLoc + i, yLoc + i, MapImages.TILE_SIZE.width - 2 * i, MapImages.TILE_SIZE.height - 2 * i);		
+	}
+	
+	/**
+	 * Sets the productionType based on how the mule is outfitted. This method
+	 * also calls updateValue() to change the value of the tile
+	 * Valid inputs:	"Food", "Energy", "Smithore", "Crystite", "None"
+	 * @param production the type of production
+	 */
+	public void setProductionType(String production){
+		productionType = production;
+		updateValue();
+	}
+	
+	/**
+	 * Updates the value of the tile based on how it is outfitted
+	 */
+	private void updateValue(){
+		int mule = 35;
+		int startVal = 500;
+		if (productionType.equalsIgnoreCase("Food"))
+			value = startVal + mule + 25;
+		else if (productionType.equalsIgnoreCase("Energy"))
+			value = startVal + mule + 50;
+		else if (productionType.equalsIgnoreCase("Smithore"))
+			value = startVal + mule + 75;
+		else if (productionType.equalsIgnoreCase("Crystite"))
+			value = startVal + mule + 100;
+		else
+			value = startVal;
+	}
+
+	/**
+	 * Gets the value of this tile. Value is determined by 500 + outfitPrice + (mules * 35)
+	 * OutfitPrice:		food		25
+	 * 					energy		50
+	 * 					smithore	75
+	 * 					crystite	100	
+	 * @return
+	 */
+	public int getValue() {
+		return value;
 	}
 
 }
