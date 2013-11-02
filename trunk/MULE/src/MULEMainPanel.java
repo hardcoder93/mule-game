@@ -143,7 +143,7 @@ public class MULEMainPanel extends JPanel{
 					cardLayout.show(MULEMainPanel.this, playerSetupID);
 				}else {
 					GameState.setState(GameState.START_ROUND);
-					gameplayPanel.setMapAndPlayers(engine.getMap(), engine.getPlayers());
+					gameplayPanel.setMapAndPlayers(engine.getMap(), engine.getPlayers(), engine.getStore());
 					displayNextRound();
 				}
 				break;
@@ -193,10 +193,16 @@ public class MULEMainPanel extends JPanel{
 				switch(e.getKeyCode()){
 				case KeyEvent.VK_UP:
 				case KeyEvent.VK_W:
-					engine.movePlayer(0,-1); //Y coords start at upper left, so up is negative.
+					if (engine.isInBuilding() == -1){
+						engine.movePlayer(0,-1); //Y coords start at upper left, so up is negative.
+						if (engine.isInBuilding() == 2)
+							gameplayPanel.displayStoreMenu();
+					}
 					break;
 				case KeyEvent.VK_DOWN:
 				case KeyEvent.VK_S:
+					if (engine.isInBuilding() == 2)
+						gameplayPanel.removeStoreMenu();
 					engine.movePlayer(0, 1); //Y coords start at upper left, so down is positive.
 					break;
 				case KeyEvent.VK_LEFT:

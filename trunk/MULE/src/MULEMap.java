@@ -425,20 +425,22 @@ public class MULEMap implements Drawable{
 	 * @return -1 if not in building; 0, 1, 2, or 3 if in Assay, Land, Store, or Pub, respectively.
 	 */
 	public int isInBuilding(int xLoc, int yLoc){
-		//Check if the location is in the vertical area.
-		if(yLoc>=256-Player.PLAYER_HEIGHT/2 && yLoc<=255){
-			//Check if in the entrance to Assay.
-			if(xLoc>=89-5 && xLoc<=148+5-Player.PLAYER_WIDTH)//+/-5 for ease of entry.
-				return 0;
-			//Check if in the entrance to Land.
-			if(xLoc>=313-5 && xLoc<=362+5-Player.PLAYER_WIDTH)//+/-5 for ease of entry.
-				return 1;
-			//Check if in the entrance to Store.
-			if(xLoc>=538-5 && xLoc<=587+5-Player.PLAYER_WIDTH)//+/-5 for ease of entry.
-				return 2;
-			//Check if in the entrance to Pub.
-			if(xLoc>=762-5 && xLoc<=811+5-Player.PLAYER_WIDTH)//+/-5 for ease of entry.
-				return 3;
+		if (activeMap.equals(TOWN_MAP)){
+			//Check if the location is in the vertical area.
+			if(yLoc>=256-Player.PLAYER_HEIGHT/2 && yLoc<=255){
+				//Check if in the entrance to Assay.
+				if(xLoc>=89-5 && xLoc<=148+5-Player.PLAYER_WIDTH)//+/-5 for ease of entry.
+					return 0;
+				//Check if in the entrance to Land.
+				if(xLoc>=313-5 && xLoc<=362+5-Player.PLAYER_WIDTH)//+/-5 for ease of entry.
+					return 1;
+				//Check if in the entrance to Store.
+				if(xLoc>=538-5 && xLoc<=587+5-Player.PLAYER_WIDTH)//+/-5 for ease of entry.
+					return 2;
+				//Check if in the entrance to Pub.
+				if(xLoc>=762-5 && xLoc<=811+5-Player.PLAYER_WIDTH)//+/-5 for ease of entry.
+					return 3;
+			}
 		}
 		return -1;
 	}

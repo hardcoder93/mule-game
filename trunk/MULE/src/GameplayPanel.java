@@ -1,13 +1,26 @@
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Panel;
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.Timer;
+import javax.swing.border.Border;
+import javax.swing.text.Position;
 
 /**
  * Jpanel object for M.U.L.E. game that displays everything that goes on during the 
@@ -25,8 +38,22 @@ public class GameplayPanel extends JPanel {
 	private MULEMap gameMap;			//map of game
 	private Player[] playerList;		//list of players (playerList.length = # of players)
 	private Player activePlayer;
+	private Store store;
 	private JLabel[] moneyLabels = new JLabel[4];
 	private JLabel label;
+	private JComboBox<String> storeResourcesBox;
+	private JComboBox<String> buyOrSellBox;
+	private JComboBox<Integer> storeQuantityBox;
+	private final String[] resourceOptions = {"Food", "Energy", "Smithore", "Mules"};
+	private String buildingDisplayed;
+	private JLabel buildingLabel;
+	private JTextArea storeInventoryLabels[];
+	private final Point menuPos = new Point(150,25);
+	private final Dimension menuSize = new Dimension(600,250);
+	private final int menuBorderSize = 8;
+	private JLabel todaysDeals;
+
+
 	
 	//Screen States
 	private String panelState;
@@ -40,16 +67,91 @@ public class GameplayPanel extends JPanel {
         setBackground(Color.LIGHT_GRAY);
         setLayout(null);
         panelState = "init";
+        buildingDisplayed = "none";
         
+        buildingLabel = new JLabel();
+        buildingLabel.setBounds(menuPos.x, menuPos.y + 5, menuSize.width, menuSize.height);
+        buildingLabel.setHorizontalAlignment(JLabel.CENTER);
+        buildingLabel.setVerticalAlignment(JLabel.TOP);
+        buildingLabel.setForeground(Color.YELLOW);
+    	buildingLabel.setFont(new Font("Narkisim", Font.BOLD, 20));
+
         nextScreenButton = new JButton("");
         nextScreenButton.setFont(new Font("Narkisim", Font.BOLD, 13));
         nextScreenButton.setBounds(783, 571, 117, 29);
         nextScreenButton.setOpaque(false);
         nextScreenButton.setContentAreaFilled(false);
-        //nextScreenButton.setBorderPainted(false);
         add(nextScreenButton);
         
-        
+        initStoreMenu();
+    }
+    
+    
+    private void initStoreMenu(){
+    	buyOrSellBox = new JComboBox<String>();
+    	buyOrSellBox.addItem("Buy");
+    	buyOrSellBox.addItem("Sell");
+    	buyOrSellBox.setBounds(menuPos.x + menuSize.width/2 + 50, menuPos.y + 80, 124, 27);
+		buyOrSellBox.addActionListener(new StoreMenuListener());
+    	storeResourcesBox = new JComboBox<String>(resourceOptions);
+		storeResourcesBox.setBounds(menuPos.x + menuSize.width/2 + 50, menuPos.y + 110, 124, 27);
+		storeResourcesBox.addActionListener(new StoreMenuListener());
+    	storeQuantityBox = new JComboBox<Integer>();
+		storeQuantityBox.setBounds(menuPos.x + menuSize.width/2 + 50, menuPos.y + 140, 124, 27);
+		todaysDeals = new JLabel("Today's Deals");
+		todaysDeals.setBounds(menuPos.x, menuPos.y + 60, menuSize.width / 2 - 40, 20);
+		todaysDeals.setHorizontalAlignment(JLabel.CENTER);
+		todaysDeals.setForeground(Color.WHITE);
+    	todaysDeals.setFont(new Font("Narkisim", Font.BOLD, 15));
+        storeInventoryLabels = new JTextArea[resourceOptions.length];
+        for (int i = 0; i < storeInventoryLabels.length; i++){
+        	storeInventoryLabels[i] = new JTextArea();
+        	storeInventoryLabels[i].setBounds(menuPos.x + 20, menuPos.y+90+i*30, 
+        			menuSize.width / 2 - 5, 20); 
+        	storeInventoryLabels[i].setForeground(Color.WHITE);
+        	storeInventoryLabels[i].setFont(new Font("Narkisim", Font.BOLD, 12));
+        	storeInventoryLabels[i].setEditable(false);
+        	storeInventoryLabels[i].setOpaque(false);
+        	storeInventoryLabels[i].setTabSize(7);
+        }
+    }
+    
+    public void updateInventoryLabels(){
+    	int numLeft;
+    	int price;
+    	String numLeftString;
+    	for (int i = 0; i < storeInventoryLabels.length; i++){
+    		price = store.getCurrentPrice(resourceOptions[i]);
+    		numLeft = store.getQuantity(resourceOptions[i]);
+    		numLeftString = numLeft > 0 ? numLeft + " left!" : "SOLD OUT";
+    		numLeftString = price >= 100 ? "    " + numLeftString : "      " + numLeftString;
+    		storeInventoryLabels[i].setText(resourceOptions[i] + ":\t$" + price + numLeftString);
+    	}
+    }
+    
+    public void displayStoreMenu(){
+    	buildingDisplayed = "Store";
+    	buildingLabel.setText("Welcome to the Store!");
+    	storeResourcesBox.setSelectedIndex(0);
+    	updateInventoryLabels();
+    	for (int i = 0; i < storeInventoryLabels.length; i++)
+    		add(storeInventoryLabels[i]);
+    	add(buyOrSellBox);
+    	add(storeResourcesBox);
+    	add(storeQuantityBox);
+    	add(buildingLabel);
+    	add(todaysDeals);
+    }
+    
+    public void removeStoreMenu(){
+    	buildingDisplayed = "none";
+    	for (int i = 0; i < storeInventoryLabels.length; i++)
+    		remove(storeInventoryLabels[i]);
+    	remove(buyOrSellBox);
+    	remove(storeResourcesBox);
+    	remove(storeQuantityBox);
+    	remove(buildingLabel);
+    	remove(todaysDeals);
     }
     
     public void addLabel(JLabel label){
@@ -339,11 +441,11 @@ public class GameplayPanel extends JPanel {
      * @param gameMap		map for the game
      * @param playerList	players in the game
      */
-    public void setMapAndPlayers(MULEMap gameMap, Player[] playerList){
+    public void setMapAndPlayers(MULEMap gameMap, Player[] playerList, Store store){
     	this.gameMap = gameMap;
     	this.playerList = playerList;
+    	this.store = store;
     	setUpScoreboard();
-    	
     }
     
     /**
@@ -392,8 +494,41 @@ public class GameplayPanel extends JPanel {
     			gameMap.draw(g);
     			if (GameState.playing()){
     				activePlayer.draw(g);
+    				if (!buildingDisplayed.equals("none"))
+    					drawBuildingMenu(g);
     			}
     		}
     	}
+    }
+    
+    private void drawBuildingMenu(Graphics g) {
+    	g.setColor(Color.BLUE);
+    	g.fillRect(menuPos.x, menuPos.y, menuSize.width, menuSize.height);
+    	g.setColor(Color.YELLOW);
+    	for (int i = 1; i <= menuBorderSize; i++)
+    		g.drawRect(menuPos.x-i, menuPos.y-i, menuSize.width+2*i-1, menuSize.height+2*i-1);
+    }
+
+	private class StoreMenuListener implements ActionListener{
+    	
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			int quantity;
+	        String selection = storeResourcesBox.getSelectedItem().toString();
+	        String buyOrSell = buyOrSellBox.getSelectedItem().toString();
+	        if (buyOrSell.equals("Buy")){
+	        	quantity = store.getQuantity(selection);
+		        quantity = (selection.equals("Mules") && quantity > 1) ? 1 : quantity;
+	        } else 
+	        	if (selection.equals("Mules"))
+	        		quantity = activePlayer.hasMule() ? 1 : 0;
+	        	else
+	        		quantity = activePlayer.getGoods(selection);	      
+	        for (int i = storeQuantityBox.getItemCount() - 1; i > quantity; i--)
+	        	storeQuantityBox.removeItemAt(i);
+	        for (int i = storeQuantityBox.getItemCount(); i <= quantity; i++){	        		
+	        	storeQuantityBox.addItem(i);	
+	        }
+		}    	
     }
 }
