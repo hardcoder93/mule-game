@@ -124,6 +124,7 @@ public class MULEMainPanel extends JPanel{
 				engine = new MULEGameEngine(gameSetupPanel.getDifficulty(), 
 						gameSetupPanel.getMapType(), 
 						gameSetupPanel.getPlayerCount());
+				gameplayPanel.setStore(engine.getStore());
 				playerSetupPanel.setPlayerNumber(engine.getNextPlayerSlot() + 1);
 				cardLayout.show(MULEMainPanel.this, playerSetupID);
 				break;
@@ -367,6 +368,7 @@ public class MULEMainPanel extends JPanel{
 	 */
 	public void endTurn(boolean gamble){
 		removeKeyListener(arrowKeys);
+		gameplayPanel.removeStoreMenu();
 		turnTime.setText("");;
 		turnTimer.stop();
 		int gamblingMoney = 0;
