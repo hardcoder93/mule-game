@@ -302,11 +302,18 @@ public class MULEGameEngine {
 		else if(timeLeft >=0 && timeLeft< 12)
 		    timeBonus = 50;
 		
-		Random rand = new Random();
-			
-		
-		
+		Random rand = new Random();	
 		return rand.nextInt(timeBonus)+ roundBonus; 
+	}
+	
+	public int isInBuilding(){
+		int xLoc = players[activePlayerInd].getX();
+		int yLoc = players[activePlayerInd].getY();
+		return map.isInBuilding(xLoc, yLoc);
+	}
+
+	public Store getStore() {
+		return store;
 	}
 
 }

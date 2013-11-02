@@ -32,6 +32,7 @@ public class Player implements Drawable{
 	private int yCoord = 250;
 	private int score;
 	private ArrayList<Tile> ownedTiles;
+	private boolean mule;
 
 	public Player(String name, String level, String race, String color, Store store){
 		this.name = name;
@@ -40,6 +41,7 @@ public class Player implements Drawable{
 		this.color = color;
 		this.ore = 0;
 		this.ownedTiles = new ArrayList<Tile>();
+		mule = false;
 		setMoney();
 		setResources();
 		setImage();
@@ -228,6 +230,24 @@ public class Player implements Drawable{
 	public void resetPosition() {
 		xCoord = 500;
 		yCoord = 250;
+	}
+
+
+	public boolean hasMule() {
+		return mule;
+	}
+
+
+	public int getGoods(String selection) {
+		switch (selection){
+		case "Food":
+			return food;
+		case "Smithore":
+			return ore;
+		case "Energy":
+			return energy;
+		}
+		return -1;
 	}
 
 	

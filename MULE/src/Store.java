@@ -58,6 +58,11 @@ public class Store {
 		}
 	}
 	
+	/**
+	 * Gets the currentPrice of a good
+	 * @param type the good get the price of
+	 * @return the current price
+	 */
 	public int getCurrentPrice(String type){
 		switch (type){
 		case "Food":
@@ -70,6 +75,28 @@ public class Store {
 			return crystite.getCurrentPrice();
 		case "Mules":
 			return mules.getCurrentPrice();
+		}
+		return -1;
+	}
+	
+	/**
+	 * Gets the current quantity in the store of a good
+	 * @param type the type of good to get the quantity of
+	 * @return the quantity in the store
+	 */
+	public int getQuantity(String type){
+		switch (type){
+		case "Food":
+			System.out.print(food.getQuantity());
+			return food.getQuantity();
+		case "Energy":
+			return energy.getQuantity();
+		case "Smithore":
+			return smithore.getQuantity();
+		case "Crystite":
+			return crystite.getQuantity();
+		case "Mules":
+			return mules.getQuantity();
 		}
 		return -1;
 	}
@@ -87,15 +114,19 @@ public class Store {
 		private int quantity;
 		
 		private Goods(int currentPrice, int quantity){
-			this.currentPrice = 0;
-			this.quantity = 0;
+			this.currentPrice = currentPrice;
+			this.quantity = quantity;
 		}
 		
 		public int getCurrentPrice() {
 			return currentPrice;
 		}
+		
+		public int getQuantity(){
+			return quantity;
+		}
 
-		public void setCurrentPrice(int price){
+		private void setCurrentPrice(int price){
 			this.currentPrice = price;
 		}
 		
