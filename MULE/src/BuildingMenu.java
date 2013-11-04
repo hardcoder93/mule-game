@@ -66,9 +66,11 @@ public class BuildingMenu implements Drawable{
 			if (i < 2){
 				tmp = new JComboBox<String>(comboBoxEntries[i]);
 				tmp.addActionListener(new StoreMenuListener());
+				tmp.setFocusable(false);
 			} else {
 				tmp = new JComboBox<String>();
 				tmp.addItem("0");
+				tmp.setFocusable(false);
 			}
 			tmp.setBounds(xPos + width/2 + 40, yPos + 60 + 30*i, 124, 27);
 			comboBoxes.add(tmp);
@@ -98,6 +100,8 @@ public class BuildingMenu implements Drawable{
 	        
 	    menuButton = new JButton("Complete Transaction");
 	    menuButton.setBounds(xPos + width/2 + 50, yPos + 180, 200, 27);
+	    menuButton.setFocusable(false);
+	    menuButton.addActionListener(new StoreMenuListener());
 	}
 	
     public void updateInventoryLabels(){
@@ -128,7 +132,6 @@ public class BuildingMenu implements Drawable{
     		parentPanel.add(comboBoxes.get(i));
     	parentPanel.add(welcomeMessage);
     	parentPanel.add(menuLabel);
-    	menuButton.setEnabled(false);
     	parentPanel.add(menuButton);
     }
     
@@ -144,6 +147,12 @@ public class BuildingMenu implements Drawable{
     	parentPanel.remove(menuButton);
     }
 
+    public ArrayList<Object> getEntries(){
+    	ArrayList<Object> entries = new ArrayList<Object>();
+    	for (int i = 0; i < comboBoxes.size(); i++)
+    		entries.add(comboBoxes.get(i).getSelectedItem());
+    	return entries;
+    }
 
 	@Override
 	public void draw(Graphics g) {
@@ -163,7 +172,8 @@ public class BuildingMenu implements Drawable{
 	        String buyOrSell = comboBoxes.get(0).getSelectedItem().toString();
 	        if (buyOrSell.equals("Buy")){
 	        	quantity = store.getQuantity(selection);
-		        quantity = (selection.equals("Mules") && quantity > 1) ? 1 : quantity;
+	        	if (selection.equals("Mules"))
+	        		quantity = (quantity > 1 && !activePlayer.hasMule()) ? 1 : 0;
 	        } else 
 	        	if (selection.equals("Mules"))
 	        		quantity = activePlayer.hasMule() ? 1 : 0;
@@ -171,10 +181,15 @@ public class BuildingMenu implements Drawable{
 	        		quantity = activePlayer.getGoods(selection);	      
 	        for (int i = comboBoxes.get(2).getItemCount() - 1; i > quantity; i--)
 	        	comboBoxes.get(2).removeItemAt(i);
-	        for (int i = comboBoxes.get(2).getItemCount(); i <= quantity; i++){	        		
+	        for (int i = comboBoxes.get(2).getItemCount(); i <= quantity; i++)  		
 	        	comboBoxes.get(2).addItem("" + i);	
-	        }
+	        
+	        updateInventoryLabels();
 		}    	
     }
+	
+	public JButton getButton() {
+		return menuButton;
+	}
 	
 }

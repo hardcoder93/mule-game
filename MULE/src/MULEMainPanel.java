@@ -53,6 +53,8 @@ public class MULEMainPanel extends JPanel{
 	private PlayerControls arrowKeys;
 	
 	private JButton gamePlayBtn;
+	private JButton menuButton;
+	private StorePurchaseAction storeListener;
 
 	/**
 	 * Constructs a MULEMainPanel with a set size, adds the 4 game screens, 
@@ -78,12 +80,16 @@ public class MULEMainPanel extends JPanel{
 		JButton playerSetupBtn = playerSetupPanel.getButton();
 		JButton turnStartBtn = turnStartPanel.getButton();
 		gamePlayBtn = gameplayPanel.getButton();
+		menuButton = gameplayPanel.getMenuButton();
+		
+		storeListener = new StorePurchaseAction();
 
 		startBtn.addActionListener(new NextListener(startID));		
 		gameSetupBtn.addActionListener(new NextListener(gameSetupID));
 		playerSetupBtn.addActionListener(new NextListener(playerSetupID));
 		turnStartBtn.addActionListener(new NextListener(turnStartID));
 		gamePlayBtn.addActionListener(new NextListener(gameplayID));
+		menuButton.addActionListener(storeListener);
 
 		arrowKeys = new PlayerControls();
 
@@ -299,6 +305,20 @@ public class MULEMainPanel extends JPanel{
 			}
 		}
 	}
+	
+	private class StorePurchaseAction implements ActionListener{
+		
+		ArrayList<Object> menuEntries;
+		
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			menuEntries = gameplayPanel.getMenuEntries();
+			engine.storeTransaction(menuEntries.get(0).equals("Buy"), menuEntries.get(1).toString(), 
+					Integer.parseInt(menuEntries.get(2).toString()));
+		}
+		
+	}
+	
 
 	/**
 	 * This class is a mouseInputListener that is used to detect mouse actions.

@@ -39,23 +39,29 @@ public class Store {
 	 * @param quantity	the number of goods to be sold
 	 */
 	public void sellGoods(String type, int quantity){
-		switch (type){
-		case "Food":
+		if (type.equals("Food"))
 			food.sellQuantity(quantity);
-			break;
-		case "Energy":
+		else if (type.equals("Energy"))
 			energy.sellQuantity(quantity);
-			break;
-		case "Smithore":
+		else if (type.equals("Smithore"))
 			smithore.sellQuantity(quantity);
-			break;
-		case "Crystite":
+		else if (type.equals("Crystite"))
 			crystite.sellQuantity(quantity);
-			break;
-		case "Mules":
+		else if (type.equals("Mules"))
 			mules.sellQuantity(quantity);
-			break;
-		}
+	}
+	
+	public void buyGoods(String type, int quantity) {
+		if (type.equals("Food"))
+			food.buyQuantity(quantity);
+		else if (type.equals("Energy"))
+			energy.buyQuantity(quantity);
+		else if (type.equals("Smithore"))
+			smithore.buyQuantity(quantity);
+		else if (type.equals("Crystite"))
+			crystite.buyQuantity(quantity);
+		else if (type.equals("Mules"))
+			mules.buyQuantity(quantity);
 	}
 	
 	/**
@@ -131,7 +137,17 @@ public class Store {
 		}
 		
 		private void sellQuantity(int quantity){
-			this.quantity = quantity;
+			this.quantity -= quantity;
+		}
+		
+		private void buyQuantity(int quantity){
+			this.quantity += quantity;
 		}
 	}
+
 }
+
+
+
+
+

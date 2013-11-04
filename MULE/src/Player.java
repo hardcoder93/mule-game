@@ -305,9 +305,41 @@ public class Player implements Drawable{
 			muleY = yCoord;
 		}
 	}
+
+	public void purchaseGoods(String type, int quantity, int currentPrice) {
+		money -= quantity * currentPrice;
+		if (type.equals("Food"))
+			food += quantity;
+		else if (type.equals("Smithore"))
+			ore += quantity;
+		else if (type.equals("Energy"))
+			energy += quantity;
+		else if (type.equals("Mules"));
+			mule = FOOD_MULE;
+	}
+	
+	public void sellGoods(String type, int quantity, int currentPrice){
+		money += quantity * currentPrice;
+		if (type.equals("Food"))
+			food -= quantity;
+		else if (type.equals("Smithore"))
+			ore -= quantity;
+		else if (type.equals("Energy"))
+			energy -= quantity;
+		else if (type.equals("Mules"));
+			mule = NO_MULE;
+	}
+
 	
 	
 	public boolean ownsTile(Tile tile){
 		return (ownedTiles.contains(tile));
 	}
 }
+
+
+
+
+
+
+
