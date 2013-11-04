@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -59,9 +61,10 @@ public class BuildingMenu implements Drawable{
 		
 		JComboBox<String> tmp;
 		comboBoxes = new ArrayList<JComboBox<String>>();
-		comboBoxEntries = new String[2][];
+		comboBoxEntries = new String[3][];
 		comboBoxEntries[0] = new String[]{"Buy", "Sell"};
 		comboBoxEntries[1] = new String[]{"Food", "Energy", "Smithore", "Mules"};
+		comboBoxEntries[2] = new String[]{"Food Mule", "Energy Mule", "Smithore Mule"};
 		for (int i = 0; i < 3; i++){
 			if (i < 2){
 				tmp = new JComboBox<String>(comboBoxEntries[i]);
@@ -72,7 +75,7 @@ public class BuildingMenu implements Drawable{
 				tmp.addItem("0");
 				tmp.setFocusable(false);
 			}
-			tmp.setBounds(xPos + width/2 + 40, yPos + 60 + 30*i, 124, 27);
+			tmp.setBounds(xPos + width/2 + 20, yPos + 60 + 30*i, 144, 27);
 			comboBoxes.add(tmp);
 		}
 	    	
@@ -85,7 +88,7 @@ public class BuildingMenu implements Drawable{
 	    }
 	    comboBoxLabels[0].setText("Buy or Sell?");
 	    comboBoxLabels[1].setText("Which Resource?");
-	    comboBoxLabels[2].setText("HowMany?");
+	    comboBoxLabels[2].setText("How Many?");
 	    	
 	    menuItems = new JTextArea[comboBoxEntries[1].length];
 	    for (int i = 0; i < menuItems.length; i++){
@@ -170,23 +173,37 @@ public class BuildingMenu implements Drawable{
 			int quantity;
 	        String selection = comboBoxes.get(1).getSelectedItem().toString();
 	        String buyOrSell = comboBoxes.get(0).getSelectedItem().toString();
+	        
+	        
 	        if (buyOrSell.equals("Buy")){
 	        	quantity = store.getQuantity(selection);
-	        	if (selection.equals("Mules"))
-	        		quantity = (quantity > 1 && !activePlayer.hasMule()) ? 1 : 0;
-	        } else 
+	        	if (selection.equals("Mules") && quantity > 0)
+	        		setMuleBox();
+	        	else
+	        		setQuantityBox(quantity);
+	        } else {
 	        	if (selection.equals("Mules"))
 	        		quantity = activePlayer.hasMule() ? 1 : 0;
-	        	else
-	        		quantity = activePlayer.getGoods(selection);	      
-	        for (int i = comboBoxes.get(2).getItemCount() - 1; i > quantity; i--)
-	        	comboBoxes.get(2).removeItemAt(i);
-	        for (int i = comboBoxes.get(2).getItemCount(); i <= quantity; i++)  		
-	        	comboBoxes.get(2).addItem("" + i);	
-	        
+	        	else 
+	        		quantity = activePlayer.getGoods(selection);
+	        	setQuantityBox(quantity);
+	        }
 	        updateInventoryLabels();
-		}    	
-    }
+		}
+	}
+	
+	private void setMuleBox(){
+		comboBoxes.get(2).setModel(new DefaultComboBoxModel<String>(comboBoxEntries[2]));
+		comboBoxLabels[2].setText("Which Type?");
+		
+	}
+	
+	private void setQuantityBox(int quantity){
+		comboBoxLabels[2].setText("How Many?");
+		comboBoxes.get(2).setModel(new DefaultComboBoxModel<String>());
+        for (int i = comboBoxes.get(2).getItemCount(); i <= quantity; i++)  		
+        	comboBoxes.get(2).addItem("" + i);	
+	}
 	
 	public JButton getButton() {
 		return menuButton;

@@ -420,31 +420,19 @@ public class GameplayPanel extends JPanel {
     	}
     }
 
-
-
-
 	public void displayStoreMenu() {
 		buildingDisplayed = "Store";
 		storeMenu.displayStoreMenu(activePlayer, store);
 	}
-
-
-
 
 	public void removeStoreMenu() {
 		buildingDisplayed = "none";
 		storeMenu.removeStoreMenu();
 	}
 
-
-
-
 	public void setStore(Store store2) {
 		this.store = store2;
 	}
-
-
-
 
 	public ArrayList<Object> getMenuEntries() {
 		return storeMenu.getEntries();
