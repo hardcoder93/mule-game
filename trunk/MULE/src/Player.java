@@ -307,7 +307,10 @@ public class Player implements Drawable{
 	}
 
 	public void purchaseGoods(String type, String quantity, int currentPrice) {
-		money -= Integer.parseInt(quantity) * currentPrice;
+		if (!type.equals("Mules"))
+			money -= Integer.parseInt(quantity) * currentPrice;
+		else 
+			money -= currentPrice;
 		if (type.equals("Food"))
 			food += Integer.parseInt(quantity);
 		else if (type.equals("Smithore"))
