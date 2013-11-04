@@ -306,16 +306,22 @@ public class Player implements Drawable{
 		}
 	}
 
-	public void purchaseGoods(String type, int quantity, int currentPrice) {
-		money -= quantity * currentPrice;
+	public void purchaseGoods(String type, String quantity, int currentPrice) {
+		money -= Integer.parseInt(quantity) * currentPrice;
 		if (type.equals("Food"))
-			food += quantity;
+			food += Integer.parseInt(quantity);
 		else if (type.equals("Smithore"))
-			ore += quantity;
+			ore += Integer.parseInt(quantity);
 		else if (type.equals("Energy"))
-			energy += quantity;
-		else if (type.equals("Mules"));
-			mule = FOOD_MULE;
+			energy += Integer.parseInt(quantity);
+		else if (type.equals("Mules")){
+			if (quantity.equals("Food Mule"))
+				mule = FOOD_MULE;
+			else if (quantity.equals("Energy Mule"))
+				mule = ENERGY_MULE;
+			else if (quantity.equals("Smithore Mule"))
+				mule = ORE_MULE;
+		}
 	}
 	
 	public void sellGoods(String type, int quantity, int currentPrice){

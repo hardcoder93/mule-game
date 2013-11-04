@@ -314,7 +314,7 @@ public class MULEMainPanel extends JPanel{
 		public void actionPerformed(ActionEvent arg0) {
 			menuEntries = gameplayPanel.getMenuEntries();
 			engine.storeTransaction(menuEntries.get(0).equals("Buy"), menuEntries.get(1).toString(), 
-					Integer.parseInt(menuEntries.get(2).toString()));
+					(menuEntries.get(2).toString()));
 		}
 		
 	}
