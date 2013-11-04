@@ -442,5 +442,16 @@ public class GameplayPanel extends JPanel {
 	public void setStore(Store store2) {
 		this.store = store2;
 	}
+
+
+
+
+	public ArrayList<Object> getMenuEntries() {
+		return storeMenu.getEntries();
+	}
+	
+	public JButton getMenuButton(){
+		return storeMenu.getButton();
+	}
 }
     

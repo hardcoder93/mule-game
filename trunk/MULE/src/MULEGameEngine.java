@@ -315,5 +315,21 @@ public class MULEGameEngine {
 	public Store getStore() {
 		return store;
 	}
+	
+	public void storeTransaction(boolean buyOrSell, String type, int quantity){
+		if (buyOrSell){
+			players[activePlayerInd].purchaseGoods(type, quantity, store.getCurrentPrice(type));
+			store.sellGoods(type, quantity);
+		} else {
+			players[activePlayerInd].sellGoods(type, quantity, store.getCurrentPrice(type));
+			store.buyGoods(type, quantity);
+		}
+		
+	}
 
 }
+
+
+
+
+
