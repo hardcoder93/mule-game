@@ -173,6 +173,8 @@ public class Tile implements Drawable{
 	@Override
 	public void draw(Graphics g) {
 		g.drawImage(tileImage, xLoc, yLoc, null);
+		if(hasMule())
+			drawMule(g);
 		if (!vacant)
 			drawBorder(g);
 		if (raised){
@@ -235,6 +237,25 @@ public class Tile implements Drawable{
 	 */
 	public int getValue() {
 		return value;
+	}
+	
+	/**
+	 * Returns true if the tile has any type of mule placed on it, false if not
+	 * @return
+	 */
+	public boolean hasMule(){
+		return (!productionType.equalsIgnoreCase("None"));
+	}
+	
+	private void drawMule(Graphics g){
+		if (productionType.equalsIgnoreCase("Food"))
+			g.drawImage(MapImages.FOOD_MULE, xLoc, yLoc, null);
+		else if (productionType.equalsIgnoreCase("Energy"))
+			g.drawImage(MapImages.ENERGY_MULE, xLoc, yLoc, null);
+		else if (productionType.equalsIgnoreCase("Smithore"))
+			g.drawImage(MapImages.ORE_MULE, xLoc, yLoc, null);
+		else if (productionType.equalsIgnoreCase("Crystite"))
+			g.drawImage(MapImages.CRYSTITE_MULE, xLoc, yLoc, null);
 	}
 
 }

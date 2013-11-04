@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.JLabel;
 import javax.swing.Timer;
@@ -217,6 +218,8 @@ public class MULEMainPanel extends JPanel{
 				case KeyEvent.VK_ESCAPE:
 					GameState.setState(GameState.WAITING);
 					gameplayPanel.repaint();
+				case KeyEvent.VK_SPACE:
+					tryPlaceMule();
 				}
 			}if(GameState.getState()==GameState.WAITING){ 
 				if(engine.getMap().getActiveMap().equals(engine.getMap().BIG_MAP))
@@ -373,6 +376,7 @@ public class MULEMainPanel extends JPanel{
 		turnTimer.stop();
 		int gamblingMoney = 0;
 		engine.getActivePlayer().resetPosition();
+		engine.getActivePlayer().setMule(Player.NO_MULE);
 		if (gamble){
 			gamblingMoney = engine.getGambleMoney(countDown);	//change 30 to amount of time left
 			engine.getActivePlayer().addMoney(gamblingMoney);
@@ -410,7 +414,8 @@ public class MULEMainPanel extends JPanel{
 	 * endLandGrant stops the land grant stage of a turn. It removes the MouseListeners
 	 */
 	private void endLandGrant(){
-		screenTimer.stop();
+		if(screenTimer!=null)
+			screenTimer.stop();
 		gamePlayBtn.doClick();
 		gameplayPanel.disableButton();
 		engine.raiseTile(new Point(0,0), false);
@@ -432,6 +437,36 @@ public class MULEMainPanel extends JPanel{
 		runGameLoop();
 	}
 
+	private void tryPlaceMule(){
+		if(GameState.getState()==GameState.PLAYING_MAP){
+			Player active = engine.getActivePlayer();
+			if(active.hasMule()){
+				Tile currTile = engine.getMap().getTileFromLocation(active.getCenterPoint());
+				if(active.ownsTile(currTile) && !currTile.hasMule()){
+					switch(active.getMule()){
+					case Player.FOOD_MULE:
+						currTile.setProductionType("Food");
+						break;
+					case Player.ENERGY_MULE:
+						currTile.setProductionType("Energy");
+						break;
+					case Player.ORE_MULE:
+						currTile.setProductionType("Smithore");
+						break;
+					}
+					active.setMule(Player.NO_MULE);
+				}
+			}
+			////////////////code for testing, remove for final version
+			else{
+				Random rand = new Random();
+				int num = rand.nextInt(3)+1;
+				active.setMule(num);
+				System.out.println(num);
+			}
+			////////////////end code for testing
+		}
+	}
 }
 
 
