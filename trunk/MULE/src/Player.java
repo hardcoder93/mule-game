@@ -7,7 +7,7 @@ import javax.swing.ImageIcon;
 
 /**
  * 
- * @author Yuna Lee (ylee385)
+ * @author Yuna Lee (ylee385), Chris Jenkins (cjenkins36)
  *
  */
 
@@ -16,6 +16,11 @@ public class Player implements Drawable{
 	//Constants
 	public static final int PLAYER_WIDTH = 50;
 	public static final int PLAYER_HEIGHT = 50;
+	
+	public static final int NO_MULE = 0;
+	public static final int FOOD_MULE = 1;
+	public static final int ENERGY_MULE = 2;
+	public static final int ORE_MULE = 3;
 	
 	//Instance Data
 	private String name;
@@ -28,11 +33,14 @@ public class Player implements Drawable{
 	private int ore;
 	private int crystite;
 	private Image pImage;
+	private Image mImage = new ImageIcon("IMAGES/mulePlaceholder.png").getImage();
 	private int xCoord = 500;
 	private int yCoord = 250;
 	private int score;
 	private ArrayList<Tile> ownedTiles;
-	private boolean mule;
+	private int mule;
+	private int muleX = xCoord;
+	private int muleY = yCoord;
 
 	public Player(String name, String level, String race, String color, Store store){
 		this.name = name;
@@ -41,7 +49,7 @@ public class Player implements Drawable{
 		this.color = color;
 		this.ore = 0;
 		this.ownedTiles = new ArrayList<Tile>();
-		mule = false;
+		mule = NO_MULE;
 		setMoney();
 		setResources();
 		setImage();
@@ -144,11 +152,17 @@ public class Player implements Drawable{
 		return yCoord;
 	}
 	
+	public Point getCenterPoint(){
+		return (new Point(xCoord+PLAYER_WIDTH/2, yCoord+PLAYER_HEIGHT/2));
+	}
+	
 	/**
 	 * Draws the player image at the current location with the set width and 
 	 * height.
 	 */
 	public void draw(Graphics g){
+		if(hasMule())
+			g.drawImage(mImage, muleX, muleY, PLAYER_WIDTH, PLAYER_HEIGHT, null, null);
 		g.drawImage(pImage, xCoord, yCoord, PLAYER_WIDTH, PLAYER_HEIGHT, null, null);
 	}
 	
@@ -181,8 +195,19 @@ public class Player implements Drawable{
 	 * @param distY Base distance to move the player in the y-direction.
 	 */
 	public void move(int speed, int distX, int distY){
-		xCoord+=speed*distX;
-		yCoord+=speed*distY;
+		int totX = speed*distX;
+		int totY = speed*distY;
+		xCoord+=totX;
+		yCoord+=totY;
+		//In the following lines, "tot/abs(tot)" is used to get the sign.
+		if(totX!=0)
+			muleX = xCoord-PLAYER_WIDTH*(totX/Math.abs(totX));
+		else
+			muleX = xCoord;
+		if(totY!=0)
+			muleY = yCoord-PLAYER_HEIGHT*(totY/Math.abs(totY));
+		else
+			muleY = yCoord;
 	}
 
 	public void subtractMoney(int i) {
@@ -232,9 +257,26 @@ public class Player implements Drawable{
 		yCoord = 250;
 	}
 
-
-	public boolean hasMule() {
+	/**
+	 * This method returns the int value representing the mule that the player 
+	 * currently has (not placed on property). If the player currently has no
+	 * unplaced mule, the method returns 0; otherwise it returns 1, 2, or 3 for
+	 * food, energy, or ore mule, respectively.
+	 * 
+	 * @return 0 for no mule or 1, 2, or 3 for food, energy or ore mule.
+	 */
+	public int getMule() {
 		return mule;
+	}
+	
+	/**
+	 * This method returns true if the player currently has any of the three
+	 * types of mule. If not, returns false.
+	 * 
+	 * @return True if player has an unplaced mule, false if not.
+	 */
+	public boolean hasMule(){
+		return (getMule()!=NO_MULE);
 	}
 
 
@@ -249,6 +291,23 @@ public class Player implements Drawable{
 		}
 		return -1;
 	}
-
 	
+	/**
+	 * Sets the mule variable representing the mule that is currently following
+	 * the player. Input must be one of the mule constants defined in this class.
+	 * 
+	 * @param mule An int value representing one of the four mule constants.
+	 */
+	public void setMule(int mule){
+		if(mule==NO_MULE || mule==FOOD_MULE || mule==ENERGY_MULE || mule==ORE_MULE){		
+			this.mule = mule;
+			muleX = xCoord;
+			muleY = yCoord;
+		}
+	}
+	
+	
+	public boolean ownsTile(Tile tile){
+		return (ownedTiles.contains(tile));
+	}
 }
