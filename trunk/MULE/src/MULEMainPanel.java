@@ -428,6 +428,8 @@ public class MULEMainPanel extends JPanel{
 	 * each player. It displays the map and add's the MouseListeners.
 	 */
 	private void startLandGrant(){
+		gameplayPanel.setLandGrantLabel(engine.getCurrentRound());
+		gameplayPanel.addLandGrantLabel(true);
 		gameplayPanel.enableButton();
 		gameplayPanel.resetButton();
 		cardLayout.show(MULEMainPanel.this, gameplayID);
@@ -442,6 +444,7 @@ public class MULEMainPanel extends JPanel{
 	private void endLandGrant(){
 		if(screenTimer!=null)
 			screenTimer.stop();
+		gameplayPanel.addLandGrantLabel(false);
 		gamePlayBtn.doClick();
 		gameplayPanel.disableButton();
 		engine.raiseTile(new Point(0,0), false);
