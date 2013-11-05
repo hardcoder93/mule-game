@@ -68,8 +68,32 @@ public class GameplayPanel extends JPanel {
         nextScreenButton.setContentAreaFilled(false);
         add(nextScreenButton);
         
+        label = new JLabel();
+        label.setBounds(250,0,400,30);
+        label.setFont(new Font("Narkisim", Font.BOLD, 16));
+        label.setHorizontalAlignment(JLabel.CENTER);
+        label.setForeground(Color.yellow);
+        label.setBackground(Color.black);
+        label.setOpaque(true);
+        add(label);
+        
     }
     
+    public void setLandGrantLabel(int round){
+    	if (round < 0)
+    		label.setText("");
+    	else if (round < 3)
+    		label.setText("Round " + round + ": Land is free this round!");
+    	else
+    		label.setText("Round " + round + ":Land costs $300 this round!");
+    }
+    
+    public void addLandGrantLabel(boolean add){
+    	if (add)
+    		add(label);
+    	else
+    		remove(label);
+    }
     
   
     
