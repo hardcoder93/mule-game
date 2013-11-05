@@ -51,17 +51,18 @@ public class Store {
 			mules.sellQuantity(quantity);
 	}
 	
+
 	public void buyGoods(String type, int quantity) {
 		if (type.equals("Food"))
 			food.buyQuantity(quantity);
 		else if (type.equals("Energy"))
 			energy.buyQuantity(quantity);
-		else if (type.equals("Smithore"))
-			smithore.buyQuantity(quantity);
-		else if (type.equals("Crystite"))
+		else if (type.equals("Smithore")){
+			smithore.buyQuantity(quantity);		
+			mules.buyQuantity(quantity);		//adds a mule and a ore to the store. M2 says that
+												//the # of mules is related to the ore but does not say how
+		} else if (type.equals("Crystite"))
 			crystite.buyQuantity(quantity);
-		else if (type.equals("Mules"))
-			mules.buyQuantity(quantity);
 	}
 	
 	/**
