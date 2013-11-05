@@ -27,6 +27,11 @@ public class Player implements Drawable{
 	private String level;
 	private String race;
 	private String color;
+	
+	/* These can't be static. Static means that these values will be the same for
+	 * every player. If we leave them static, then every time money is added to one player
+	 * it will be added to all the players in the game.
+	 */
 	private static int money;
 	private static int food;
 	private static int energy;
@@ -308,11 +313,15 @@ public class Player implements Drawable{
 		}
 	}
 
-	public void purchaseGoods(String type, String quantity, int currentPrice) {
-		if (!type.equals("Mules"))
-			money -= Integer.parseInt(quantity) * currentPrice;
-		else 
-			money -= currentPrice;
+	public int purchaseGoods(String type, String quantity, int currentPrice) {
+		int cost;
+		if (!type.equals("Mules")){
+			cost = Integer.parseInt(quantity) * currentPrice;
+			if (money >= cost)
+				money -= cost;
+			else
+				return cost;
+		}
 		if (type.equals("Food"))
 			food += Integer.parseInt(quantity);
 		else if (type.equals("Smithore"))
@@ -320,13 +329,27 @@ public class Player implements Drawable{
 		else if (type.equals("Energy"))
 			energy += Integer.parseInt(quantity);
 		else if (type.equals("Mules")){
-			if (quantity.equals("Food Mule"))
+			if (quantity.equals("Food Mule")){
+				if (money >= 125)
+					money -= 125;
+				else
+					return 125;
 				mule = FOOD_MULE;
-			else if (quantity.equals("Energy Mule"))
+			} else if (quantity.equals("Energy Mule")){
+				if (money >= 150)
+					money -= 150;
+				else
+					return 150;
 				mule = ENERGY_MULE;
-			else if (quantity.equals("Smithore Mule"))
+			}else if (quantity.equals("Smithore Mule")){
+				if (money >= 175)
+					money -= 175;
+				else
+					return 175;
 				mule = ORE_MULE;
+			}
 		}
+		return 0;
 	}
 	
 	public void sellGoods(String type, int quantity, int currentPrice){

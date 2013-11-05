@@ -5,14 +5,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
 public class BuildingMenu implements Drawable{
 	
@@ -21,9 +20,10 @@ public class BuildingMenu implements Drawable{
 	int xPos, yPos, width, height;
 	String type;
 	JPanel parentPanel;
-	JLabel welcomeMessage, menuLabel;
+	JLabel welcomeMessage, menuLabel, errorMessage;
 	JLabel[] comboBoxLabels;
 	JTextArea[] menuItems;
+	JRadioButton[] muleRadioButtons;
 	JButton menuButton;
 	ArrayList<JComboBox<String>> comboBoxes;
 	String[][] comboBoxEntries;
@@ -45,10 +45,8 @@ public class BuildingMenu implements Drawable{
         welcomeMessage.setForeground(Color.YELLOW);
         welcomeMessage.setFont(new Font("Narkisim", Font.BOLD, 20));
 		
-		switch (type){
-		case "Store":
+		if (type.equals("Store"))
 			initStoreMenu();
-		}
 	}
 	
 	private void initStoreMenu() {
@@ -58,6 +56,13 @@ public class BuildingMenu implements Drawable{
 		menuLabel.setHorizontalAlignment(JLabel.CENTER);
 		menuLabel.setForeground(Color.WHITE);
 		menuLabel.setFont(new Font("Narkisim", Font.BOLD, 15));
+		
+		errorMessage = new JLabel("");
+		errorMessage.setBounds(xPos, yPos + height - 30, width, 20);
+		errorMessage.setHorizontalAlignment(JLabel.CENTER);
+		errorMessage.setForeground(Color.RED);
+		errorMessage.setFont(new Font("Narkisim", Font.BOLD, 12));
+
 		
 		JComboBox<String> tmp;
 		comboBoxes = new ArrayList<JComboBox<String>>();
@@ -89,17 +94,26 @@ public class BuildingMenu implements Drawable{
 	    comboBoxLabels[0].setText("Buy or Sell?");
 	    comboBoxLabels[1].setText("Which Resource?");
 	    comboBoxLabels[2].setText("How Many?");
-	    	
-	    menuItems = new JTextArea[comboBoxEntries[1].length];
+	    
+	    menuItems = new JTextArea[comboBoxEntries[1].length + 4];
 	    for (int i = 0; i < menuItems.length; i++){
 	        menuItems[i] = new JTextArea();
-	       	menuItems[i].setBounds(xPos + 40, yPos + 70 + i * 30, width / 2 - 5, 20); 
 	       	menuItems[i].setForeground(Color.WHITE);
 	       	menuItems[i].setFont(new Font("Narkisim", Font.BOLD, 12));
 	       	menuItems[i].setEditable(false);
 	       	menuItems[i].setOpaque(false);
-	       	menuItems[i].setTabSize(7);
+	       	if (i < comboBoxEntries[1].length){
+		       	menuItems[i].setBounds(xPos + 40, yPos + 63 + i * 20, width / 2 - 5, 20); 
+	       		menuItems[i].setTabSize(7);
+	       	}else{
+		       	menuItems[i].setBounds(xPos + 40, yPos + 78 + i * 20, width / 2 - 5, 20); 
+	       		menuItems[i].setTabSize(4);
+	       	}
 	    }
+	    menuItems[4].setText("Mule Outfitting:");
+	    menuItems[5].setText("    Food Mule\t\t$25");
+	    menuItems[6].setText("    Energy Mule\t$50");
+	    menuItems[7].setText("    Smithore Mule\t$75");
 	        
 	    menuButton = new JButton("Complete Transaction");
 	    menuButton.setBounds(xPos + width/2 + 50, yPos + 180, 200, 27);
@@ -111,7 +125,7 @@ public class BuildingMenu implements Drawable{
     	int numLeft;
     	int price;
     	String numLeftString;
-    	for (int i = 0; i < menuItems.length; i++){
+    	for (int i = 0; i < menuItems.length - 4; i++){
     		price = store.getCurrentPrice(comboBoxEntries[1][i]);
     		numLeft = store.getQuantity(comboBoxEntries[1][i]);
     		numLeftString = numLeft > 0 ? numLeft + " left!" : "SOLD OUT";
@@ -135,6 +149,7 @@ public class BuildingMenu implements Drawable{
     		parentPanel.add(comboBoxes.get(i));
     	parentPanel.add(welcomeMessage);
     	parentPanel.add(menuLabel);
+    	parentPanel.add(errorMessage);
     	parentPanel.add(menuButton);
     }
     
@@ -147,6 +162,7 @@ public class BuildingMenu implements Drawable{
     		parentPanel.remove(comboBoxes.get(i));
     	parentPanel.remove(welcomeMessage);
     	parentPanel.remove(menuLabel);
+    	parentPanel.remove(errorMessage);
     	parentPanel.remove(menuButton);
     }
 
@@ -162,9 +178,10 @@ public class BuildingMenu implements Drawable{
     	g.setColor(Color.BLUE);
     	g.fillRect(xPos, yPos, width, height);
     	g.setColor(Color.YELLOW);
-    	g.fillRect(xPos + width/2 - 3, yPos + 60, 6, height - 90);
+    	g.fillRect(xPos + width/2 - 3, yPos + 60, 6, height - 105);
     	for (int i = 1; i <= menuBorderSize; i++)
-    		g.drawRect(xPos-i, yPos-i, width+2*i-1, height+2*i-1);	}
+    		g.drawRect(xPos-i, yPos-i, width+2*i-1, height+2*i-1);	
+    }
 	
 	private class StoreMenuListener implements ActionListener{
     	
@@ -173,7 +190,7 @@ public class BuildingMenu implements Drawable{
 			int quantity;
 	        String selection = comboBoxes.get(1).getSelectedItem().toString();
 	        String buyOrSell = comboBoxes.get(0).getSelectedItem().toString();
-	        
+	        parentPanel.remove(errorMessage);
 	        
 	        if (buyOrSell.equals("Buy")){
 	        	quantity = store.getQuantity(selection);
@@ -195,7 +212,11 @@ public class BuildingMenu implements Drawable{
 	private void setMuleBox(){
 		comboBoxes.get(2).setModel(new DefaultComboBoxModel<String>(comboBoxEntries[2]));
 		comboBoxLabels[2].setText("Which Type?");
-		
+		if (activePlayer.hasMule()){
+			menuButton.setEnabled(false);
+		} else {
+			menuButton.setEnabled(true);
+		}
 	}
 	
 	private void setQuantityBox(int quantity){
@@ -203,10 +224,16 @@ public class BuildingMenu implements Drawable{
 		comboBoxes.get(2).setModel(new DefaultComboBoxModel<String>());
         for (int i = comboBoxes.get(2).getItemCount(); i <= quantity; i++)  		
         	comboBoxes.get(2).addItem("" + i);	
+        menuButton.setEnabled(true);
 	}
 	
 	public JButton getButton() {
 		return menuButton;
+	}
+
+	public void setErrorMessage(int cost) {
+		errorMessage.setText("Not enough money! You need $" + cost + ".");
+		parentPanel.add(errorMessage);		
 	}
 	
 }

@@ -387,8 +387,10 @@ public class GameplayPanel extends JPanel {
     }
     
     public void updateScoreboard(){
-    	for (int i = 0; i < playerList.length; i++)
+    	for (int i = 0; i < playerList.length; i++){
     		moneyLabels[i].setText("" + playerList[i].getMoney());
+    		System.out.print("\n" + i + ":" + playerList[i].getName());
+    	}
     }
     
     
@@ -440,6 +442,13 @@ public class GameplayPanel extends JPanel {
 	
 	public JButton getMenuButton(){
 		return storeMenu.getButton();
+	}
+
+
+
+
+	public void setErrorMessage(int cost) {
+		storeMenu.setErrorMessage(cost);		
 	}
 }
     
