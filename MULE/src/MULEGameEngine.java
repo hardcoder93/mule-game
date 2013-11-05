@@ -15,12 +15,14 @@ public class MULEGameEngine {
 	private MULEMap map;
 	private Player[] players;
 	private int activePlayerInd = 0;
-	private int currentRound = 0;
+	private static int currentRound = 0;
 	private ArrayList<Integer> playerTurnOrder;
 	private ArrayList<Integer> landGrantOrder;
 	private String nextState = "";
 	private int roundBonus;
 	private Store store;
+	private int event;
+	
 	/**
 	 * Builds a MULEGameEngine object, setting the difficulty of the game,
 	 * creating the map, and initializing the empty player list.
@@ -111,7 +113,7 @@ public class MULEGameEngine {
 	 * 
 	 * @return The current round number.
 	 */
-	public int getCurrentRound(){
+	public static int getCurrentRound(){
 		return currentRound;
 	}
 	
@@ -331,7 +333,57 @@ public class MULEGameEngine {
 		
 	}
 
+	public void randomEvent(){
+		Random rand = new Random();
+		event= rand.nextInt(7);
+		if ((Math.random() * 100) < 27) {
+			if (event == 0) {
+				Player.randomEvent1();
+			}
+			else if (event==1) {
+				Player.randomEvent2();
+			}
+			else if (event==2) {
+				Player.randomEvent3();
+			}
+			else if (event==3) {
+				Player.randomEvent4();
+			}
+			else if (event==4) {
+				Player.randomEvent5();
+			}
+			else if (event==5) {
+				Player.randomEvent6();
+			}
+			else {
+				Player.randomEvent7();
+			}
+		}
+	}	
+		public void randomEventForLoser(){
+			Random rand = new Random();
+			event= rand.nextInt(3);
+			if ((Math.random() * 100) < 27) {
+				if (event == 0) {
+					Player.randomEvent1();
+				}
+				else if (event==1) {
+					Player.randomEvent2();
+				}
+				else if (event==2) {
+					Player.randomEvent3();
+				}
+				else {
+					Player.randomEvent4();
+				}
+			}		
+		
+		
+	
+		}
+
 }
+
 
 
 
