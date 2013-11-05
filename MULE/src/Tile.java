@@ -23,7 +23,7 @@ public class Tile implements Drawable{
 	private Color ownerColor;		//owner's color
 	private Player owner;			//player number
 	private boolean vacant;			//true if no owner
-	private boolean wombat;			//true if has wombat
+	private boolean wampus;			//true if has wampus
 	private boolean raised;			//true if should be drawn raised
 	private char direction;			//direction (used for river)
 	private Image tileImage;		//image for tile
@@ -40,7 +40,7 @@ public class Tile implements Drawable{
 		this.type = "VHB".contains(type) ? "R" : type;
 		this.direction = "VHB".contains(type) ? type.charAt(0) : 'V';
 		this.id = id;
-		this.wombat = false;	
+		this.wampus = false;	
 		this.vacant = true;
 		this.xCoord = xCoord;
 		this.yCoord = yCoord;
@@ -77,11 +77,11 @@ public class Tile implements Drawable{
 	}
 	
 	/**
-	 * Set the Tile to have the wombat or to not have the wombat
-	 * @param hasWombat	true if Tile should have wombat; fals eif not
+	 * Set the Tile to have the wampus or to not have the wampus
+	 * @param hasWampus	true if Tile should have wampus; fals eif not
 	 */
-	public void setWombat(boolean hasWombat){
-		this.wombat = hasWombat;
+	public void setWampus(boolean hasWampus){
+		this.wampus = hasWampus;
 	}
 	
 	/**
@@ -101,11 +101,11 @@ public class Tile implements Drawable{
 	}
 	
 	/**
-	 * Determines if a tile has the Wombat. 
-	 * @return	true if tile has wombat; false if tile does not
+	 * Determines if a tile has the Wampus. 
+	 * @return	true if tile has wampus; false if tile does not
 	 */
-	public boolean hasWombat(){
-		return wombat;
+	public boolean hasWampus(){
+		return wampus;
 	}
 	
 	/**
