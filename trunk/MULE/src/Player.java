@@ -27,10 +27,12 @@ public class Player implements Drawable{
 	private String level;
 	private String race;
 	private String color;
-	private int money;
-	private int food;
-	private int energy;
-	private int ore;
+	private static int money;
+	private static int food;
+	private static int energy;
+	private static int ore;
+	private static int m;
+	private static boolean goodEvent;
 	private int crystite;
 	private Image pImage;
 	private Image mImage = new ImageIcon("IMAGES/mulePlaceholder.png").getImage();
@@ -344,6 +346,42 @@ public class Player implements Drawable{
 	public boolean ownsTile(Tile tile){
 		return (ownedTiles.contains(tile));
 	}
+	
+	public static int determinant(int m) {
+		if (MULEGameEngine.getCurrentRound()>0 && MULEGameEngine.getCurrentRound()<4) m=25;
+		else if (MULEGameEngine.getCurrentRound()>3 && MULEGameEngine.getCurrentRound()<8) m=50;
+		else if (MULEGameEngine.getCurrentRound()>7 && MULEGameEngine.getCurrentRound()<12) m=75;
+		else m=100;
+		return m;
+	}
+	
+	public static void randomEvent1() {
+		food+=3;
+		energy+=2;
+	}
+	public static void randomEvent2() {
+		ore+=2;
+	}
+	public static void randomEvent3() {
+		money+=(8*m);
+	}
+	public static void randomEvent4() {
+		money+=(2*m);
+	}
+	public static void randomEvent5() {
+		money-=(4*m);
+	}
+	public static void randomEvent6() {
+		food=food/2;
+	}
+	public static void randomEvent7() {
+		money-=(6*m);
+	}
+
+
+
+
+
 }
 
 
