@@ -448,5 +448,17 @@ public class MULEMap implements Drawable{
 	public Tile getTileFromLocation(Point location) {
 		return getTileFromLocation(location.x, location.y);
 	}
+	
+	/**
+	 * Checks whether or not the wampus is currently visible; returns true if visible,
+	 * false if not.
+	 * 
+	 * @return True if wampus is currently visible, false if not.
+	 */
+	public boolean hasWampus(){
+		for(Tile tile:tileList)
+			if(tile.hasWampus()) return true;
+		return false;
+	}
 
 }

@@ -260,6 +260,7 @@ public class MULEMainPanel extends JPanel{
 		@Override
 		public void actionPerformed(ActionEvent e){
 			if(GameState.playing()){
+				engine.updateWampus();
 				gameplayPanel.repaint();
 				// Change to Black Screen - Lauren
 				if(3==engine.getMap().isInBuilding(engine.getActivePlayer().getX(), engine.getActivePlayer().getY())){
@@ -403,7 +404,7 @@ public class MULEMainPanel extends JPanel{
 		engine.getActivePlayer().resetPosition();
 		engine.getActivePlayer().setMule(Player.NO_MULE);
 		if (gamble){
-			gamblingMoney = engine.getGambleMoney(countDown);	//change 30 to amount of time left
+			gamblingMoney = engine.getGambleMoney(countDown);
 			engine.getActivePlayer().addMoney(gamblingMoney);
 			turnStartPanel.setPubLabel(engine.getActivePlayer(), gamblingMoney);
 		} else {
@@ -482,14 +483,6 @@ public class MULEMainPanel extends JPanel{
 					active.setMule(Player.NO_MULE);
 				}
 			}
-			////////////////code for testing, remove for final version
-			else{
-				Random rand = new Random();
-				int num = rand.nextInt(3)+1;
-				active.setMule(num);
-				System.out.println(num);
-			}
-			////////////////end code for testing
 		}
 	}
 }

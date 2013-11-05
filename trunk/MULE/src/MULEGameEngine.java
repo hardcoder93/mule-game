@@ -22,6 +22,7 @@ public class MULEGameEngine {
 	private int roundBonus;
 	private Store store;
 	private int event;
+	private boolean wampusAppeared = false;
 	
 	/**
 	 * Builds a MULEGameEngine object, setting the difficulty of the game,
@@ -366,28 +367,40 @@ public class MULEGameEngine {
 			}
 		}
 	}	
-		public void randomEventForLoser(){
-			Random rand = new Random();
-			event= rand.nextInt(3);
-			if ((Math.random() * 100) < 27) {
-				if (event == 0) {
-					Player.randomEvent1();
-				}
-				else if (event==1) {
-					Player.randomEvent2();
-				}
-				else if (event==2) {
-					Player.randomEvent3();
-				}
-				else {
-					Player.randomEvent4();
-				}
-			}		
-		
-		
 	
+	public void randomEventForLoser(){
+		Random rand = new Random();
+		event= rand.nextInt(3);
+		if ((Math.random() * 100) < 27) {
+			if (event == 0) {
+				Player.randomEvent1();
+			}
+			else if (event==1) {
+				Player.randomEvent2();
+			}
+			else if (event==2) {
+				Player.randomEvent3();
+			}
+			else {
+				Player.randomEvent4();
+			}
+		}		
+	}
+	
+	public boolean hasWampusAppeared(){
+		return wampusAppeared;
+	}
+		
+	public void resetWampus(){
+		wampusAppeared = false;
+	}
+	
+	public boolean updateWampus(){
+		if(GameState.getState()==GameState.PLAYING_MAP && !hasWampusAppeared()){
+			//here we will determine if/where the wampus will appear for 1 sec
 		}
-
+		return false;
+	}
 }
 
 
