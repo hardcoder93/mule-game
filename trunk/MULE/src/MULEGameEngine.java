@@ -318,18 +318,24 @@ public class MULEGameEngine {
 		return store;
 	}
 	
-	public void storeTransaction(boolean buyOrSell, String type, String quantity){
+	public int storeTransaction(boolean buyOrSell, String type, String quantity){
+		int cost;
 		if (buyOrSell){
-			players[activePlayerInd].purchaseGoods(type, quantity, store.getCurrentPrice(type));
-			if (type.equals("Mules")){
-				store.sellGoods(type, 1);
-			} else { 
-				store.sellGoods(type, Integer.parseInt(quantity));
+			cost = players[activePlayerInd].purchaseGoods(type, quantity, store.getCurrentPrice(type));
+			if (cost == 0){
+				if (type.equals("Mules")){
+					store.sellGoods(type, 1);
+				} else { 
+					store.sellGoods(type, Integer.parseInt(quantity));
+				}
+			} else {
+				return cost;
 			}
 		} else {
 			players[activePlayerInd].sellGoods(type, Integer.parseInt(quantity), store.getCurrentPrice(type));
 			store.buyGoods(type, Integer.parseInt(quantity));
 		}
+		return 0;
 		
 	}
 

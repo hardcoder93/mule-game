@@ -299,7 +299,6 @@ public class MULEMainPanel extends JPanel{
 			}
 			else{
 				if (GameState.getState().equals(GameState.LANDGRANT)){
-					System.out.print("HERE");
 					endLandGrant();
 				}
 			}
@@ -312,9 +311,15 @@ public class MULEMainPanel extends JPanel{
 		
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
+			int cost;
 			menuEntries = gameplayPanel.getMenuEntries();
-			engine.storeTransaction(menuEntries.get(0).equals("Buy"), menuEntries.get(1).toString(), 
+			cost = engine.storeTransaction(menuEntries.get(0).equals("Buy"), menuEntries.get(1).toString(), 
 					(menuEntries.get(2).toString()));
+			if (cost > 0){
+				gameplayPanel.setErrorMessage(cost);
+			} else {
+				gameplayPanel.updateScoreboard();
+			}
 		}
 		
 	}
