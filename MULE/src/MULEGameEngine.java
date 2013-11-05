@@ -341,50 +341,54 @@ public class MULEGameEngine {
 	}
 
 	public void randomEvent(){
+		Player active = players[activePlayerInd];
 		Random rand = new Random();
 		event= rand.nextInt(7);
 		if ((Math.random() * 100) < 27) {
 			if (event == 0) {
-				Player.randomEvent1();
+				active.randomEvent1();
 			}
 			else if (event==1) {
-				Player.randomEvent2();
+				active.randomEvent2();
 			}
 			else if (event==2) {
-				Player.randomEvent3();
+				active.randomEvent3();
 			}
 			else if (event==3) {
-				Player.randomEvent4();
+				active.randomEvent4();
 			}
 			else if (event==4) {
-				Player.randomEvent5();
+				active.randomEvent5();
 			}
 			else if (event==5) {
-				Player.randomEvent6();
+				active.randomEvent6();
 			}
 			else {
-				Player.randomEvent7();
+				active.randomEvent7();
 			}
 		}
 	}	
-	
 	public void randomEventForLoser(){
+		Player active = players[activePlayerInd];
 		Random rand = new Random();
 		event= rand.nextInt(3);
 		if ((Math.random() * 100) < 27) {
 			if (event == 0) {
-				Player.randomEvent1();
+				active.randomEvent1();
 			}
 			else if (event==1) {
-				Player.randomEvent2();
+				active.randomEvent2();
 			}
 			else if (event==2) {
-				Player.randomEvent3();
+				active.randomEvent3();
 			}
 			else {
-				Player.randomEvent4();
+				active.randomEvent4();
 			}
 		}		
+		
+		
+	
 	}
 	
 	public boolean hasWampusAppeared(){
