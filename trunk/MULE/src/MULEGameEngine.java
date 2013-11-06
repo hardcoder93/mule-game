@@ -384,24 +384,31 @@ public class MULEGameEngine {
 		if ((Math.random() * 100) < 27) {
 			if (event == 0) {
 				active.randomEvent1();
+				System.out.println(1);
 			}
 			else if (event==1) {
 				active.randomEvent2();
+				System.out.println(2);
 			}
 			else if (event==2) {
 				active.randomEvent3(m);
+				System.out.println(3);
 			}
 			else if (event==3) {
 				active.randomEvent4(m);
+				System.out.println(4);
 			}
 			else if (event==4) {
 				active.randomEvent5(m);
+				System.out.println(5);
 			}
 			else if (event==5) {
 				active.randomEvent6();
+				System.out.println(6);
 			}
 			else {
 				active.randomEvent7(m);
+				System.out.println(7);
 			}
 		}
 	}	
@@ -413,12 +420,15 @@ public class MULEGameEngine {
 		if ((Math.random() * 100) < 27) {
 			if (event == 0) {
 				active.randomEvent1();
+				System.out.println(1);
 			}
 			else if (event==1) {
 				active.randomEvent2();
+				System.out.println(2);
 			}
 			else if (event==2) {
 				active.randomEvent3(m);
+				System.out.println(3);
 			}
 			else {
 				active.randomEvent4(m);
