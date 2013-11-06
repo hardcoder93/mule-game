@@ -377,6 +377,7 @@ public class Player implements Drawable{
 			if (energy>0)
 				switch (type) {
 				case "Food":
+					System.out.println("adsgfsdg");
 					switch (ownedTiles.get(i).getType()){
 					case "R": food+=4;
 					break;
