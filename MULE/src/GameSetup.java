@@ -42,56 +42,51 @@ public class GameSetup extends JPanel {
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public GameSetup() {
-		/*setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 900, 600);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);*/
-		this.setLayout(null);
+		setLayout(null);
 		
 		JLabel lblNumberOfPlayer = new JLabel("Number of Players:");
+		lblNumberOfPlayer.setBounds(351, 410, 182, 29);
 		lblNumberOfPlayer.setFont(new Font("Narkisim", Font.BOLD, 17));
-		lblNumberOfPlayer.setBounds(185, 150, 182, 29);
 		add(lblNumberOfPlayer);
 		
 		playerCountBox = new JComboBox();
+		playerCountBox.setBounds(351, 435, 82, 27);
 		playerCountBox.setFont(new Font("Narkisim", Font.BOLD, 13));
 		playerCountBox.setModel(new DefaultComboBoxModel(new String[] {"2", "3", "4"}));
 		playerCountBox.setToolTipText("");
-		playerCountBox.setBounds(214, 180, 82, 27);
 		add(playerCountBox);
 		
 		JLabel lblDifficulty = new JLabel("Difficulty:");
+		lblDifficulty.setBounds(351, 514, 153, 29);
 		lblDifficulty.setFont(new Font("Narkisim", Font.BOLD, 17));
-		lblDifficulty.setBounds(214, 286, 153, 29);
 		add(lblDifficulty);
 		
 		difficultyBox = new JComboBox();
+		difficultyBox.setBounds(351, 544, 124, 27);
 		difficultyBox.setFont(new Font("Narkisim", Font.BOLD, 13));
 		difficultyBox.setModel(new DefaultComboBoxModel(new String[] {"Beginner", "Standard", "Tournament"}));
 		difficultyBox.setToolTipText("");
-		difficultyBox.setBounds(200, 315, 124, 27);
 		add(difficultyBox);
 		
 		JLabel lblMapType = new JLabel("Map Type:");
+		lblMapType.setBounds(352, 460, 153, 29);
 		lblMapType.setFont(new Font("Narkisim", Font.BOLD, 17));
-		lblMapType.setBounds(214, 219, 153, 29);
 		add(lblMapType);
 		
 		mapTypeBox = new JComboBox();
+		mapTypeBox.setBounds(351, 488, 133, 27);
 		mapTypeBox.setFont(new Font("Narkisim", Font.BOLD, 13));
 		mapTypeBox.setModel(new DefaultComboBoxModel(new String[] {"Standard", "Random"}));
-		mapTypeBox.setBounds(191, 247, 133, 27);
 		add(mapTypeBox);
 		
 		btnNewButton = new JButton("Next");
-		btnNewButton.setFont(new Font("Narkisim", Font.BOLD, 13));
 		btnNewButton.setBounds(777, 543, 117, 29);
+		btnNewButton.setFont(new Font("Narkisim", Font.BOLD, 13));
 		add(btnNewButton);
 		
 		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setBounds(0, 0, 900, 710);
 		lblNewLabel.setIcon(new ImageIcon("IMAGES/GameSetupImage.png"));
-		lblNewLabel.setBounds(0, 0, 900, 600);
 		add(lblNewLabel);
 	}
 	
