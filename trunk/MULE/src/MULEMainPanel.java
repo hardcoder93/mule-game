@@ -1,6 +1,5 @@
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Point;
@@ -10,12 +9,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Random;
 
 import javax.swing.JLabel;
 import javax.swing.Timer;
 
-import java.util.TimerTask;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -490,6 +487,7 @@ public class MULEMainPanel extends JPanel{
 		}
 	}
 	// checks for the randomTurnEvent in the beginning of the turn
+	@SuppressWarnings("unused")
 	private void randomTurnEvent() {
 		if (GameState.getState().equals (GameState.PLAYING_MAP) ){
 			if (engine.getActivePlayerIndex()==engine.getLowestScore()) {
