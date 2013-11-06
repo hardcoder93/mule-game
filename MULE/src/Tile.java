@@ -25,6 +25,7 @@ public class Tile implements Drawable{
 	private boolean vacant;			//true if no owner
 	private boolean wampus;			//true if has wampus
 	private boolean raised;			//true if should be drawn raised
+	@SuppressWarnings("unused")
 	private char direction;			//direction (used for river)
 	private Image tileImage;		//image for tile
 	private int value;

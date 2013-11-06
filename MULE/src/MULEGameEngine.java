@@ -137,6 +137,7 @@ public class MULEGameEngine {
 	 * @param distX The distance to move the player in the x-direction.
 	 * @param distY The distance to move the player in the y-direction.
 	 */
+	@SuppressWarnings("static-access")
 	public void movePlayer(int distX, int distY){
 		Player active = players[activePlayerInd];
 		final int slowSpeed = 3;

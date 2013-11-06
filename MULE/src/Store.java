@@ -133,6 +133,7 @@ public class Store {
 			return quantity;
 		}
 
+		@SuppressWarnings("unused")
 		private void setCurrentPrice(int price){
 			this.currentPrice = price;
 		}
