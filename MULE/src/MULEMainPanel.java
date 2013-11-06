@@ -462,7 +462,8 @@ public class MULEMainPanel extends JPanel{
 		addKeyListener(arrowKeys);					
 		cardLayout.show(MULEMainPanel.this, gameplayID);
 		countDown = engine.calculateActivePlayerTurnTime();
-		turnTime.setText("" + countDown);;
+		turnTime.setText("" + countDown);
+		engine.getActivePlayer().calculateProduction();
 		runGameLoop();
 	}
 
