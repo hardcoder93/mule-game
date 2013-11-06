@@ -275,7 +275,6 @@ public class MULEMainPanel extends JPanel{
 		@Override
 		public void actionPerformed(ActionEvent e){
 			if (countDown>0){
-				//System.out.println(countDown);
 				
 				turnTime.setText(String.valueOf(countDown--));
 				gameplayPanel.updateLabel(turnTime);

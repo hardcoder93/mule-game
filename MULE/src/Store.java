@@ -94,7 +94,6 @@ public class Store {
 	public int getQuantity(String type){
 		switch (type){
 		case "Food":
-			System.out.print(food.getQuantity());
 			return food.getQuantity();
 		case "Energy":
 			return energy.getQuantity();
