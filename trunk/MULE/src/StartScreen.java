@@ -28,7 +28,7 @@ public class StartScreen extends JPanel {
 		ImageIcon image = new ImageIcon("IMAGES/StartImage.png");
 		JLabel lblNewLabel = new JLabel(image);
 
-		lblNewLabel.setBounds(0, 0, 900, 600);
+		lblNewLabel.setBounds(0, 0, 900, 710);
 		add(lblNewLabel);
 	}
 }
