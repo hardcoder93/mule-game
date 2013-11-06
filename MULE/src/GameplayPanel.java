@@ -26,6 +26,9 @@ public class GameplayPanel extends JPanel {
 	private Player activePlayer;
 	private Store store;
 	private JLabel[] moneyLabels = new JLabel[4];
+	private JLabel[] foodLabels = new JLabel[4];
+	private JLabel[] energyLabels = new JLabel[4];
+	private JLabel[] oreLabels = new JLabel[4];
 	private JLabel label;
 	private String buildingDisplayed;
 	
@@ -117,7 +120,21 @@ public class GameplayPanel extends JPanel {
 		JLabel playerMoney_2 = null;
 		JLabel playerMoney_3 = null;
 
-
+		JLabel playerEnergy = null;
+		JLabel playerEnergy_1 = null;
+		JLabel playerEnergy_2 = null;
+		JLabel playerEnergy_3 = null;
+		
+		JLabel playerFood = null;
+		JLabel playerFood_1 = null;
+		JLabel playerFood_2 = null;
+		JLabel playerFood_3 = null;
+		
+		JLabel playerOre = null;
+		JLabel playerOre_1 = null;
+		JLabel playerOre_2 = null;
+		JLabel playerOre_3 = null;
+		
 		
 		
 		
@@ -131,12 +148,12 @@ public class GameplayPanel extends JPanel {
         	JLabel playerName_1 = new JLabel(""+ playerList[1].getName()) ;
         	playerMoney = new JLabel(""+""+ playerList[0].getMoney()) ; 
         	playerMoney_1 = new JLabel(""+ playerList[1].getMoney()) ;
-        	JLabel playerEnergy = new JLabel(""+ playerList[0].getEnergy()) ; 
-        	JLabel playerEnergy_1 = new JLabel(""+ playerList[1].getEnergy()) ;
-        	JLabel playerFood = new JLabel(""+ playerList[0].getFood()) ; 
-        	JLabel playerFood_1 = new JLabel(""+ playerList[1].getFood()) ;
-        	JLabel playerOre = new JLabel(""+ playerList[0].getOre()) ; 
-        	JLabel playerOre_1 = new JLabel(""+ playerList[1].getOre()) ;
+        	playerEnergy = new JLabel(""+ playerList[0].getEnergy()) ; 
+        	playerEnergy_1 = new JLabel(""+ playerList[1].getEnergy()) ;
+        	playerFood = new JLabel(""+ playerList[0].getFood()) ; 
+        	playerFood_1 = new JLabel(""+ playerList[1].getFood()) ;
+        	playerOre = new JLabel(""+ playerList[0].getOre()) ; 
+        	playerOre_1 = new JLabel(""+ playerList[1].getOre()) ;
         	
         	Name.setFont(new Font("Narkisim", Font.BOLD, 20));
         	Money.setFont(new Font("Narkisim", Font.BOLD, 20));
@@ -194,15 +211,15 @@ public class GameplayPanel extends JPanel {
         	playerMoney = new JLabel(""+ playerList[0].getMoney()) ; 
         	playerMoney_1 = new JLabel(""+ playerList[1].getMoney()) ;
         	playerMoney_2 = new JLabel(""+ playerList[2].getMoney()) ;
-        	JLabel playerEnergy = new JLabel(""+ playerList[0].getEnergy()) ; 
-        	JLabel playerEnergy_1 = new JLabel(""+ playerList[1].getEnergy()) ;
-        	JLabel playerEnergy_2 = new JLabel(""+ playerList[2].getEnergy()) ;
-        	JLabel playerFood = new JLabel(""+ playerList[0].getFood()) ; 
-        	JLabel playerFood_1 = new JLabel(""+ playerList[1].getFood()) ;
-        	JLabel playerFood_2 = new JLabel(""+ playerList[2].getFood()) ;
-        	JLabel playerOre = new JLabel(""+ playerList[0].getOre()) ; 
-        	JLabel playerOre_1 = new JLabel(""+ playerList[1].getOre()) ;
-        	JLabel playerOre_2 = new JLabel(""+ playerList[2].getOre()) ;
+        	playerEnergy = new JLabel(""+ playerList[0].getEnergy()) ; 
+        	playerEnergy_1 = new JLabel(""+ playerList[1].getEnergy()) ;
+        	playerEnergy_2 = new JLabel(""+ playerList[2].getEnergy()) ;
+        	playerFood = new JLabel(""+ playerList[0].getFood()) ; 
+        	playerFood_1 = new JLabel(""+ playerList[1].getFood()) ;
+        	playerFood_2 = new JLabel(""+ playerList[2].getFood()) ;
+        	playerOre = new JLabel(""+ playerList[0].getOre()) ; 
+        	playerOre_1 = new JLabel(""+ playerList[1].getOre()) ;
+        	playerOre_2 = new JLabel(""+ playerList[2].getOre()) ;
         	
         	Name.setFont(new Font("Narkisim", Font.BOLD, 20));
         	Money.setFont(new Font("Narkisim", Font.BOLD, 20));
@@ -273,20 +290,20 @@ public class GameplayPanel extends JPanel {
         	playerMoney_2 = new JLabel(""+ playerList[2].getMoney()) ;
         	playerMoney_3 = new JLabel(""+ playerList[3].getMoney()) ;
         	
-        	JLabel playerEnergy = new JLabel(""+ playerList[0].getEnergy()) ; 
-        	JLabel playerEnergy_1 = new JLabel(""+ playerList[1].getEnergy()) ;
-        	JLabel playerEnergy_2 = new JLabel(""+ playerList[2].getEnergy()) ;
-        	JLabel playerEnergy_3 = new JLabel(""+ playerList[3].getEnergy()) ;
+        	playerEnergy = new JLabel(""+ playerList[0].getEnergy()) ; 
+        	playerEnergy_1 = new JLabel(""+ playerList[1].getEnergy()) ;
+        	playerEnergy_2 = new JLabel(""+ playerList[2].getEnergy()) ;
+        	playerEnergy_3 = new JLabel(""+ playerList[3].getEnergy()) ;
         	
-        	JLabel playerFood = new JLabel(""+ playerList[0].getFood()) ; 
-        	JLabel playerFood_1 = new JLabel(""+ playerList[1].getFood()) ;
-        	JLabel playerFood_2 = new JLabel(""+ playerList[2].getFood()) ;
-        	JLabel playerFood_3 = new JLabel(""+ playerList[3].getFood()) ;
+        	playerFood = new JLabel(""+ playerList[0].getFood()) ; 
+        	playerFood_1 = new JLabel(""+ playerList[1].getFood()) ;
+        	playerFood_2 = new JLabel(""+ playerList[2].getFood()) ;
+        	playerFood_3 = new JLabel(""+ playerList[3].getFood()) ;
         	
-        	JLabel playerOre = new JLabel(""+ playerList[0].getOre()) ; 
-        	JLabel playerOre_1 = new JLabel(""+ playerList[1].getOre()) ;
-        	JLabel playerOre_2 = new JLabel(""+ playerList[2].getOre()) ;
-        	JLabel playerOre_3 = new JLabel(""+ playerList[3].getOre()) ;
+        	playerOre = new JLabel(""+ playerList[0].getOre()) ; 
+        	playerOre_1 = new JLabel(""+ playerList[1].getOre()) ;
+        	playerOre_2 = new JLabel(""+ playerList[2].getOre()) ;
+        	playerOre_3 = new JLabel(""+ playerList[3].getOre()) ;
     		
         	Name.setFont(new Font("Narkisim", Font.BOLD, 20));
         	Money.setFont(new Font("Narkisim", Font.BOLD, 20));
@@ -358,7 +375,27 @@ public class GameplayPanel extends JPanel {
 				moneyLabels[2] = playerMoney_2;
 			if (playerMoney_3 != null)
 				moneyLabels[3] = playerMoney_3;
-
+			
+			foodLabels[0] = playerFood;
+			foodLabels[1] = playerFood_1;
+			if (playerMoney_2 != null)
+				foodLabels[2] = playerFood_2;
+			if (playerMoney_3 != null)
+				foodLabels[3] = playerFood_3;
+			
+			energyLabels[0] = playerEnergy;
+			energyLabels[1] = playerEnergy_1;
+			if (playerMoney_2 != null)
+				energyLabels[2] = playerEnergy_2;
+			if (playerMoney_3 != null)
+				energyLabels[3] = playerEnergy_3;
+			
+			oreLabels[0] = playerOre;
+			oreLabels[1] = playerOre_1;
+			if (playerMoney_2 != null)
+				oreLabels[2] = playerOre_2;
+			if (playerMoney_3 != null)
+				oreLabels[3] = playerOre_3;
 		}
          
     
