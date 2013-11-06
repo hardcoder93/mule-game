@@ -124,7 +124,6 @@ public class PlayerSetup extends JPanel {
 		for (int i = 0; i < newColors.size(); i++)
 			this.colorOptions[i] = newColors.get(i);
 		colorBox.setModel(new DefaultComboBoxModel<String>(colorOptions));
-		
 	}
 	
 	public String getPlayerName(){
@@ -141,5 +140,9 @@ public class PlayerSetup extends JPanel {
 	
 	public String getName(){
 		return "";
+	}
+	
+	public void focusNameBox(){
+		textField.requestFocusInWindow();
 	}
 }
