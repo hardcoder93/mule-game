@@ -1,7 +1,11 @@
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Random;
+
+import javax.swing.Timer;
 
 
 /**
@@ -33,6 +37,7 @@ public class MULEMap implements Drawable{
 	
 	private ArrayList<Tile> tileList;
 	private ArrayList<Integer> alteredTiles;
+	private ArrayList<Tile> mountainTiles;
 	
 	private int raisedID;
 
@@ -48,6 +53,7 @@ public class MULEMap implements Drawable{
 		int ID = 0;
 		tileList = new ArrayList<Tile>();
 		alteredTiles = new ArrayList<Integer>();
+		mountainTiles = new ArrayList<Tile>();
 		raisedID = -1;
 		String[] mapArea = type.equals("Random") ? createRandomMap() : createStandardMap();
 		for (int y = 0; y < HEIGHT; y++){
@@ -459,5 +465,35 @@ public class MULEMap implements Drawable{
 			if(tile.hasWampus()) return true;
 		return false;
 	}
+	
+	public void randomMountainWampus(){
+		if(mountainTiles.isEmpty())
+			fillMountainTiles();
+		
+		Random rand = new Random();
+		Tile wTile = mountainTiles.get(rand.nextInt(mountainTiles.size()));
+		wTile.setWampus(true);
+		Timer wampusTimer = new Timer(1500, new WampusHider(wTile));
+		wampusTimer.setRepeats(false);
+		wampusTimer.start();
+	}
+	
+	private class WampusHider implements ActionListener{
+		Tile wTile;
+		public WampusHider(Tile wampusTile){
+			wTile = wampusTile;
+		}
+		
+		public void actionPerformed(ActionEvent e){
+			wTile.setWampus(false);
+		}
+	}
 
+	private void fillMountainTiles(){
+		for(Tile tile:tileList){
+			String type = tile.getType();
+			if(type.equals(M1) || type.equals(M2) || type.equals(M3))
+				mountainTiles.add(tile);
+		}
+	}
 }

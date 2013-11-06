@@ -87,7 +87,7 @@ public class PlayerSetup extends JPanel {
 		noInputLabel.setVisible(false);
 		
 		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon("IMAGES/PlayerSetupImage.png"));
+		label.setIcon(new ImageIcon("IMAGES/PlayerSetupImage.jpeg"));
 		label.setBounds(0, 0, 900, 710);
 		add(label);
 	}
