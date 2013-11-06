@@ -492,9 +492,11 @@ public class MULEMainPanel extends JPanel{
 		if (GameState.getState().equals (GameState.PLAYING_MAP) ){
 			if (engine.getActivePlayerIndex()==engine.getLowestScore()) {
 				engine.randomEventForLoser();
+				gameplayPanel.updateScoreboard();
 			}
 			else {
 				engine.randomEvent();
+				gameplayPanel.updateScoreboard();
 			}
 		}
 	}
