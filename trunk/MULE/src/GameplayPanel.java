@@ -436,19 +436,15 @@ public class GameplayPanel extends JPanel {
     public void updateScoreboard(){
     	for (int i = 0; i < playerList.length; i++){
     		moneyLabels[i].setText("" + playerList[i].getMoney());
-    		System.out.print("\n" + i + ":" + playerList[i].getName());
     	}	
     	for (int i = 0; i < playerList.length; i++){
         	energyLabels[i].setText("" + playerList[i].getEnergy());
-        	System.out.print("\n" + i + ":" + playerList[i].getName());	
     	}
     	for (int i = 0; i < playerList.length; i++){
     		foodLabels[i].setText("" + playerList[i].getFood());
-    		System.out.print("\n" + i + ":" + playerList[i].getName());
     	}
     	for (int i = 0; i < playerList.length; i++){
     		oreLabels[i].setText("" + playerList[i].getOre());
-    		System.out.print("\n" + i + ":" + playerList[i].getName());
   
     	}
     }
