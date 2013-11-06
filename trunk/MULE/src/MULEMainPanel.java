@@ -461,6 +461,7 @@ public class MULEMainPanel extends JPanel{
 		countDown = engine.calculateActivePlayerTurnTime();
 		turnTime.setText("" + countDown);
 		engine.getActivePlayer().calculateProduction();
+		gameplayPanel.updateScoreboard();
 		runGameLoop();
 	}
 
