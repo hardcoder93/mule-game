@@ -369,6 +369,65 @@ public class Player implements Drawable{
 	}
 	
 
+	public void calculateProduction(){
+		String type = null;
+
+		for (int i=0; i<ownedTiles.size();i++){
+			type = ownedTiles.get(i).productionType;
+			if (energy>0)
+				switch (type) {
+				case "Food":
+					switch (ownedTiles.get(i).getType()){
+					case "R": food+=4;
+					break;
+					case "P": food+=2;
+					break;
+					case "M1": food+=1;
+					break;
+					case "M2": food+=1;
+					break;
+					case "M3": food+=1;
+					break;}
+					break;
+				case "Energy":
+					switch (ownedTiles.get(i).getType()){
+					case "R": energy+=2;
+					break;
+					case "P": energy+=3;
+					break;
+					case "M1": energy+=1;
+					break;
+					case "M2": energy+=1;
+					break;
+					case "M3": energy+=1;
+					break;}
+					break;
+				case "Smithore":
+					switch (ownedTiles.get(i).getType()){
+					case "P": ore+=1;
+					break;
+					case "M1": ore+=2;
+					break;
+					case "M2": ore+=3;
+					break;
+					case "M3": ore+=4;
+					break;}
+					break;
+				case "Crystite":
+					switch (ownedTiles.get(i).getType()){
+					case "P": crystite+=2;
+					break;
+					case "M1": crystite+=2;
+					break;
+					case "M2": crystite+=2;
+					break;
+					case "M3": crystite+=2;
+					break;}
+					break;
+				}
+		}
+	}
+	
 	
 	public void randomEvent1() {
 		food+=3;
