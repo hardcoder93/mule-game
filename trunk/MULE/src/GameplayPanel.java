@@ -30,6 +30,7 @@ public class GameplayPanel extends JPanel {
 	private JLabel[] energyLabels = new JLabel[4];
 	private JLabel[] oreLabels = new JLabel[4];
 	private JLabel label;
+	private JLabel label2;
 	private String buildingDisplayed;
 	
 	private BuildingMenu storeMenu;
@@ -58,30 +59,31 @@ public class GameplayPanel extends JPanel {
         add(nextScreenButton);
         
         label = new JLabel();
-        label.setBounds(250,0,400,30);
-        label.setFont(new Font("Narkisim", Font.BOLD, 16));
-        label.setHorizontalAlignment(JLabel.CENTER);
-        label.setForeground(Color.yellow);
-        label.setBackground(Color.black);
-        label.setOpaque(true);
-        add(label);
+        label2 = new JLabel();
+        label2.setBounds(250,0,400,30);
+        label2.setFont(new Font("Narkisim", Font.BOLD, 16));
+        label2.setHorizontalAlignment(JLabel.CENTER);
+        label2.setForeground(Color.yellow);
+        label2.setBackground(Color.black);
+        label2.setOpaque(true);
+        add(label2);
         
     }
     
     public void setLandGrantLabel(int round){
     	if (round < 0)
-    		label.setText("");
+    		label2.setText("");
     	else if (round < 3)
-    		label.setText("Round " + round + ": Land is free this round!");
+    		label2.setText("Round " + round + ": Land is free this round!");
     	else
-    		label.setText("Round " + round + ":Land costs $300 this round!");
+    		label2.setText("Round " + round + ":Land costs $300 this round!");
     }
     
     public void addLandGrantLabel(boolean add){
     	if (add)
-    		add(label);
+    		add(label2);
     	else
-    		remove(label);
+    		remove(label2);
     }
     
   
