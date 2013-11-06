@@ -131,6 +131,7 @@ public class MULEMainPanel extends JPanel{
 				gameplayPanel.setStore(engine.getStore());
 				playerSetupPanel.setPlayerNumber(engine.getNextPlayerSlot() + 1);
 				cardLayout.show(MULEMainPanel.this, playerSetupID);
+				playerSetupPanel.focusNameBox();
 				break;
 			case playerSetupID: //If player button is pressed, check that fields are filled, then go to next or game screen.
 				if (playerSetupPanel.getPlayerName().equals("")){
@@ -146,6 +147,7 @@ public class MULEMainPanel extends JPanel{
 					playerSetupPanel.clearPlayerName();
 					playerSetupPanel.setPlayerNumber(engine.getNextPlayerSlot() + 1);
 					cardLayout.show(MULEMainPanel.this, playerSetupID);
+					playerSetupPanel.focusNameBox();
 				}else {
 					GameState.setState(GameState.START_ROUND);
 					gameplayPanel.setMapAndPlayers(engine.getMap(), engine.getPlayers(), engine.getStore());
