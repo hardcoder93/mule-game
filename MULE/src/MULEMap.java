@@ -142,7 +142,6 @@ public class MULEMap implements Drawable{
 	public void removeTileOwner(int xCoord, int yCoord){
 		int ID = calculateID(xCoord, yCoord);
 		getTile(ID).removeOwner();
-		System.out.print(getTile(ID).isVacant());
 		alteredTiles.add(ID);
 	}
 	
