@@ -488,6 +488,17 @@ public class MULEMainPanel extends JPanel{
 			}
 		}
 	}
+	// checks for the randomTurnEvent in the beginning of the turn
+	private void randomTurnEvent() {
+		if (GameState.getState().equals (GameState.PLAYING_MAP) ){
+			if (engine.getActivePlayerIndex()==engine.getLowestScore()) {
+				engine.randomEventForLoser();
+			}
+			else {
+				engine.randomEvent();
+			}
+		}
+	}
 }
 
 
