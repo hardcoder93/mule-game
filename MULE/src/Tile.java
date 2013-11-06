@@ -28,7 +28,7 @@ public class Tile implements Drawable{
 	private char direction;			//direction (used for river)
 	private Image tileImage;		//image for tile
 	private int value;
-	private String productionType;
+	public String productionType;
 	
 	/**
 	 * Constructor for Tile class
