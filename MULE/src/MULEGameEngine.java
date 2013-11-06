@@ -15,7 +15,8 @@ public class MULEGameEngine {
 	private MULEMap map;
 	private Player[] players;
 	private int activePlayerInd = 0;
-	private static int currentRound = 0;
+	private int currentRound = 0;
+	private int lowestScore;
 	private ArrayList<Integer> playerTurnOrder;
 	private ArrayList<Integer> landGrantOrder;
 	private String nextState = "";
@@ -109,12 +110,15 @@ public class MULEGameEngine {
 		return players[activePlayerInd];
 	}
 	
+	public int getActivePlayerIndex() {
+		return activePlayerInd;
+	}
 	/**
 	 * Gets the current round that the game is in.
 	 * 
 	 * @return The current round number.
 	 */
-	public static int getCurrentRound(){
+	public int getCurrentRound(){
 		return currentRound;
 	}
 	
@@ -229,10 +233,32 @@ public class MULEGameEngine {
 					landGrantOrder.add(i);
 					break;
 				}
-			}	
+			}
+		lowestScore = playerTurnOrder.get(0);
 		nextState = GameState.START_ROUND;
 	}
-
+	public int getLowestScore() {
+		landGrantOrder.clear();
+		playerTurnOrder.clear();
+		landGrantOrder.add(0);
+		playerTurnOrder.add(0);
+		for (int i = 1; i < players.length; i++)
+			for (int j = 0; j < playerTurnOrder.size(); j++){
+				if (players[i].getScore() < players[playerTurnOrder.get(j)].getScore()){
+					playerTurnOrder.add(j,i);
+					landGrantOrder.add(j,i);
+					break;
+				}
+				if (j == playerTurnOrder.size() - 1){
+					playerTurnOrder.add(i);
+					landGrantOrder.add(i);
+					break;
+				}
+			}
+		lowestScore = playerTurnOrder.get(0);
+		
+		return lowestScore;
+	}
 	public boolean nextActivePlayerIndex() {
 		if (!landGrantOrder.isEmpty()){
 			activePlayerInd = landGrantOrder.remove(0);
@@ -339,11 +365,21 @@ public class MULEGameEngine {
 		return 0;
 		
 	}
-
+	
+	public int determinant() {
+		int m;
+		if (getCurrentRound()>0 && getCurrentRound()<4) m=25;
+		else if (getCurrentRound()>3 && getCurrentRound()<8) m=50;
+		else if (getCurrentRound()>7 && getCurrentRound()<12) m=75;
+		else m=100;
+		return m;
+	}
+	
 	public void randomEvent(){
 		Player active = players[activePlayerInd];
 		Random rand = new Random();
 		event= rand.nextInt(7);
+		int m = determinant();
 		if ((Math.random() * 100) < 27) {
 			if (event == 0) {
 				active.randomEvent1();
@@ -352,23 +388,24 @@ public class MULEGameEngine {
 				active.randomEvent2();
 			}
 			else if (event==2) {
-				active.randomEvent3();
+				active.randomEvent3(m);
 			}
 			else if (event==3) {
-				active.randomEvent4();
+				active.randomEvent4(m);
 			}
 			else if (event==4) {
-				active.randomEvent5();
+				active.randomEvent5(m);
 			}
 			else if (event==5) {
 				active.randomEvent6();
 			}
 			else {
-				active.randomEvent7();
+				active.randomEvent7(m);
 			}
 		}
 	}	
 	public void randomEventForLoser(){
+		int m=determinant();
 		Player active = players[activePlayerInd];
 		Random rand = new Random();
 		event= rand.nextInt(3);
@@ -380,10 +417,10 @@ public class MULEGameEngine {
 				active.randomEvent2();
 			}
 			else if (event==2) {
-				active.randomEvent3();
+				active.randomEvent3(m);
 			}
 			else {
-				active.randomEvent4();
+				active.randomEvent4(m);
 			}
 		}		
 		
