@@ -447,11 +447,14 @@ public class MULEGameEngine {
 		wampusAppeared = false;
 	}
 	
-	public boolean updateWampus(){
+	public void updateWampus(){
 		if(GameState.getState()==GameState.PLAYING_MAP && !hasWampusAppeared()){
-			//here we will determine if/where the wampus will appear for 1 sec
+			Random rand = new Random();
+			if(rand.nextInt(999)==1){
+				map.randomMountainWampus();
+				wampusAppeared = true;
+			}
 		}
-		return false;
 	}
 }
 

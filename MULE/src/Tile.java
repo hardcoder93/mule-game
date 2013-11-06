@@ -178,6 +178,8 @@ public class Tile implements Drawable{
 			drawMule(g);
 		if (!vacant)
 			drawBorder(g);
+		if(hasWampus())
+			drawWampus(g);
 		if (raised){
 			g.setColor(Color.BLACK);
 			g.drawRect(xLoc, yLoc, MapImages.TILE_SIZE.width - 1, MapImages.TILE_SIZE.height -1);
@@ -257,6 +259,12 @@ public class Tile implements Drawable{
 			g.drawImage(MapImages.ORE_MULE, xLoc, yLoc, null);
 		else if (productionType.equalsIgnoreCase("Crystite"))
 			g.drawImage(MapImages.CRYSTITE_MULE, xLoc, yLoc, null);
+	}
+	
+	private void drawWampus(Graphics g){
+		int wampusX = xLoc + MapImages.TILE_SIZE.width/2 - 12; //-12 to account for wampus width
+		int wampusY = yLoc + MapImages.TILE_SIZE.height/2 - 12; //-12 to account for wampus height
+		g.drawImage(MapImages.WAMPUS, wampusX, wampusY, null);
 	}
 
 }

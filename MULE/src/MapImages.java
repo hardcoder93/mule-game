@@ -23,10 +23,11 @@ public class MapImages{
 	private final static String IMAGE_FILE_PLAINS = "IMAGES/Grass.png";
 	private final static String IMAGE_FILE_RIVER = "IMAGES/River.png";
 	private final static String IMAGE_FILE_TOWN = "IMAGES/techTower.png";
-	private final static String IMAGE_FILE_FOOD_MULE = "IMAGES/mapFoodMule.png";
-	private final static String IMAGE_FILE_ENERGY_MULE = "IMAGES/mapEnergyMule.png";
-	private final static String IMAGE_FILE_ORE_MULE = "IMAGES/mapOreMule.png";
+	private final static String IMAGE_FILE_FOOD_MULE = "IMAGES/food.gif";
+	private final static String IMAGE_FILE_ENERGY_MULE = "IMAGES/energy.gif";
+	private final static String IMAGE_FILE_ORE_MULE = "IMAGES/ore.gif";
 	private final static String IMAGE_FILE_CRYSTITE_MULE = "IMAGES/mapCrystiteMule.png";	
+	private final static String IMAGE_FILE_WAMPUS = "IMAGES/wampus.png";
 	
 	public final static Image MOUNTAIN1 = new ImageIcon(IMAGE_FILE_MOUNTAIN1).getImage();
 	public final static Image MOUNTAIN2 = new ImageIcon(IMAGE_FILE_MOUNTAIN2).getImage();
@@ -40,4 +41,7 @@ public class MapImages{
 	public final static Image ENERGY_MULE = new ImageIcon(IMAGE_FILE_ENERGY_MULE).getImage();
 	public final static Image ORE_MULE = new ImageIcon(IMAGE_FILE_ORE_MULE).getImage();
 	public final static Image CRYSTITE_MULE = new ImageIcon(IMAGE_FILE_CRYSTITE_MULE).getImage();
+	public final static Image WAMPUS = new ImageIcon(IMAGE_FILE_WAMPUS).getImage();
+	
+	
 }

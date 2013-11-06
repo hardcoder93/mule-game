@@ -399,6 +399,7 @@ public class MULEMainPanel extends JPanel{
 		int gamblingMoney = 0;
 		engine.getActivePlayer().resetPosition();
 		engine.getActivePlayer().setMule(Player.NO_MULE);
+		engine.resetWampus();
 		if (gamble){
 			gamblingMoney = engine.getGambleMoney(countDown);
 			engine.getActivePlayer().addMoney(gamblingMoney);
@@ -482,7 +483,8 @@ public class MULEMainPanel extends JPanel{
 						break;
 					}
 					active.setMule(Player.NO_MULE);
-				}
+				}else
+					active.setMule(Player.NO_MULE);
 			}
 		}
 	}
