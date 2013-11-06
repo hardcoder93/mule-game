@@ -36,7 +36,6 @@ public class Player implements Drawable{
 	private int food;
 	private int energy;
 	private int ore;
-	private int m;
 	private int crystite;
 	private Image pImage;
 	private Image mImage = new ImageIcon("IMAGES/mulePlaceholder.png").getImage();
@@ -370,13 +369,6 @@ public class Player implements Drawable{
 	}
 	
 
-	public static int determinant(int m) {
-		if (MULEGameEngine.getCurrentRound()>0 && MULEGameEngine.getCurrentRound()<4) m=25;
-		else if (MULEGameEngine.getCurrentRound()>3 && MULEGameEngine.getCurrentRound()<8) m=50;
-		else if (MULEGameEngine.getCurrentRound()>7 && MULEGameEngine.getCurrentRound()<12) m=75;
-		else m=100;
-		return m;
-	}
 	
 	public void randomEvent1() {
 		food+=3;
@@ -385,19 +377,19 @@ public class Player implements Drawable{
 	public void randomEvent2() {
 		ore+=2;
 	}
-	public void randomEvent3() {
+	public void randomEvent3(int m) {
 		money+=(8*m);
 	}
-	public void randomEvent4() {
+	public void randomEvent4(int m) {
 		money+=(2*m);
 	}
-	public void randomEvent5() {
+	public void randomEvent5(int m) {
 		money-=(4*m);
 	}
 	public void randomEvent6() {
 		food=food/2;
 	}
-	public void randomEvent7() {
+	public void randomEvent7(int m) {
 		money-=(6*m);
 	}
 
