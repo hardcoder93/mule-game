@@ -91,6 +91,7 @@ public class MULEMainPanel extends JPanel{
 		//
 		startBtn.addKeyListener(new EnterKeyListener(startID));		
 		gameSetupBtn.addKeyListener(new EnterKeyListener(gameSetupID));
+		
 		playerSetupBtn.addKeyListener(new EnterKeyListener(playerSetupID));
 		turnStartBtn.addKeyListener(new EnterKeyListener(turnStartID));
 		gamePlayBtn.addKeyListener(new EnterKeyListener(gameplayID));

@@ -90,6 +90,10 @@ public class GameSetup extends JPanel {
 		add(lblNewLabel);
 	}
 	
+	public void focusNameBox(){
+		btnNewButton.requestFocusInWindow();
+	}
+	
 	public int getPlayerCount(){
 		return Integer.parseInt((String)playerCountBox.getSelectedItem());
 	}
@@ -101,4 +105,6 @@ public class GameSetup extends JPanel {
 	public String getMapType(){
 		return (String)mapTypeBox.getSelectedItem();
 	}
+	
+	
 }
