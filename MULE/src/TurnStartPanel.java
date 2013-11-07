@@ -18,7 +18,7 @@ import javax.swing.JTextArea;
 @SuppressWarnings("serial")
 public class TurnStartPanel extends JPanel {
 
-	private final Color BACKGROUND_COLOR = new Color(0,0,0,220);		//background color for panel
+	private final Color BACKGROUND_COLOR = new Color(0,0,0,255);		//background color for panel
 	private final Color CLEAR = new Color(255,255,255,0);
 	
 	private JButton startTurnButton;		//button to begin turn
@@ -60,10 +60,10 @@ public class TurnStartPanel extends JPanel {
 	 */
 	public void setPlayerLabel(Player player){
 		remove(roundLabel);
-		if (inRound)
+		/*if (inRound)
 			this.setBackground(CLEAR);
 		else
-			this.setBackground(BACKGROUND_COLOR);
+			this.setBackground(BACKGROUND_COLOR);*/
 		inRound = false;
 		label.setText("<html><div style=\"text-align: center;\">" + "It is " + player.getName() + "'s turn!" +  "</html>");
 		add(startTurnButton);
@@ -82,11 +82,11 @@ public class TurnStartPanel extends JPanel {
 	}
 
 	public void setRoundLabel(int currentRound) {
-		remove(startTurnButton);
+		//remove(startTurnButton);
 		inRound = true;
 		
-		roundLabel.setText("<html><div style=\"text-align: center;\">" + "Starting Round " + currentRound + "</html>");
-		add(roundLabel);
+		label.setText("<html><div style=\"text-align: center;\">" + "Starting Round " + currentRound + "</html>");
+		add(label);
 	}
 
 	public void setTimeIsUpLabel() {

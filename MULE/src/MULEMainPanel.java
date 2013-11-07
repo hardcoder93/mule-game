@@ -408,8 +408,9 @@ public class MULEMainPanel extends JPanel{
 			gamblingMoney = engine.getGambleMoney(countDown);
 			engine.getActivePlayer().addMoney(gamblingMoney);
 			gameplayPanel.displayPub(gamblingMoney);
-			countDown = 2;
-			screenTimer.restart();
+			countDown = 3;
+			screenTimer = new Timer(1000, new ScreenDelay());
+			screenTimer.start();
 			//turnStartPanel.setPubLabel(engine.getActivePlayer(), gamblingMoney);
 		} else {
 			turnStartPanel.setTimeIsUpLabel();
@@ -516,7 +517,7 @@ public class MULEMainPanel extends JPanel{
 			displayNextRound();
 			countDown = 1;
 			screenTimer = new Timer(500, new ScreenDelay());
-			screenTimer.start();
+			//screenTimer.start();
 		} else {
 			GameState.setState(GameState.WAITING);
 			displayNextTurn();
