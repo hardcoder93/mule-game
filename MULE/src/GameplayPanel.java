@@ -20,6 +20,10 @@ import javax.swing.JPanel;
  */
 @SuppressWarnings("serial")
 public class GameplayPanel extends JPanel {
+	private final String STORE = "STORE";
+	private final String PUB = "PUB";
+	private final String NONE = "NONE";
+	
 	//Game play objects
 	private MULEMap gameMap;			//map of game
 	private Player[] playerList;		//list of players (playerList.length = # of players)
@@ -33,7 +37,8 @@ public class GameplayPanel extends JPanel {
 	private JLabel label2;
 	private String buildingDisplayed;
 	
-	private BuildingMenu storeMenu;
+	private StoreMenu storeMenu;
+	private PubMenu pubMenu;
 
 	//Screen States
 	private String panelState;
@@ -49,7 +54,8 @@ public class GameplayPanel extends JPanel {
         panelState = "init";
         buildingDisplayed = "none";
 
-        storeMenu = new BuildingMenu(150,25,600,250,"Store",store,this);
+        storeMenu = new StoreMenu(Color.BLUE,Color.YELLOW,this);
+        pubMenu = new PubMenu(Color.GREEN, Color.BLUE, this);
         
         nextScreenButton = new JButton("");
         nextScreenButton.setFont(new Font("Narkisim", Font.BOLD, 13));
@@ -456,10 +462,6 @@ public class GameplayPanel extends JPanel {
      * This method should not be called directly. Instead use repaint()
      */
     public void paintComponent(Graphics g) {
-    	if (panelState != null && !panelState.equals(GameState.getState())){
-    		super.paintComponent(g);
-    		panelState = GameState.getState();
-    	}
     	if (this.gameMap != null){
     		if(GameState.getState().equals(GameState.WAITING)){
     			g.setColor(Color.BLACK);
@@ -472,25 +474,36 @@ public class GameplayPanel extends JPanel {
     			gameMap.draw(g);
     			if (GameState.playing()){
     				activePlayer.draw(g);
-    				if (!buildingDisplayed.equals("none"))
+    				if (buildingDisplayed.equals(STORE))
     					storeMenu.draw(g);
+    				else if (buildingDisplayed.equals(PUB))
+    					pubMenu.draw(g);
     			}
     		}
     	}
     }
 
+    public void displayPub(int winnings){
+    	buildingDisplayed = PUB;
+    	pubMenu.displayPub(activePlayer, winnings);
+    }
+    
+    public void removeBuilding(){
+    	if (buildingDisplayed.equals(STORE))
+    		storeMenu.removeStoreMenu();
+    	else if (buildingDisplayed.equals(PUB))
+    		pubMenu.removePub();
+    	buildingDisplayed = NONE;
+    }
+    
 	public void displayStoreMenu() {
-		buildingDisplayed = "Store";
+		buildingDisplayed = STORE;
 		storeMenu.displayStoreMenu(activePlayer, store);
 	}
 
-	public void removeStoreMenu() {
-		buildingDisplayed = "none";
-		storeMenu.removeStoreMenu();
-	}
-
-	public void setStore(Store store2) {
-		this.store = store2;
+	public void setStore(Store store) {
+		this.store = store;
+		storeMenu.setStore(store);
 	}
 
 	public ArrayList<Object> getMenuEntries() {
