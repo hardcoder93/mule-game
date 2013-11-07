@@ -3,35 +3,41 @@
 +-------------+
 
 Things we need to do(required things that still need to be added):
-	-Message that tells player what was produced
-	-Message that tells player what random event happened
-	-Fix turn order to update for each round (right now calculateScore() is 
+	|-Message that tells player what was produced
+	|-Message that tells player what random event happened
+	|-Fix turn order to update for each round (right now calculateScore() is 
 		only called when the Player is first created)
-	-Add option to save/load game
+	|-Add option to save/load game
 		-Need to fix the pause menu to do this (right now pressing ESC
 			only speeds up time...ironically.)
 	
 
 Additional Things (things that will make the game better):
-	-Calculate all players production immediately after land grant(?)
-	-Make each players column on scoreboard match their color
-	-Finish making black turn message screen transparent
-	-Add store to scoreboard
+	|-Calculate all players production immediately after land grant
+	|-Make each players column on scoreboard match their color
+	|-Finish making black turn message screen transparent
+	|-Add store to scoreboard
+	|-Change following mule to look like Ramblin' Wreck instead of Buzz
 	
 -------------------------------------------------
 YL:
-	- make production right after land grant
-	- message for production
-	- enter button
+	-Calculate all players production immediately after land grant
+	-Message that tells player what was produced	
 -------------------------------------------------
 CJ:
-	-
+	-Add option to save/load game
+		-Need to fix the pause menu to do this (right now pressing ESC
+			only speeds up time...ironically.)
 -------------------------------------------------
 SHJ:
-	-
+	-Change following mule to look like Ramblin' Wreck instead of Buzz
 -------------------------------------------------
 WS:
-	-
+	-Message that tells player what random event happened
+	-Add store to scoreboard
+	-Make each players column on scoreboard match their color
 -------------------------------------------------
 JC:
-	-
+	-Fix turn order to update for each round (right now calculateScore() is 
+		only called when the Player is first created)
+	-Finish making black turn message screen transparent
