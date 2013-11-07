@@ -48,7 +48,7 @@ public class MULEMainPanel extends JPanel{
 
 	private Mouse landGrantMouse;
 	private PlayerControls arrowKeys;
-	
+
 	private JButton gamePlayBtn;
 	private JButton menuButton;
 	private StorePurchaseAction storeListener;
@@ -69,7 +69,7 @@ public class MULEMainPanel extends JPanel{
 		add(turnStartPanel, turnStartID);
 
 		turnTime.setFont(new Font("Narkisim", Font.BOLD, 20));
-	    turnTime.setForeground(Color.RED);
+		turnTime.setForeground(Color.RED);
 		gameplayPanel.addLabel(turnTime);
 
 		JButton startBtn = startPanel.getButton();
@@ -78,7 +78,7 @@ public class MULEMainPanel extends JPanel{
 		JButton turnStartBtn = turnStartPanel.getButton();
 		gamePlayBtn = gameplayPanel.getButton();
 		menuButton = gameplayPanel.getMenuButton();
-		
+
 		storeListener = new StorePurchaseAction();
 
 		startBtn.addActionListener(new NextListener(startID));		
@@ -87,6 +87,14 @@ public class MULEMainPanel extends JPanel{
 		turnStartBtn.addActionListener(new NextListener(turnStartID));
 		gamePlayBtn.addActionListener(new NextListener(gameplayID));
 		menuButton.addActionListener(storeListener);
+
+		//
+		startBtn.addKeyListener(new EnterKeyListener(startID));		
+		gameSetupBtn.addKeyListener(new EnterKeyListener(gameSetupID));
+		playerSetupBtn.addKeyListener(new EnterKeyListener(playerSetupID));
+		turnStartBtn.addKeyListener(new EnterKeyListener(turnStartID));
+		gamePlayBtn.addKeyListener(new EnterKeyListener(gameplayID));
+		//menuButton.addActionListener(storeListener);
 
 		arrowKeys = new PlayerControls();
 
@@ -100,10 +108,30 @@ public class MULEMainPanel extends JPanel{
 		updater = new Timer(1000/60, new GameUpdater()); //1000/60 means we are updating at 60 FPS.
 		turnTimer =  new Timer(1000, new TurnUpdater());
 		turnTimer.start();
-		
+
 		if (GameState.playing())
 			updater.start();
 	}
+
+	private class EnterKeyListener implements KeyListener{
+		String ID2;
+		public EnterKeyListener(String id){
+			ID2 = id;
+		}
+		public void keyTyped(KeyEvent e) {           
+		}
+
+		public void keyPressed(KeyEvent e) {
+			if(e.getKeyCode() == KeyEvent.VK_ENTER){
+				NextListener go = new NextListener(ID2);
+				go.actionPerformed(null);
+			}
+
+		}
+
+		public void keyReleased(KeyEvent e) {            
+		}    
+	} 
 
 	/**
 	 * The NextListener class creates button listeners for the "Next" buttons
@@ -273,18 +301,18 @@ public class MULEMainPanel extends JPanel{
 		@Override
 		public void actionPerformed(ActionEvent e){
 			if (countDown>0){
-				
+
 				turnTime.setText(String.valueOf(countDown--));
 				gameplayPanel.updateLabel(turnTime);
 
 			}
 			else{
-			turnTimer.stop();
-			endTurn(false);
+				turnTimer.stop();
+				endTurn(false);
 			}
 		}
 	}
-	
+
 	private class ScreenDelay implements ActionListener{
 
 		@Override
@@ -307,11 +335,11 @@ public class MULEMainPanel extends JPanel{
 			}
 		}
 	}
-	
+
 	private class StorePurchaseAction implements ActionListener{
-		
+
 		ArrayList<Object> menuEntries;
-		
+
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			int cost;
@@ -324,9 +352,9 @@ public class MULEMainPanel extends JPanel{
 				gameplayPanel.updateScoreboard();
 			}
 		}
-		
+
 	}
-	
+
 
 	/**
 	 * This class is a mouseInputListener that is used to detect mouse actions.
@@ -456,7 +484,7 @@ public class MULEMainPanel extends JPanel{
 		removeMouseListener(landGrantMouse);
 		removeMouseMotionListener(landGrantMouse);
 	}
-	
+
 	/**
 	 * startGameLoop initializes the game loop (player moving around map). It adds the
 	 * keyListener and displays the map. 
