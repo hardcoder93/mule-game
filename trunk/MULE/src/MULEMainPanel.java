@@ -83,6 +83,7 @@ public class MULEMainPanel extends JPanel{
 
 		startBtn.addActionListener(new NextListener(startID));		
 		gameSetupBtn.addActionListener(new NextListener(gameSetupID));
+		
 		playerSetupBtn.addActionListener(new NextListener(playerSetupID));
 		turnStartBtn.addActionListener(new NextListener(turnStartID));
 		gamePlayBtn.addActionListener(new NextListener(gameplayID));
@@ -152,6 +153,7 @@ public class MULEMainPanel extends JPanel{
 			switch(ID){
 			case startID: //If the start button is pressed, display the game setup screen.
 				cardLayout.show(MULEMainPanel.this, gameSetupID);
+				gameSetupPanel.focusNameBox();
 				break;
 			case gameSetupID: //If the game setup button is pressed, create game engine and show player screen.
 				engine = new MULEGameEngine(gameSetupPanel.getDifficulty(), 
