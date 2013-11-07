@@ -230,7 +230,7 @@ public class Player implements Drawable{
 		if (money >= 300 || round < 3){
 			tile.setOwner(this);
 			ownedTiles.add(tile);
-			money = round < 2 ? money : money - 300;
+			money = round < 3 ? money : money - 300;
 			return true;
 		}
 		return false;

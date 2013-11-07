@@ -4,6 +4,7 @@ import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 
 
@@ -17,10 +18,12 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class TurnStartPanel extends JPanel {
 
-	private final Color BACKGROUND_COLOR = Color.black;		//background color for panel
+	private final Color BACKGROUND_COLOR = new Color(0,0,0,220);		//background color for panel
+	private final Color CLEAR = new Color(255,255,255,0);
 	
 	private JButton startTurnButton;		//button to begin turn
-	private JLabel playerLabel;				//label showing whose turn it is
+	private JLabel label, roundLabel;		//label showing whose turn it is
+	private boolean inRound;
 
 	/**
 	 * Create the frame.
@@ -34,12 +37,21 @@ public class TurnStartPanel extends JPanel {
 		startTurnButton.setBounds(777, 543, 117, 29);
 		add(startTurnButton);
 
-		playerLabel = new JLabel("");
-		playerLabel.setForeground(Color.WHITE);
-		playerLabel.setBounds(400, 250, 200, 100);
-		playerLabel.setAlignmentX(CENTER_ALIGNMENT);
-		playerLabel.setAlignmentY(CENTER_ALIGNMENT);
-		add(playerLabel);
+		label = new JLabel("");
+		label.setForeground(Color.WHITE);
+		label.setBounds(0, 0, 900, 600);
+		label.setHorizontalAlignment(JLabel.CENTER);
+		label.setVerticalAlignment(JLabel.CENTER);
+		label.setOpaque(false);
+		label.setFont(new Font("Narkisim", Font.BOLD, 20));
+		
+		roundLabel = new JLabel("");
+		roundLabel.setForeground(Color.WHITE);
+		roundLabel.setBounds(0, 0, 900, 400);
+		roundLabel.setHorizontalAlignment(JLabel.CENTER);
+		roundLabel.setVerticalAlignment(JLabel.CENTER);
+		roundLabel.setOpaque(false);
+		roundLabel.setFont(new Font("Narkisim", Font.BOLD, 14));
 	}
 	
 	/**
@@ -47,11 +59,19 @@ public class TurnStartPanel extends JPanel {
 	 * @param player	the player whose turn it is
 	 */
 	public void setPlayerLabel(Player player){
-		playerLabel.setText("<html><div style=\"text-align: center;\">" + "It is " + player.getName() + "'s turn!" +  "</html>");
+		remove(roundLabel);
+		if (inRound)
+			this.setBackground(CLEAR);
+		else
+			this.setBackground(BACKGROUND_COLOR);
+		inRound = false;
+		label.setText("<html><div style=\"text-align: center;\">" + "It is " + player.getName() + "'s turn!" +  "</html>");
+		add(startTurnButton);
+		add(label);
 	}
 	
 	public void setPubLabel(Player player, int money){
-		playerLabel.setText("<html><div style=\"text-align: center;\">" + player.getName() + " received $" + money + " by gambling. \n Now " + player.getName() + " has $" + player.getMoney()  + "</html>");
+		label.setText("<html><div style=\"text-align: center;\">" + player.getName() + " received $" + money + " by gambling.<br>Now " + player.getName() + " has $" + player.getMoney()  + "</html>");
 	}
 	/**
 	 * Getter for the startTurnButton
@@ -62,11 +82,16 @@ public class TurnStartPanel extends JPanel {
 	}
 
 	public void setRoundLabel(int currentRound) {
-		playerLabel.setText("<html><div style=\"text-align: center;\">" + "Starting Round: " + currentRound + "</html>");
+		remove(startTurnButton);
+		inRound = true;
+		
+		roundLabel.setText("<html><div style=\"text-align: center;\">" + "Starting Round " + currentRound + "</html>");
+		add(roundLabel);
 	}
 
 	public void setTimeIsUpLabel() {
-		playerLabel.setText("<html><div style=\"text-align: center;\">" + "Your Turn  is Over!\nThe Timer Reached Zero!" + "</html>");		
+		remove(roundLabel);
+		label.setText("<html><div style=\"text-align: center;\">" + "Your turn  is over!<br>The timer reached zero!" + "</html>");		
 	}
 }
 

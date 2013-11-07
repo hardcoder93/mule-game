@@ -151,7 +151,8 @@ public class MULEMainPanel extends JPanel{
 				}else {
 					GameState.setState(GameState.START_ROUND);
 					gameplayPanel.setMapAndPlayers(engine.getMap(), engine.getPlayers(), engine.getStore());
-					displayNextRound();
+					engine.nextActivePlayerIndex();
+					displayRoundOrTurn();
 				}
 				break;
 			case turnStartID: //if start turn button is pushed
@@ -165,13 +166,7 @@ public class MULEMainPanel extends JPanel{
 					}	
 				} else { //if player's turn is over
 					engine.nextActivePlayerIndex();
-					if (engine.getNextState().equals(GameState.START_ROUND)){
-						GameState.setState(GameState.START_ROUND);
-						displayNextRound();
-					} else {
-						GameState.setState(GameState.WAITING);
-						displayNextTurn();
-					}
+					displayRoundOrTurn();
 				}
 				break;
 			case gameplayID: //if gameplay button is pushed
@@ -183,6 +178,7 @@ public class MULEMainPanel extends JPanel{
 				}
 			}
 		}
+
 	}
 
 	/**
@@ -209,7 +205,7 @@ public class MULEMainPanel extends JPanel{
 				case KeyEvent.VK_DOWN:
 				case KeyEvent.VK_S:
 					if (engine.isInBuilding() == 2)
-						gameplayPanel.removeStoreMenu();
+						gameplayPanel.removeBuilding();
 					engine.movePlayer(0, 1); //Y coords start at upper left, so down is positive.
 					break;
 				case KeyEvent.VK_LEFT:
@@ -295,11 +291,19 @@ public class MULEMainPanel extends JPanel{
 		public void actionPerformed(ActionEvent e){
 			if (countDown>0){
 				countDown--;
-			}
-			else{
+			} else{
+				screenTimer.stop();
 				if (GameState.getState().equals(GameState.LANDGRANT)){
 					endLandGrant();
-				}
+				} else if (GameState.playing()){
+					gameplayPanel.removeBuilding();
+					gameplayPanel.repaint();
+					engine.nextActivePlayerIndex();
+					displayRoundOrTurn();
+				} else if (GameState.getState().equals(GameState.START_ROUND)){
+					engine.nextActivePlayerIndex();
+					displayRoundOrTurn();
+				}				
 			}
 		}
 	}
@@ -395,22 +399,23 @@ public class MULEMainPanel extends JPanel{
 	 */
 	public void endTurn(boolean gamble){
 		removeKeyListener(arrowKeys);
-		gameplayPanel.removeStoreMenu();
 		turnTime.setText("");;
 		turnTimer.stop();
 		int gamblingMoney = 0;
-		engine.getActivePlayer().resetPosition();
 		engine.getActivePlayer().setMule(Player.NO_MULE);
 		engine.resetWampus();
 		if (gamble){
 			gamblingMoney = engine.getGambleMoney(countDown);
 			engine.getActivePlayer().addMoney(gamblingMoney);
-			turnStartPanel.setPubLabel(engine.getActivePlayer(), gamblingMoney);
+			gameplayPanel.displayPub(gamblingMoney);
+			countDown = 2;
+			screenTimer.restart();
+			//turnStartPanel.setPubLabel(engine.getActivePlayer(), gamblingMoney);
 		} else {
 			turnStartPanel.setTimeIsUpLabel();
+			cardLayout.show(MULEMainPanel.this, turnStartID);
 		}
 		gameplayPanel.updateScoreboard();
-		cardLayout.show(MULEMainPanel.this, turnStartID);
 	}
 
 	/**
@@ -457,6 +462,7 @@ public class MULEMainPanel extends JPanel{
 	 */
 	private void startGameLoop(){
 		gameplayPanel.setActivePlayer(engine.getActivePlayer());
+		engine.getActivePlayer().resetPosition();
 		setFocusable(true);
 		addKeyListener(arrowKeys);					
 		cardLayout.show(MULEMainPanel.this, gameplayID);
@@ -491,7 +497,6 @@ public class MULEMainPanel extends JPanel{
 		}
 	}
 	// checks for the randomTurnEvent in the beginning of the turn
-	@SuppressWarnings("unused")
 	private void randomTurnEvent() {
 		if (GameState.getState().equals (GameState.PLAYING_MAP) ){
 			if (engine.getActivePlayerIndex()==engine.getLowestScore()) {
@@ -504,6 +509,20 @@ public class MULEMainPanel extends JPanel{
 			}
 		}
 	}
+	
+	public void displayRoundOrTurn(){
+		if (engine.getNextState().equals(GameState.START_ROUND)){
+			GameState.setState(GameState.START_ROUND);
+			displayNextRound();
+			countDown = 1;
+			screenTimer = new Timer(500, new ScreenDelay());
+			screenTimer.start();
+		} else {
+			GameState.setState(GameState.WAITING);
+			displayNextTurn();
+		}
+	}
+	
 }
 
 
