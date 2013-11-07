@@ -90,6 +90,7 @@ public class GameSetup extends JPanel {
 		add(lblNewLabel);
 	}
 	
+
 	public void focusNameBox(){
 		btnNewButton.requestFocusInWindow();
 	}
