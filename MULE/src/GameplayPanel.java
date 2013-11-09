@@ -133,10 +133,6 @@ public class GameplayPanel extends JPanel {
     public void setButtonText(String text){
     	landGrantPass.setText(text);
     }
-    
-    public void resetButton(){
-    	landGrantPass.setText("Pass");
-    }
    
 	public void setUpScoreboard () {
 		
@@ -504,6 +500,7 @@ public class GameplayPanel extends JPanel {
     
 	public void displayNoMoreTime() {
 		screenLabel1.setText(activePlayer.getName() + ", you ran out of Time! -- You're turn is over");
+		screenLabel1.setVisible(true);
 	}
     
     /**
@@ -522,7 +519,8 @@ public class GameplayPanel extends JPanel {
    			else if (buildingDisplayed.equals(PUB))
    				pubMenu.draw(g);
     	} else if (GameState.getState().equals(GameState.LANDGRANT)){
-    	} else {
+    	} 
+   		if (screenLabel1.isVisible()){
     		g.setColor(new Color(0,0,0,220));
     		g.fillRect(0, 0, 900, 600);
     	}

@@ -358,7 +358,7 @@ public class MULEMainPanel extends JPanel{
 						if (engine.purchaseTile(location)){
 							pickedTile = true;
 							gameplayPanel.updateScoreboard();
-							gameplayPanel.setButtonText("Done");
+							gameplayPanel.removeButton();
 							engine.raiseTile(location, true);
 							gameplayPanel.repaint();
 							screenTimer = new Timer(1000, new ScreenDelay());
@@ -433,7 +433,7 @@ public class MULEMainPanel extends JPanel{
 			//turnStartPanel.setPubLabel(engine.getActivePlayer(), gamblingMoney);
 		} else {
 			gameplayPanel.displayNoMoreTime();
-			
+			gameplayPanel.repaint();
 			countDown = 2;
 			screenTimer = new Timer(1000, new ScreenDelay());
 			screenTimer.start();
@@ -467,7 +467,6 @@ public class MULEMainPanel extends JPanel{
 		gameplayPanel.setLandGrantLabel(engine.getCurrentRound());
 		gameplayPanel.addLandGrantLabel(true);
 		gameplayPanel.enableButton();
-		gameplayPanel.resetButton();
 		gameplayPanel.repaint();
 		landGrantMouse = new Mouse();
 		addMouseListener(landGrantMouse);
@@ -482,7 +481,6 @@ public class MULEMainPanel extends JPanel{
 		removeMouseMotionListener(landGrantMouse);
 		if (screenTimer != null)
 			screenTimer.stop();
-		gameplayPanel.removeButton();
 		gameplayPanel.addLandGrantLabel(false);
 		gameplayPanel.removeButton();
 		engine.raiseTile(new Point(0,0), false);
