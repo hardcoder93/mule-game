@@ -9,7 +9,7 @@ import java.util.Random;
  * @author Chris Jenkins (cjenkins36)
  *
  */
-public class MULEGameEngine {
+public class MULEGameEngine{
 	//Instance Data
 	private String difficulty;
 	private MULEMap map;
@@ -23,7 +23,7 @@ public class MULEGameEngine {
 	private int roundBonus;
 	private Store store;
 	private int event;
-	private boolean wampusAppeared = false;
+	private boolean wampusCaught = false;
 	
 	/**
 	 * Builds a MULEGameEngine object, setting the difficulty of the game,
@@ -439,22 +439,66 @@ public class MULEGameEngine {
 	
 	}
 	
-	public boolean hasWampusAppeared(){
-		return wampusAppeared;
+	public boolean hasWampusBeenCaught(){
+		return wampusCaught;
 	}
 		
 	public void resetWampus(){
-		wampusAppeared = false;
+		wampusCaught = false;
 	}
 	
 	public void updateWampus(){
-		if(GameState.getState()==GameState.PLAYING_MAP && !hasWampusAppeared()){
+		if(GameState.getState()==GameState.PLAYING_MAP && !hasWampusBeenCaught()){
 			Random rand = new Random();
-			if(rand.nextInt(999)==1){
+			if(rand.nextInt(999)==1)
 				map.randomMountainWampus();
-				wampusAppeared = true;
-			}
 		}
+	}
+	
+	/*public boolean isWampusCaught(){
+		Point loc = players[activePlayerInd].getCenterPoint();
+		if(map.isMountainTile(loc.x, loc.y) && map.getTileFromLocation(loc).hasWampus())
+			return true;
+		return false;
+	}*/
+	
+	/**
+	 * This method checks to see if the input point is a valid wampus click.
+	 * If the point is valid, the active player is given the appropriate reward
+	 * and the amount rewarded is returned as an int. If the point is invalid,
+	 * 0 is returned.
+	 * 
+	 * @param pt The Point to be checked.
+	 * @return Either the amount rewarded or 0 if the point is invalid.
+	 */
+	public int tryWampusClick(Point pt){
+		Tile clickedTile = map.getTileFromLocation(pt);
+		System.out.print("This tile ");
+		if(clickedTile.hasWampus()){System.out.println("has a wampus.");
+			clickedTile.setWampus(false);
+			int reward = getWampusReward();
+			players[activePlayerInd].addMoney(reward);
+			System.out.println(players[activePlayerInd].getMoney());
+			wampusCaught = true;
+			return reward;
+		}System.out.println("doesnt have a wampus.");
+		return 0;
+	}
+	
+	/**
+	 * Calculates the reward for catching the wampus depending on the current round.
+	 * 
+	 * @return The amount to be rewarded.
+	 */
+	private int getWampusReward(){
+		if(currentRound>=1 && currentRound<=3)
+			return 100;
+		else if(currentRound>=4 && currentRound<=7)
+			return 200;
+		else if(currentRound>=8 && currentRound<=11)
+			return 300;
+		else
+			return 400;
 	}
 }
 

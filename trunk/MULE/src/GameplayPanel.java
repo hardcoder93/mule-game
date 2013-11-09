@@ -87,9 +87,10 @@ public class GameplayPanel extends JPanel {
     
     public void addLandGrantLabel(boolean add){
     	if (add)
-    		add(label2);
+    		//add(label2);
+    		label2.setVisible(true);
     	else
-    		remove(label2);
+    		label2.setVisible(false);
     }
     
   
