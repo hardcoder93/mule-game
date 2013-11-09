@@ -34,6 +34,7 @@ public class GameState {
 	public static final String LANDGRANT = "LAND_GRANT";
 	public static final String AUCTION = "AUCTION";
 	public static final String START_ROUND = "START_ROUND";
+	public static final String START_TURN = "START_TURN";
 	
 	//Instance Data
 	private static GameState gamestate = null;
@@ -61,6 +62,7 @@ public class GameState {
 		case LANDGRANT:
 		case AUCTION:
 		case START_ROUND:
+		case START_TURN:
 			state = st;
 		}
 	}
