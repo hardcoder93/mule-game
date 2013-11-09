@@ -48,7 +48,7 @@ public class MULEMainPanel extends JPanel{
 	private PlayerControls arrowKeys;
 	private NextScreen spaceBar;
 
-	private JButton gamePlayBtn;
+	private JButton landGrantBtn;
 	private JButton menuButton;
 	private StorePurchaseAction storeListener;
 
@@ -73,7 +73,7 @@ public class MULEMainPanel extends JPanel{
 		JButton startBtn = startPanel.getButton();
 		JButton gameSetupBtn = gameSetupPanel.getButton();
 		JButton playerSetupBtn = playerSetupPanel.getButton();
-		gamePlayBtn = gameplayPanel.getButton();
+		landGrantBtn = gameplayPanel.getButton();
 		menuButton = gameplayPanel.getMenuButton();
 
 		storeListener = new StorePurchaseAction();
@@ -82,7 +82,7 @@ public class MULEMainPanel extends JPanel{
 		gameSetupBtn.addActionListener(new NextListener(gameSetupID));
 		
 		playerSetupBtn.addActionListener(new NextListener(playerSetupID));
-		gamePlayBtn.addActionListener(new NextListener(gameplayID));
+		landGrantBtn.addActionListener(new NextListener(gameplayID));
 		menuButton.addActionListener(storeListener);
 
 		//
@@ -90,7 +90,8 @@ public class MULEMainPanel extends JPanel{
 		gameSetupBtn.addKeyListener(new EnterKeyListener(gameSetupID));
 		
 		playerSetupBtn.addKeyListener(new EnterKeyListener(playerSetupID));
-		gamePlayBtn.addKeyListener(new EnterKeyListener(gameplayID));
+		landGrantBtn.addKeyListener(new EnterKeyListener(gameplayID));
+		landGrantBtn.addActionListener(new LandGrantButton());
 		//menuButton.addActionListener(storeListener);
 
 		arrowKeys = new PlayerControls();
@@ -432,11 +433,13 @@ public class MULEMainPanel extends JPanel{
 			//turnStartPanel.setPubLabel(engine.getActivePlayer(), gamblingMoney);
 		} else {
 			gameplayPanel.displayNoMoreTime();
+			
 			countDown = 2;
 			screenTimer = new Timer(1000, new ScreenDelay());
 			screenTimer.start();
 		}
 		gameplayPanel.updateScoreboard();
+		gameplayPanel.repaint();
 	}
 
 	/**
@@ -459,6 +462,7 @@ public class MULEMainPanel extends JPanel{
 	private void startLandGrant(){
 		removeKeyListener(spaceBar);
 		GameState.setState(GameState.LANDGRANT);
+		gameplayPanel.addButton();
 		gameplayPanel.removeScreenLabel();
 		gameplayPanel.setLandGrantLabel(engine.getCurrentRound());
 		gameplayPanel.addLandGrantLabel(true);
@@ -476,7 +480,9 @@ public class MULEMainPanel extends JPanel{
 	private void endLandGrant(){
 		removeMouseListener(landGrantMouse);
 		removeMouseMotionListener(landGrantMouse);
-		screenTimer.stop();
+		if (screenTimer != null)
+			screenTimer.stop();
+		gameplayPanel.removeButton();
 		gameplayPanel.addLandGrantLabel(false);
 		gameplayPanel.removeButton();
 		engine.raiseTile(new Point(0,0), false);
@@ -550,6 +556,12 @@ public class MULEMainPanel extends JPanel{
 		}
 	}
 	
+	private class LandGrantButton implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			endLandGrant();
+		}
+	}
 
 	private class NextScreen implements KeyListener{
 
@@ -572,10 +584,8 @@ public class MULEMainPanel extends JPanel{
 
 		@Override
 		public void keyReleased(KeyEvent arg0) {}
-
 		@Override
 		public void keyTyped(KeyEvent arg0) {}
-		
 	}
 
 	private void showWampusMessage(int reward){

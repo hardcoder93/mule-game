@@ -49,7 +49,7 @@ public class GameplayPanel extends JPanel {
 	private JLabel screenLabel1;
 	private JLabel spaceBarLabel;
 	
-	JButton nextScreenButton;
+	private JButton landGrantPass;
 	
     /**
      * Makes a new gameplayPanel
@@ -58,17 +58,16 @@ public class GameplayPanel extends JPanel {
         setBackground(Color.LIGHT_GRAY);
         setLayout(null);
         panelState = "init";
-        buildingDisplayed = "none";
+        buildingDisplayed = NONE;
 
         storeMenu = new StoreMenu(Color.BLUE,Color.YELLOW,this);
         pubMenu = new PubMenu(Color.GREEN, Color.BLUE, this);
         
-        nextScreenButton = new JButton("");
-        nextScreenButton.setFont(new Font("Narkisim", Font.BOLD, 13));
-        nextScreenButton.setBounds(783, 571, 117, 29);
-        nextScreenButton.setOpaque(false);
-        nextScreenButton.setContentAreaFilled(false);
-        add(nextScreenButton);
+        landGrantPass = new JButton("PASS");
+        landGrantPass.setFont(new Font("Narkisim", Font.BOLD, 13));
+        landGrantPass.setBounds(783, 471, 117, 29);
+        landGrantPass.setOpaque(true);
+        landGrantPass.setContentAreaFilled(true);
         
         screenLabel1 = new JLabel();
         screenLabel1.setBounds(0,0,900,600);
@@ -105,7 +104,7 @@ public class GameplayPanel extends JPanel {
     	else if (round < 3)
     		messageLabel.setText("Round " + round + ": Land is free this round!");
     	else
-    		messageLabel.setText("Round " + round + ":Land costs $300 this round!");
+    		messageLabel.setText("Round " + round + ": Land costs $300 this round!");
     }
     
     public void addLandGrantLabel(boolean add){
@@ -128,15 +127,15 @@ public class GameplayPanel extends JPanel {
     }
     
     public JButton getButton(){
-    	return nextScreenButton;
+    	return landGrantPass;
     }
     
     public void setButtonText(String text){
-    	nextScreenButton.setText(text);
+    	landGrantPass.setText(text);
     }
     
     public void resetButton(){
-    	nextScreenButton.setText("Pass");
+    	landGrantPass.setText("Pass");
     }
    
 	public void setUpScoreboard () {
@@ -456,13 +455,13 @@ public class GameplayPanel extends JPanel {
     }
     
     public void disableButton(){
-    	if (nextScreenButton.isEnabled())
-    		nextScreenButton.setEnabled(false);
+    	if (landGrantPass.isEnabled())
+    		landGrantPass.setEnabled(false);
     }
     
     public void enableButton(){
-    	if (!nextScreenButton.isEnabled())
-    		nextScreenButton.setEnabled(true);
+    	if (!landGrantPass.isEnabled())
+    		landGrantPass.setEnabled(true);
     }
     
     public void updateScoreboard(){
@@ -562,7 +561,11 @@ public class GameplayPanel extends JPanel {
 
 
 	public void removeButton(){
-		remove(nextScreenButton);
+		remove(landGrantPass);
+	}
+	
+	public void addButton(){
+		add(landGrantPass);
 	}
 
 
