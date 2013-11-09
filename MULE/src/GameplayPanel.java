@@ -23,9 +23,12 @@ import javax.swing.Timer;
  */
 @SuppressWarnings("serial")
 public class GameplayPanel extends JPanel {
+	//Building Menus
 	private final String STORE = "STORE";
 	private final String PUB = "PUB";
 	private final String NONE = "NONE";
+	private StoreMenu storeMenu;
+	private PubMenu pubMenu;
 	
 	//Game play objects
 	private MULEMap gameMap;			//map of game
@@ -39,12 +42,12 @@ public class GameplayPanel extends JPanel {
 	private JLabel timerLabel;
 	private JLabel messageLabel;
 	private String buildingDisplayed;
-	
-	private StoreMenu storeMenu;
-	private PubMenu pubMenu;
 
 	//Screen States
 	private String panelState;
+	
+	private JLabel screenLabel1;
+	private JLabel spaceBarLabel;
 	
 	JButton nextScreenButton;
 	
@@ -66,6 +69,24 @@ public class GameplayPanel extends JPanel {
         nextScreenButton.setOpaque(false);
         nextScreenButton.setContentAreaFilled(false);
         add(nextScreenButton);
+        
+        screenLabel1 = new JLabel();
+        screenLabel1.setBounds(0,0,900,600);
+        screenLabel1.setFont(new Font("Narkisim", Font.BOLD, 20));
+        screenLabel1.setHorizontalAlignment(JLabel.CENTER);
+        screenLabel1.setVerticalAlignment(JLabel.CENTER);
+        screenLabel1.setForeground(Color.WHITE);
+        add(screenLabel1);
+        
+        spaceBarLabel = new JLabel();
+        spaceBarLabel.setBounds(0,200,900,400);
+        spaceBarLabel.setFont(new Font("Narkisim", Font.BOLD, 20));
+        spaceBarLabel.setHorizontalAlignment(JLabel.CENTER);
+        spaceBarLabel.setVerticalAlignment(JLabel.CENTER);
+        spaceBarLabel.setForeground(Color.WHITE);
+        spaceBarLabel.setText("Press [SPACE] to continue!");
+        add(spaceBarLabel);
+        spaceBarLabel.setVisible(false);
         
         timerLabel = new JLabel();
         messageLabel = new JLabel();
@@ -460,29 +481,51 @@ public class GameplayPanel extends JPanel {
     	}
     }
     
+    public void removeScreenLabel(){
+    	screenLabel1.setVisible(false);
+    	spaceBarLabel.setVisible(false);
+    }
+    
+    public void displayPause(){
+    	screenLabel1.setText("PAUSED - Press any key to continue");
+    	screenLabel1.setVisible(true);
+    }
+    
+    public void displayNextRound(int round){
+    	screenLabel1.setText("Starting Round " + round);
+    	screenLabel1.setVisible(true);
+    	spaceBarLabel.setVisible(true);
+    }
+    
+    public void displayNextTurn(){
+    	screenLabel1.setText(activePlayer.getName() + ", it is your turn!");
+    	screenLabel1.setVisible(true);
+    	spaceBarLabel.setVisible(true);
+    }
+    
+	public void displayNoMoreTime() {
+		screenLabel1.setText(activePlayer.getName() + ", you ran out of Time! -- You're turn is over");
+	}
+    
     /**
      * Overrides the panel's paintComponent Method
      * This method should not be called directly. Instead use repaint()
      */
     public void paintComponent(Graphics g) {
-    	if (this.gameMap != null){
-    		if(GameState.getState().equals(GameState.WAITING)){
-    			g.setColor(Color.BLACK);
-    			g.fillRect(0, 0, 900, 500);
-    			g.setColor(Color.WHITE);
-    			g.drawString("PAUSED - Press any key to continue", 350, 250);
-    		}else{
-    			super.paintComponent(g);
-    			
-    			gameMap.draw(g);
-    			if (GameState.playing()){
-    				activePlayer.draw(g);
-    				if (buildingDisplayed.equals(STORE))
-    					storeMenu.draw(g);
-    				else if (buildingDisplayed.equals(PUB))
-    					pubMenu.draw(g);
-    			}
-    		}
+    	super.paintComponent(g);
+    	if (this.gameMap == null)
+    		return;    	
+   		gameMap.draw(g);
+   		if (GameState.playing()){
+   			activePlayer.draw(g);
+   			if (buildingDisplayed.equals(STORE))
+   				storeMenu.draw(g);
+   			else if (buildingDisplayed.equals(PUB))
+   				pubMenu.draw(g);
+    	} else if (GameState.getState().equals(GameState.LANDGRANT)){
+    	} else {
+    		g.setColor(new Color(0,0,0,220));
+    		g.fillRect(0, 0, 900, 600);
     	}
     }
 
@@ -516,11 +559,17 @@ public class GameplayPanel extends JPanel {
 	public JButton getMenuButton(){
 		return storeMenu.getButton();
 	}
-	
+
+
+	public void removeButton(){
+		remove(nextScreenButton);
+	}
+
+
 	public void setErrorMessage(int cost) {
 		storeMenu.setErrorMessage(cost);		
 	}
-	
+
 	/**
 	 * Shows an input message in the message box at the top of the screen
 	 * for a specified amount of time.
@@ -561,5 +610,6 @@ public class GameplayPanel extends JPanel {
 			GameplayPanel.this.messageLabel.setText("");
 		}
 	}
+
 }
     
