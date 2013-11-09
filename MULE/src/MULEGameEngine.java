@@ -474,14 +474,14 @@ public class MULEGameEngine{
 	public int tryWampusClick(Point pt){
 		Tile clickedTile = map.getTileFromLocation(pt);
 		System.out.print("This tile ");
-		if(clickedTile.hasWampus()){System.out.println("has a wampus.");
+		if(clickedTile.hasWampus()){
 			clickedTile.setWampus(false);
 			int reward = getWampusReward();
 			players[activePlayerInd].addMoney(reward);
 			System.out.println(players[activePlayerInd].getMoney());
 			wampusCaught = true;
 			return reward;
-		}System.out.println("doesnt have a wampus.");
+		}
 		return 0;
 	}
 	
