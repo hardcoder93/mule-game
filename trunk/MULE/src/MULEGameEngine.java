@@ -220,6 +220,8 @@ public class MULEGameEngine{
 	public void setPlayerTurnOrder() {
 		landGrantOrder.clear();
 		playerTurnOrder.clear();
+		for (int i = 0; i < players.length; i++)
+			players[i].calculateScore(store);
 		landGrantOrder.add(0);
 		playerTurnOrder.add(0);
 		for (int i = 1; i < players.length; i++)
