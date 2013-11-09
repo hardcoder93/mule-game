@@ -589,7 +589,6 @@ public class MULEMainPanel extends JPanel{
 	}
 
 	private void showWampusMessage(int reward){
-		System.out.println("You caught the wambuzz! He gave you $"+reward+" as a reward!");
 		gameplayPanel.showMessage("You caught the wambuzz! He gave you $"+reward+
 				" as a reward!");
 	}
