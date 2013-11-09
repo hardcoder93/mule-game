@@ -110,7 +110,6 @@ public class MULEMainPanel extends JPanel{
 		updater = new Timer(1000/60, new GameUpdater()); //1000/60 means we are updating at 60 FPS.
 		turnTimer =  new Timer(1000, new TurnUpdater());
 		turnTimer.start();
-
 		if (GameState.playing())
 			updater.start();
 	}
@@ -287,7 +286,12 @@ public class MULEMainPanel extends JPanel{
 		public void actionPerformed(ActionEvent e){
 			if(GameState.playing()){
 				engine.updateWampus();
+				gameplayPanel.updateScoreboard();
 				gameplayPanel.repaint();
+				/*if(engine.isWampusCaught()){
+					System.out.println("Wampus caught!");
+					
+				}*/
 				// Change to Black Screen - Lauren
 				if(3==engine.getMap().isInBuilding(engine.getActivePlayer().getX(), engine.getActivePlayer().getY())){
 					updater.stop();
@@ -372,20 +376,26 @@ public class MULEMainPanel extends JPanel{
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
 			Point location = arg0.getPoint();
-			if (!pickedTile){
-				if (engine.getMap().isBuyable(location)){
-					if (engine.purchaseTile(location)){
-						pickedTile = true;
-						gameplayPanel.updateScoreboard();
-						gameplayPanel.setButtonText("Done");
-						engine.raiseTile(location, true);
-						gameplayPanel.repaint();
-						screenTimer = new Timer(1000, new ScreenDelay());
-						countDown = 1;
-						screenTimer.start();
+			if(GameState.getState().equals(GameState.LANDGRANT)){
+				if (!pickedTile){
+					if (engine.getMap().isBuyable(location)){
+						if (engine.purchaseTile(location)){
+							pickedTile = true;
+							gameplayPanel.updateScoreboard();
+							gameplayPanel.setButtonText("Done");
+							engine.raiseTile(location, true);
+							gameplayPanel.repaint();
+							screenTimer = new Timer(1000, new ScreenDelay());
+							countDown = 1;
+							screenTimer.start();
+						}
 					}
-				}
-			}	
+				}	
+			}else if(GameState.getState().equals(GameState.PLAYING_MAP)){
+				int reward = engine.tryWampusClick(location); 
+				if(reward>0)
+					showWampusMessage(reward);
+			}
 		}
 
 		@Override
@@ -430,6 +440,7 @@ public class MULEMainPanel extends JPanel{
 	 */
 	public void endTurn(boolean gamble){
 		removeKeyListener(arrowKeys);
+		removeMouseListener(landGrantMouse);
 		turnTime.setText("");;
 		turnTimer.stop();
 		int gamblingMoney = 0;
@@ -496,7 +507,8 @@ public class MULEMainPanel extends JPanel{
 		gameplayPanel.setActivePlayer(engine.getActivePlayer());
 		engine.getActivePlayer().resetPosition();
 		setFocusable(true);
-		addKeyListener(arrowKeys);					
+		addKeyListener(arrowKeys);			
+		addMouseListener(landGrantMouse);
 		cardLayout.show(MULEMainPanel.this, gameplayID);
 		countDown = engine.calculateActivePlayerTurnTime();
 		turnTime.setText("" + countDown);
@@ -555,6 +567,9 @@ public class MULEMainPanel extends JPanel{
 		}
 	}
 	
+	private void showWampusMessage(int reward){
+		System.out.println("The wampus was caught! You got $"+reward);
+	}
 }
 
 
