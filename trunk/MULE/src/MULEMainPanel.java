@@ -35,7 +35,6 @@ public class MULEMainPanel extends JPanel{
 	private PlayerSetup playerSetupPanel = new PlayerSetup(); //The panel that allows each player to make a character.
 	private GameplayPanel gameplayPanel = new GameplayPanel(); //The panel which displays main gameplay.
 	private CardLayout cardLayout = new CardLayout(); //CardLayout allows us to easily switch between screens.
-	private TurnStartPanel turnStartPanel = new TurnStartPanel();
 	private JLabel turnTime = new JLabel();
 	private int countDown;
 	//The screen IDs are used to tell the CardLayout which screen to display, and to tell the 
@@ -44,10 +43,10 @@ public class MULEMainPanel extends JPanel{
 	private final String gameSetupID = "GAMESETUP";
 	private final String playerSetupID = "PLAYERSETUP";
 	private final String gameplayID = "GAMEPLAY";
-	private final String turnStartID = "TURNSTART";
 
 	private Mouse landGrantMouse;
 	private PlayerControls arrowKeys;
+	private NextScreen spaceBar;
 
 	private JButton gamePlayBtn;
 	private JButton menuButton;
@@ -66,7 +65,6 @@ public class MULEMainPanel extends JPanel{
 		add(gameSetupPanel, gameSetupID);
 		add(playerSetupPanel, playerSetupID);
 		add(gameplayPanel, gameplayID);
-		add(turnStartPanel, turnStartID);
 
 		turnTime.setFont(new Font("Narkisim", Font.BOLD, 20));
 		turnTime.setForeground(Color.RED);
@@ -75,7 +73,6 @@ public class MULEMainPanel extends JPanel{
 		JButton startBtn = startPanel.getButton();
 		JButton gameSetupBtn = gameSetupPanel.getButton();
 		JButton playerSetupBtn = playerSetupPanel.getButton();
-		JButton turnStartBtn = turnStartPanel.getButton();
 		gamePlayBtn = gameplayPanel.getButton();
 		menuButton = gameplayPanel.getMenuButton();
 
@@ -85,7 +82,6 @@ public class MULEMainPanel extends JPanel{
 		gameSetupBtn.addActionListener(new NextListener(gameSetupID));
 		
 		playerSetupBtn.addActionListener(new NextListener(playerSetupID));
-		turnStartBtn.addActionListener(new NextListener(turnStartID));
 		gamePlayBtn.addActionListener(new NextListener(gameplayID));
 		menuButton.addActionListener(storeListener);
 
@@ -94,11 +90,12 @@ public class MULEMainPanel extends JPanel{
 		gameSetupBtn.addKeyListener(new EnterKeyListener(gameSetupID));
 		
 		playerSetupBtn.addKeyListener(new EnterKeyListener(playerSetupID));
-		turnStartBtn.addKeyListener(new EnterKeyListener(turnStartID));
 		gamePlayBtn.addKeyListener(new EnterKeyListener(gameplayID));
 		//menuButton.addActionListener(storeListener);
 
 		arrowKeys = new PlayerControls();
+		spaceBar = new NextScreen();
+		setFocusable(true);
 
 
 	}
@@ -181,22 +178,8 @@ public class MULEMainPanel extends JPanel{
 				}else {
 					GameState.setState(GameState.START_ROUND);
 					gameplayPanel.setMapAndPlayers(engine.getMap(), engine.getPlayers(), engine.getStore());
-					engine.nextActivePlayerIndex();
-					displayRoundOrTurn();
-				}
-				break;
-			case turnStartID: //if start turn button is pushed
-				if (GameState.getState().equals(GameState.WAITING)){ //if the player starts his turn
-					if (engine.getNextState().equals(GameState.LANDGRANT)){ //if next state is landgrant
-						GameState.setState(GameState.LANDGRANT);
-						startLandGrant();
-					} else if (engine.getNextState().equals(GameState.PLAYING_MAP)){ //if next state is map
-						GameState.setState(GameState.PLAYING_MAP);
-						startGameLoop();													
-					}	
-				} else { //if player's turn is over
-					engine.nextActivePlayerIndex();
-					displayRoundOrTurn();
+					gameplayPanel.repaint();
+					startRoundOrTurn();
 				}
 				break;
 			case gameplayID: //if gameplay button is pushed
@@ -204,7 +187,7 @@ public class MULEMainPanel extends JPanel{
 					GameState.setState(GameState.WAITING);
 					endLandGrant();
 					engine.nextActivePlayerIndex();
-					displayNextTurn();
+					startNextTurn();
 				}
 			}
 		}
@@ -329,12 +312,8 @@ public class MULEMainPanel extends JPanel{
 				} else if (GameState.playing()){
 					gameplayPanel.removeBuilding();
 					gameplayPanel.repaint();
-					engine.nextActivePlayerIndex();
-					displayRoundOrTurn();
-				} else if (GameState.getState().equals(GameState.START_ROUND)){
-					engine.nextActivePlayerIndex();
-					displayRoundOrTurn();
-				}				
+					startRoundOrTurn();			
+				}
 			}
 		}
 	}
@@ -419,12 +398,13 @@ public class MULEMainPanel extends JPanel{
 	 * displayNextRound displays the turnStartPanel, but displays which round is
 	 * about to begin. It also sets up the next round in the game engine.
 	 */
-	private void displayNextRound() {
+	private void startNextRound() {
+		GameState.setState(GameState.START_ROUND);
 		engine.nextRound();
 		engine.setPlayerTurnOrder();
-		turnStartPanel.setRoundLabel(engine.getCurrentRound());
-		cardLayout.show(MULEMainPanel.this, turnStartID);
-		GameState.setState(GameState.START_ROUND);
+		gameplayPanel.displayNextRound(engine.getCurrentRound());
+		cardLayout.show(MULEMainPanel.this, gameplayID);
+		addKeyListener(spaceBar);
 	}
 
 	/**
@@ -451,8 +431,10 @@ public class MULEMainPanel extends JPanel{
 			screenTimer.start();
 			//turnStartPanel.setPubLabel(engine.getActivePlayer(), gamblingMoney);
 		} else {
-			turnStartPanel.setTimeIsUpLabel();
-			cardLayout.show(MULEMainPanel.this, turnStartID);
+			gameplayPanel.displayNoMoreTime();
+			countDown = 2;
+			screenTimer = new Timer(1000, new ScreenDelay());
+			screenTimer.start();
 		}
 		gameplayPanel.updateScoreboard();
 	}
@@ -461,9 +443,13 @@ public class MULEMainPanel extends JPanel{
 	 * displayNextTurn displays the turnStartPanel and shows which player's turn is
 	 * about to begin.
 	 */
-	private void displayNextTurn() {
-		turnStartPanel.setPlayerLabel(engine.getActivePlayer());
-		cardLayout.show(MULEMainPanel.this,turnStartID);
+	private void startNextTurn() {
+		removeKeyListener(spaceBar);
+		GameState.setState(GameState.START_TURN);
+		gameplayPanel.setActivePlayer(engine.getActivePlayer());
+		gameplayPanel.displayNextTurn();
+		gameplayPanel.repaint();
+		addKeyListener(spaceBar);
 	}
 
 	/**
@@ -471,11 +457,14 @@ public class MULEMainPanel extends JPanel{
 	 * each player. It displays the map and add's the MouseListeners.
 	 */
 	private void startLandGrant(){
+		removeKeyListener(spaceBar);
+		GameState.setState(GameState.LANDGRANT);
+		gameplayPanel.removeScreenLabel();
 		gameplayPanel.setLandGrantLabel(engine.getCurrentRound());
 		gameplayPanel.addLandGrantLabel(true);
 		gameplayPanel.enableButton();
 		gameplayPanel.resetButton();
-		cardLayout.show(MULEMainPanel.this, gameplayID);
+		gameplayPanel.repaint();
 		landGrantMouse = new Mouse();
 		addMouseListener(landGrantMouse);
 		addMouseMotionListener(landGrantMouse);
@@ -485,14 +474,13 @@ public class MULEMainPanel extends JPanel{
 	 * endLandGrant stops the land grant stage of a turn. It removes the MouseListeners
 	 */
 	private void endLandGrant(){
-		if(screenTimer!=null)
-			screenTimer.stop();
-		gameplayPanel.addLandGrantLabel(false);
-		gamePlayBtn.doClick();
-		gameplayPanel.disableButton();
-		engine.raiseTile(new Point(0,0), false);
 		removeMouseListener(landGrantMouse);
 		removeMouseMotionListener(landGrantMouse);
+		screenTimer.stop();
+		gameplayPanel.addLandGrantLabel(false);
+		gameplayPanel.removeButton();
+		engine.raiseTile(new Point(0,0), false);
+		startRoundOrTurn();
 	}
 
 	/**
@@ -500,6 +488,9 @@ public class MULEMainPanel extends JPanel{
 	 * keyListener and displays the map. 
 	 */
 	private void startGameLoop(){
+		removeKeyListener(spaceBar);
+		GameState.setState(GameState.PLAYING_MAP);
+		gameplayPanel.removeScreenLabel();
 		gameplayPanel.setActivePlayer(engine.getActivePlayer());
 		engine.getActivePlayer().resetPosition();
 		setFocusable(true);
@@ -550,19 +541,43 @@ public class MULEMainPanel extends JPanel{
 		}
 	}
 	
-	public void displayRoundOrTurn(){
+	private void startRoundOrTurn(){
+		engine.nextActivePlayerIndex();
 		if (engine.getNextState().equals(GameState.START_ROUND)){
-			GameState.setState(GameState.START_ROUND);
-			displayNextRound();
-			countDown = 1;
-			screenTimer = new Timer(500, new ScreenDelay());
-			//screenTimer.start();
+			startNextRound();
 		} else {
-			GameState.setState(GameState.WAITING);
-			displayNextTurn();
+			startNextTurn();
 		}
 	}
 	
+
+	private class NextScreen implements KeyListener{
+
+		@Override
+		public void keyPressed(KeyEvent arg0) {
+			String currState = GameState.getState();
+			switch (arg0.getKeyCode()) {
+			case KeyEvent.VK_SPACE:
+				if (currState.equals(GameState.START_ROUND)){
+					startRoundOrTurn();
+				} else if (currState.equals(GameState.START_TURN)){
+					if (engine.getNextState().equals(GameState.LANDGRANT)){
+						startLandGrant();
+					} else {
+						startGameLoop();
+					}
+				}
+			}
+		}
+
+		@Override
+		public void keyReleased(KeyEvent arg0) {}
+
+		@Override
+		public void keyTyped(KeyEvent arg0) {}
+		
+	}
+
 	private void showWampusMessage(int reward){
 		System.out.println("You caught the wambuzz! He gave you $"+reward+" as a reward!");
 		gameplayPanel.showMessage("You caught the wambuzz! He gave you $"+reward+
