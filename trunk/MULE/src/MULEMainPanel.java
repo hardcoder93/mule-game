@@ -288,10 +288,6 @@ public class MULEMainPanel extends JPanel{
 				engine.updateWampus();
 				gameplayPanel.updateScoreboard();
 				gameplayPanel.repaint();
-				/*if(engine.isWampusCaught()){
-					System.out.println("Wampus caught!");
-					
-				}*/
 				// Change to Black Screen - Lauren
 				if(3==engine.getMap().isInBuilding(engine.getActivePlayer().getX(), engine.getActivePlayer().getY())){
 					updater.stop();
@@ -310,7 +306,7 @@ public class MULEMainPanel extends JPanel{
 			if (countDown>0){
 
 				turnTime.setText(String.valueOf(countDown--));
-				gameplayPanel.updateLabel(turnTime);
+				gameplayPanel.updateTimerLabel(turnTime);
 
 			}
 			else{
@@ -568,7 +564,9 @@ public class MULEMainPanel extends JPanel{
 	}
 	
 	private void showWampusMessage(int reward){
-		System.out.println("The wampus was caught! You got $"+reward);
+		System.out.println("You caught the wambuzz! He gave you $"+reward+" as a reward!");
+		gameplayPanel.showMessage("You caught the wambuzz! He gave you $"+reward+
+				" as a reward!");
 	}
 }
 

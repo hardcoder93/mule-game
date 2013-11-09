@@ -1,12 +1,15 @@
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 /**
  * Jpanel object for M.U.L.E. game that displays everything that goes on during the 
@@ -33,8 +36,8 @@ public class GameplayPanel extends JPanel {
 	private JLabel[] foodLabels = new JLabel[4];
 	private JLabel[] energyLabels = new JLabel[4];
 	private JLabel[] oreLabels = new JLabel[4];
-	private JLabel label;
-	private JLabel label2;
+	private JLabel timerLabel;
+	private JLabel messageLabel;
 	private String buildingDisplayed;
 	
 	private StoreMenu storeMenu;
@@ -64,33 +67,32 @@ public class GameplayPanel extends JPanel {
         nextScreenButton.setContentAreaFilled(false);
         add(nextScreenButton);
         
-        label = new JLabel();
-        label2 = new JLabel();
-        label2.setBounds(250,0,400,30);
-        label2.setFont(new Font("Narkisim", Font.BOLD, 16));
-        label2.setHorizontalAlignment(JLabel.CENTER);
-        label2.setForeground(Color.yellow);
-        label2.setBackground(Color.black);
-        label2.setOpaque(true);
-        add(label2);
+        timerLabel = new JLabel();
+        messageLabel = new JLabel();
+        messageLabel.setFont(new Font("Narkisim", Font.BOLD, 16));
+        messageLabel.setHorizontalAlignment(JLabel.CENTER);
+        messageLabel.setForeground(Color.yellow);
+        messageLabel.setBackground(Color.black);
+        messageLabel.setOpaque(true);
+        add(messageLabel);
         
     }
     
     public void setLandGrantLabel(int round){
     	if (round < 0)
-    		label2.setText("");
+    		messageLabel.setText("");
     	else if (round < 3)
-    		label2.setText("Round " + round + ": Land is free this round!");
+    		messageLabel.setText("Round " + round + ": Land is free this round!");
     	else
-    		label2.setText("Round " + round + ":Land costs $300 this round!");
+    		messageLabel.setText("Round " + round + ":Land costs $300 this round!");
     }
     
     public void addLandGrantLabel(boolean add){
-    	if (add)
-    		//add(label2);
-    		label2.setVisible(true);
-    	else
-    		label2.setVisible(false);
+    	if (add){
+    		messageLabel.setBounds(250,0,400,30);
+    		messageLabel.setVisible(true);
+    	}else
+    		messageLabel.setVisible(false);
     }
     
   
@@ -100,8 +102,8 @@ public class GameplayPanel extends JPanel {
     	add(label);
     }
     
-    public void updateLabel(JLabel label){
-    	this.label = label;
+    public void updateTimerLabel(JLabel label){
+    	this.timerLabel = label;
     }
     
     public JButton getButton(){
@@ -514,12 +516,50 @@ public class GameplayPanel extends JPanel {
 	public JButton getMenuButton(){
 		return storeMenu.getButton();
 	}
-
-
-
-
+	
 	public void setErrorMessage(int cost) {
 		storeMenu.setErrorMessage(cost);		
+	}
+	
+	/**
+	 * Shows an input message in the message box at the top of the screen
+	 * for a specified amount of time.
+	 * 
+	 * @param message The message to be displayed.
+	 * @param time The amount of time to display the message in milliseconds.
+	 */
+	public void showMessage(String message, int time){
+		messageLabel.setText(message);
+		messageLabel.setSize(messageLabel.getPreferredSize());
+		Timer hider = new Timer(time, new MessageLabelHider());
+		hider.setRepeats(false);
+		messageLabel.setVisible(true);
+		hider.start();
+	}
+	
+	/**
+	 * Shows an input message in the message box at the top of the screen
+	 * for 3 seconds.
+	 * 
+	 * @param message The message to be displayed.
+	 */
+	public void showMessage(String message){
+		showMessage(message, 5000);
+	}
+	
+	/**
+	 * A private ActionListener class used by the timer in showMessage to
+	 * hide the messageLabel object.
+	 * 
+	 * @author Chris Jenkins (cjenkins36)
+	 *
+	 */
+	private class MessageLabelHider implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			GameplayPanel.this.messageLabel.setVisible(false);
+			GameplayPanel.this.messageLabel.setText("");
+		}
 	}
 }
     
