@@ -1,7 +1,10 @@
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Image;
+//import java.awt.Image;
+import java.io.Serializable;
 import java.lang.reflect.Field;
+
+import javax.swing.ImageIcon;
 
 
 /**
@@ -10,9 +13,10 @@ import java.lang.reflect.Field;
  * 
  * @author John Certusi (jcertusi3)
  */
-public class Tile implements Drawable{
+@SuppressWarnings("serial")
+public class Tile implements Drawable,Serializable{
 	
-	private final int TILE_BORDER_WIDTH = 10;
+	private final int TILE_BORDER_WIDTH = 5;
 		
 	private int id;					//unique ID
 	private int xCoord;				//x coordinate location
@@ -27,7 +31,8 @@ public class Tile implements Drawable{
 	private boolean raised;			//true if should be drawn raised
 	@SuppressWarnings("unused")
 	private char direction;			//direction (used for river)
-	private Image tileImage;		//image for tile
+	//private Image tileImage;		//image for tile
+	private ImageIcon tileImage;		//image for tile
 	private int value;
 	public String productionType;
 	
@@ -147,17 +152,17 @@ public class Tile implements Drawable{
 	 */
 	public void setImage(){
 		switch (this.type) {
-		case "M1": tileImage = MapImages.MOUNTAIN1;
+		case "M1": tileImage = new ImageIcon(MapImages.MOUNTAIN1);
 			break;
-		case "M2": tileImage = MapImages.MOUNTAIN2;
+		case "M2": tileImage = new ImageIcon(MapImages.MOUNTAIN2);
 			break;
-		case "M3": tileImage = MapImages.MOUNTAIN3;
+		case "M3": tileImage = new ImageIcon(MapImages.MOUNTAIN3);
 			break;
-		case "R": tileImage = MapImages.RIVER;
+		case "R": tileImage = new ImageIcon(MapImages.RIVER);
 			break;
-		case "Town": tileImage = MapImages.TOWN;
+		case "Town": tileImage = new ImageIcon(MapImages.TOWN);
 			break;
-		default: tileImage = MapImages.PLAINS;
+		default: tileImage = new ImageIcon(MapImages.PLAINS);
 			break;
 		}
 	}
@@ -173,7 +178,7 @@ public class Tile implements Drawable{
 	
 	@Override
 	public void draw(Graphics g) {
-		g.drawImage(tileImage, xLoc, yLoc, null);
+		g.drawImage(tileImage.getImage(), xLoc, yLoc, null);
 		if(hasMule())
 			drawMule(g);
 		if (!vacant)

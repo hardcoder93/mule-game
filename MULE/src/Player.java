@@ -1,6 +1,7 @@
 import java.awt.Graphics;
-import java.awt.Image;
+//import java.awt.Image;
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -12,7 +13,8 @@ import javax.swing.ImageIcon;
  */
 
 
-public class Player implements Drawable{
+@SuppressWarnings("serial")
+public class Player implements Drawable,Serializable{
 	//Constants
 	public static final int PLAYER_WIDTH = 50;
 	public static final int PLAYER_HEIGHT = 50;
@@ -37,8 +39,10 @@ public class Player implements Drawable{
 	private int energy;
 	private int ore;
 	private int crystite;
-	private Image pImage;
-	private Image mImage = new ImageIcon("IMAGES/mulePlaceholder.png").getImage();
+	//private Image pImage;
+	private ImageIcon pImage;
+	//private Image mImage = new ImageIcon("IMAGES/mulePlaceholder.png").getImage();
+	private ImageIcon mImage = new ImageIcon("IMAGES/mulePlaceholder.png");
 	private int xCoord = 500;
 	private int yCoord = 250;
 	private int score;
@@ -102,7 +106,7 @@ public class Player implements Drawable{
 	 * Sets the player's image based on the player's race and color.
 	 */
 	public void setImage(){
-		pImage = new ImageIcon("IMAGES/"+race+"_"+color.toLowerCase()+".png").getImage();
+		pImage = new ImageIcon("IMAGES/"+race+"_"+color.toLowerCase()+".png");
 	}
 	
 	/**
@@ -110,7 +114,7 @@ public class Player implements Drawable{
 	 * 
 	 * @return The image associated with the player.
 	 */
-	public Image getImage(){
+	public ImageIcon getImage(){
 		return pImage;
 	}
 	
@@ -167,8 +171,8 @@ public class Player implements Drawable{
 	 */
 	public void draw(Graphics g){
 		if(hasMule())
-			g.drawImage(mImage, muleX, muleY, PLAYER_WIDTH, PLAYER_HEIGHT, null, null);
-		g.drawImage(pImage, xCoord, yCoord, PLAYER_WIDTH, PLAYER_HEIGHT, null, null);
+			g.drawImage(mImage.getImage(), muleX, muleY, PLAYER_WIDTH, PLAYER_HEIGHT, null, null);
+		g.drawImage(pImage.getImage(), xCoord, yCoord, PLAYER_WIDTH, PLAYER_HEIGHT, null, null);
 	}
 	
 	/**

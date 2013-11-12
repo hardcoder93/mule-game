@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JPanel;
@@ -81,7 +82,8 @@ public class GameSetup extends JPanel {
 		
 		btnNewButton = new JButton("Next");
 		btnNewButton.setBounds(777, 543, 117, 29);
-		btnNewButton.setFont(new Font("Narkisim", Font.BOLD, 13));
+		btnNewButton.setFont(new Font("Narkisim", Font.BOLD, 15));
+		btnNewButton.setBackground(new Color(255,255,255,150));
 		add(btnNewButton);
 		
 		JLabel lblNewLabel = new JLabel("");

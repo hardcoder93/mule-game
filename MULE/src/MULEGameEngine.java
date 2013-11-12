@@ -1,4 +1,5 @@
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -9,7 +10,8 @@ import java.util.Random;
  * @author Chris Jenkins (cjenkins36)
  *
  */
-public class MULEGameEngine{
+@SuppressWarnings("serial")
+public class MULEGameEngine implements Serializable{
 	//Instance Data
 	private String difficulty;
 	private MULEMap map;

@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
@@ -12,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 
-public class StoreMenu extends BuildingMenu{
+public class StoreMenu extends BuildingMenu implements Serializable{
 	private JLabel menuLabel, errorMessage;
 	private JLabel[] comboBoxLabels;
 	private JTextArea[] menuItems;
@@ -101,6 +102,7 @@ public class StoreMenu extends BuildingMenu{
 	        
 	    menuButton = new JButton("Complete Transaction");
 	    menuButton.setBounds(getX() + getWidth()/2 + 50, getY() + 180, 200, 27);
+		menuButton.setBackground(new Color(255,255,255,200));
 	    menuButton.setFocusable(false);
 	    menuButton.addActionListener(new StoreMenuListener());
 	}

@@ -1,4 +1,6 @@
+import java.awt.Color;
 import java.awt.Font;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -8,10 +10,15 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class StartScreen extends JPanel {
 
-	private JButton btnQuit;
+	private JButton btnNewGame;
+	private JButton btnLoadGame;
 
-	public JButton getButton(){
-		return btnQuit;
+	public JButton getNewGameButton(){
+		return btnNewGame;
+	}
+	
+	public JButton getLoadGameButton(){
+		return btnLoadGame;
 	}
 
 	/**
@@ -20,15 +27,22 @@ public class StartScreen extends JPanel {
 	public StartScreen() {
 		setLayout(null);
 		
-		btnQuit = new JButton("START");
-		btnQuit.setFont(new Font("Narkisim", Font.BOLD, 13));
-		btnQuit.setBounds(777, 543, 117, 29);
-		add(btnQuit);
+		btnNewGame = new JButton("New Game");
+		btnNewGame.setFont(new Font("Narkisim", Font.BOLD, 20));
+		btnNewGame.setBounds(700, 450, 175, 35);
+		btnNewGame.setBackground(new Color(255,255,255,150));
+		add(btnNewGame);
+		
+		btnLoadGame = new JButton("Load Game");
+		btnLoadGame.setFont(new Font("Narkisim", Font.BOLD, 15));
+		btnLoadGame.setBounds(725, 500, 125, 30);
+		btnLoadGame.setBackground(new Color(255,255,255,150));
+		add(btnLoadGame);
 
 		ImageIcon image = new ImageIcon("IMAGES/StartImage.png");
 		JLabel lblNewLabel = new JLabel(image);
 
-		lblNewLabel.setBounds(0, 0, 900, 710);
+		lblNewLabel.setBounds(0, 0, 900, 600);
 		add(lblNewLabel);
 	}
 }

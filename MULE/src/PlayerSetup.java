@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.io.IOException;
@@ -46,6 +47,7 @@ public class PlayerSetup extends JPanel {
 		btnNewButton = new JButton("Next");
 		btnNewButton.setFont(new Font("Narkisim", Font.BOLD, 13));
 		btnNewButton.setBounds(777, 543, 117, 29);
+		btnNewButton.setBackground(new Color(255,255,255,150));
 		add(btnNewButton);
 
 		JLabel lblNameOfPlayer = new JLabel("Name of Player");
