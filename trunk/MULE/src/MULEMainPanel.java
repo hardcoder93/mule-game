@@ -8,6 +8,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import javax.swing.JLabel;
@@ -27,8 +33,8 @@ import javax.swing.event.MouseInputListener;
 @SuppressWarnings("serial")
 public class MULEMainPanel extends JPanel{
 	//Instance Data
-	static MULEGameEngine engine;
-	Timer updater,turnTimer, screenTimer;
+	private MULEGameEngine engine;
+	private Timer updater,turnTimer, screenTimer;
 
 	private StartScreen startPanel = new StartScreen(); //game startup screen.
 	private GameSetup gameSetupPanel = new GameSetup(); //The panel that allows choice of game type.
@@ -40,9 +46,12 @@ public class MULEMainPanel extends JPanel{
 	//The screen IDs are used to tell the CardLayout which screen to display, and to tell the 
 	//button listeners which button was pressed.
 	private final String startID = "START";
+	private final String loadID = "LOAD";
 	private final String gameSetupID = "GAMESETUP";
 	private final String playerSetupID = "PLAYERSETUP";
 	private final String gameplayID = "GAMEPLAY";
+	
+	private final String SAVE_FILE = "savedGame.dat";
 
 	private Mouse landGrantMouse;
 	private PlayerControls arrowKeys;
@@ -70,7 +79,8 @@ public class MULEMainPanel extends JPanel{
 		turnTime.setForeground(Color.RED);
 		gameplayPanel.addLabel(turnTime);
 
-		JButton startBtn = startPanel.getButton();
+		JButton startBtn = startPanel.getNewGameButton();
+		JButton loadBtn = startPanel.getLoadGameButton();
 		JButton gameSetupBtn = gameSetupPanel.getButton();
 		JButton playerSetupBtn = playerSetupPanel.getButton();
 		landGrantBtn = gameplayPanel.getButton();
@@ -78,7 +88,8 @@ public class MULEMainPanel extends JPanel{
 
 		storeListener = new StorePurchaseAction();
 
-		startBtn.addActionListener(new NextListener(startID));		
+		startBtn.addActionListener(new NextListener(startID));
+		loadBtn.addActionListener(new NextListener(loadID));
 		gameSetupBtn.addActionListener(new NextListener(gameSetupID));
 		
 		playerSetupBtn.addActionListener(new NextListener(playerSetupID));
@@ -152,6 +163,13 @@ public class MULEMainPanel extends JPanel{
 				cardLayout.show(MULEMainPanel.this, gameSetupID);
 				gameSetupPanel.focusNameBox();
 				break;
+			case loadID:
+				engine = load(SAVE_FILE);
+				//GameState.setState(GameState.PLAYING_MAP);
+				gameplayPanel.setMapAndPlayers(engine.getMap(), engine.getPlayers(), engine.getStore());
+				gameplayPanel.setStore(engine.getStore());
+				startRoundOrTurn(false);
+				break;
 			case gameSetupID: //If the game setup button is pressed, create game engine and show player screen.
 				engine = new MULEGameEngine(gameSetupPanel.getDifficulty(), 
 						gameSetupPanel.getMapType(), 
@@ -180,7 +198,7 @@ public class MULEMainPanel extends JPanel{
 					GameState.setState(GameState.START_ROUND);
 					gameplayPanel.setMapAndPlayers(engine.getMap(), engine.getPlayers(), engine.getStore());
 					gameplayPanel.repaint();
-					startRoundOrTurn();
+					startRoundOrTurn(true);
 				}
 				break;
 			case gameplayID: //if gameplay button is pushed
@@ -231,8 +249,10 @@ public class MULEMainPanel extends JPanel{
 					engine.movePlayer(1, 0);
 					break;
 				case KeyEvent.VK_ESCAPE:
-					GameState.setState(GameState.WAITING);
-					gameplayPanel.repaint();
+					save(SAVE_FILE);
+					gameplayPanel.showMessage("Game Saved",2000);
+					//GameState.setState(GameState.WAITING);
+					//gameplayPanel.repaint();
 				case KeyEvent.VK_SPACE:
 					tryPlaceMule();
 				}
@@ -313,7 +333,7 @@ public class MULEMainPanel extends JPanel{
 				} else if (GameState.playing()){
 					gameplayPanel.removeBuilding();
 					gameplayPanel.repaint();
-					startRoundOrTurn();			
+					startRoundOrTurn(true);			
 				}
 			}
 		}
@@ -452,6 +472,7 @@ public class MULEMainPanel extends JPanel{
 		gameplayPanel.setActivePlayer(engine.getActivePlayer());
 		gameplayPanel.displayNextTurn();
 		gameplayPanel.repaint();
+		cardLayout.show(MULEMainPanel.this, gameplayID);
 		addKeyListener(spaceBar);
 	}
 
@@ -484,7 +505,7 @@ public class MULEMainPanel extends JPanel{
 		gameplayPanel.addLandGrantLabel(false);
 		gameplayPanel.removeButton();
 		engine.raiseTile(new Point(0,0), false);
-		startRoundOrTurn();
+		startRoundOrTurn(true);
 	}
 
 	/**
@@ -545,8 +566,16 @@ public class MULEMainPanel extends JPanel{
 		}
 	}
 	
-	private void startRoundOrTurn(){
-		engine.nextActivePlayerIndex();
+	/**
+	 * Starts the next turn/round if the input is true. If the input is false,
+	 * initiates the beginning of the current round (this case is meant to be
+	 * used for loading a saved game).
+	 * 
+	 * @param next
+	 */
+	private void startRoundOrTurn(boolean next){
+		System.out.println(GameState.getState());
+		if(next) engine.nextActivePlayerIndex();
 		if (engine.getNextState().equals(GameState.START_ROUND)){
 			startNextRound();
 		} else {
@@ -569,7 +598,7 @@ public class MULEMainPanel extends JPanel{
 			switch (arg0.getKeyCode()) {
 			case KeyEvent.VK_SPACE:
 				if (currState.equals(GameState.START_ROUND)){
-					startRoundOrTurn();
+					startRoundOrTurn(true);
 				} else if (currState.equals(GameState.START_TURN)){
 					if (engine.getNextState().equals(GameState.LANDGRANT)){
 						startLandGrant();
@@ -589,6 +618,54 @@ public class MULEMainPanel extends JPanel{
 	private void showWampusMessage(int reward){
 		gameplayPanel.showMessage("You caught the wambuzz! He gave you $"+reward+
 				" as a reward!");
+	}
+	
+	private void save(String filename) {
+        try {
+            /*
+             * Create the object output stream for serialization.
+             * We are wrapping a FileOutputStream since we
+             * want to save to disk.  You can also save to socket
+             * streams or any other kind of stream.
+             */
+           ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename));
+           
+           /*
+            * The only real call we need.  The stream buffers the output and reuses
+            * data, so if you are serializing very frequently, then the object values might
+            * not actually change because the old serialized object is being reused.
+            * 
+            * To fix this you can try writeUnshared() or you can reset the stream.
+            * out.reset();
+            */
+           out.writeObject(engine);
+           out.close();
+       } catch (FileNotFoundException e) {
+           System.out.println("Save file not found, Error:"+e);
+       } catch (IOException e) {
+           e.printStackTrace();
+    	   //System.out.println("IO error on saving, Error:"+e);
+       }
+        
+    }
+	
+	private MULEGameEngine load(String filename){
+		MULEGameEngine eng = null;
+        try {
+        	//Create the input stream. Since we want to read from the disk, we wrap a file stream.
+        	ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename));
+        	//Now read the saved game engine in with one call. 
+        	eng = (MULEGameEngine) in.readObject();
+        	in.close();
+       } catch (FileNotFoundException e) {
+           System.out.println("No saved game file found, error:\n"+e);
+       } catch (IOException e) {
+    	   e.printStackTrace();
+           //System.out.println("IO error on loading, error:\n"+e);
+       } catch (ClassNotFoundException e) {
+           System.out.println("MULEGameEngine class not found on loading, error:\n"+e);
+       }
+       return eng;
 	}
 }
 

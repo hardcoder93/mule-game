@@ -66,6 +66,7 @@ public class GameplayPanel extends JPanel {
         landGrantPass = new JButton("PASS");
         landGrantPass.setFont(new Font("Narkisim", Font.BOLD, 13));
         landGrantPass.setBounds(783, 471, 117, 29);
+		landGrantPass.setBackground(new Color(255,255,255,150));
         landGrantPass.setOpaque(true);
         landGrantPass.setContentAreaFilled(true);
         
@@ -92,7 +93,7 @@ public class GameplayPanel extends JPanel {
         messageLabel.setFont(new Font("Narkisim", Font.BOLD, 16));
         messageLabel.setHorizontalAlignment(JLabel.CENTER);
         messageLabel.setForeground(Color.yellow);
-        messageLabel.setBackground(Color.black);
+        messageLabel.setBackground(new Color(0,0,0,150));
         messageLabel.setOpaque(true);
         add(messageLabel);
         
@@ -579,8 +580,12 @@ public class GameplayPanel extends JPanel {
 	 * @param time The amount of time to display the message in milliseconds.
 	 */
 	public void showMessage(String message, int time){
+		int locX=0;
 		messageLabel.setText(message);
 		messageLabel.setSize(messageLabel.getPreferredSize());
+		if(!message.equals("Game Saved"))
+			locX=this.getWidth()/2-messageLabel.getWidth()/2;
+		messageLabel.setLocation(locX, 0);
 		Timer hider = new Timer(time, new MessageLabelHider());
 		hider.setRepeats(false);
 		messageLabel.setVisible(true);

@@ -1,3 +1,5 @@
+import java.io.Serializable;
+
 
 /**
  * The Store class is the store in the M.U.L.E. game. It sells food, 
@@ -6,8 +8,8 @@
  * 
  * @author John Certusi (jcertusi3)
  */
-public class Store {
-	Goods food, energy, smithore, crystite, mules;		//goods that can be sold
+public class Store implements Serializable{
+	private Goods food, energy, smithore, crystite, mules;		//goods that can be sold
 	
 	/**
 	 * Constructor for the Store. Game difficulty determines starting 
@@ -115,7 +117,7 @@ public class Store {
 	 * @author root
 	 *
 	 */
-	private class Goods {
+	private class Goods implements Serializable{
 		private int currentPrice;
 		private int quantity;
 		

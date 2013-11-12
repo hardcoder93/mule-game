@@ -2,6 +2,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -14,7 +15,8 @@ import javax.swing.Timer;
  * 
  * @author John Certusi (jcertusi3)
  */
-public class MULEMap implements Drawable{
+@SuppressWarnings("serial")
+public class MULEMap implements Drawable,Serializable{
 
 	// Map Size
 	public final int HEIGHT = 5;
