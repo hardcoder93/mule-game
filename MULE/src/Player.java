@@ -453,10 +453,22 @@ public class Player implements Drawable,Serializable{
 				}
 			}
 		}
-		if(foodP>0) message+="Food+"+foodP;
-		if(energyP>0) message+=" Energy+"+energyP;
-		if(oreP>0) message+=" Ore+"+oreP;
-		if(crystiteP>0) message+="Crystite+"+crystiteP;
+		if(foodP>0){
+			food+=foodP;
+			message+="Food+"+foodP;
+		}
+		if(energyP>0){
+			energy+=energyP;
+			message+=" Energy+"+energyP;
+		}
+		if(oreP>0){
+			ore+=oreP;
+			message+=" Ore+"+oreP;
+		}
+		if(crystiteP>0){
+			crystite+=crystiteP;
+			message+="Crystite+"+crystiteP;
+		}
 		if(!message.equals("Production: "))
 			return message;
 		return "";
