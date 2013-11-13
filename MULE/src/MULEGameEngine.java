@@ -405,8 +405,7 @@ public class MULEGameEngine implements Serializable{
 				
 			}
 		}else{ 
-			System.out.println("3");
-			return("");
+			return("no random event happened");
 		}
 	
 		
@@ -438,7 +437,7 @@ public class MULEGameEngine implements Serializable{
 			
 		}
 		else 
-			return("");
+			return("no random event happened");
 				
 		
 		
