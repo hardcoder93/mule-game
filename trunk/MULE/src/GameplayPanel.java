@@ -41,6 +41,7 @@ public class GameplayPanel extends JPanel {
 	private JLabel[] oreLabels = new JLabel[4];
 	private JLabel timerLabel;
 	private JLabel messageLabel;
+	private JLabel messageLabel2;
 	private String buildingDisplayed;
 
 	//Screen States
@@ -96,6 +97,13 @@ public class GameplayPanel extends JPanel {
         messageLabel.setBackground(new Color(0,0,0,150));
         messageLabel.setOpaque(true);
         add(messageLabel);
+        messageLabel2 = new JLabel();
+        messageLabel2.setFont(new Font("Narkisim", Font.BOLD, 16));
+        messageLabel2.setHorizontalAlignment(JLabel.CENTER);
+        messageLabel2.setForeground(Color.yellow);
+        messageLabel2.setBackground(new Color(0,0,0,150));
+        messageLabel2.setOpaque(true);
+        add(messageLabel2);
         
     }
     
@@ -503,6 +511,7 @@ public class GameplayPanel extends JPanel {
 		screenLabel1.setText(activePlayer.getName() + ", you ran out of Time! -- You're turn is over");
 		screenLabel1.setVisible(true);
 	}
+	
     
     /**
      * Overrides the panel's paintComponent Method
@@ -600,6 +609,22 @@ public class GameplayPanel extends JPanel {
 	 */
 	public void showMessage(String message){
 		showMessage(message, 5000);
+	}
+	
+	public void showProductionMessage(String message){
+		showMessage(message, 5000);
+	}
+	
+	public void showProductionMessage(String message, int time){
+		int locX=0;
+		messageLabel2.setText(message);
+		messageLabel2.setSize(messageLabel2.getPreferredSize());
+		
+		messageLabel2.setLocation(locX, 0);
+		Timer hider = new Timer(time, new MessageLabelHider());
+		hider.setRepeats(false);
+		messageLabel2.setVisible(true);
+		hider.start();
 	}
 	
 	/**
