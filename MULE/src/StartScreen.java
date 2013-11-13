@@ -29,13 +29,13 @@ public class StartScreen extends JPanel {
 		
 		btnNewGame = new JButton("New Game");
 		btnNewGame.setFont(new Font("Narkisim", Font.BOLD, 20));
-		btnNewGame.setBounds(700, 450, 175, 35);
+		btnNewGame.setBounds(700, 495, 175, 35);
 		btnNewGame.setBackground(new Color(255,255,255,150));
 		add(btnNewGame);
 		
 		btnLoadGame = new JButton("Load Game");
 		btnLoadGame.setFont(new Font("Narkisim", Font.BOLD, 15));
-		btnLoadGame.setBounds(725, 500, 125, 30);
+		btnLoadGame.setBounds(55, 500, 125, 30);
 		btnLoadGame.setBackground(new Color(255,255,255,150));
 		add(btnLoadGame);
 
