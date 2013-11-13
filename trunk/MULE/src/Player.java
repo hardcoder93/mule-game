@@ -456,7 +456,7 @@ public class Player implements Drawable,Serializable{
 					break;}
 					break;
 				}
-			}else
+			}else if(i==0)
 				return "No energy! Nothing was produced.";
 		}
 		if(foodP>0){
