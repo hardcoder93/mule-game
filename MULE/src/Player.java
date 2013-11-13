@@ -386,6 +386,7 @@ public class Player implements Drawable,Serializable{
 			if (energy>0){
 				switch (type) {
 				case "Food":
+					energy--;
 					switch (ownedTiles.get(i).getType()){
 					case "R": 
 						foodP+=4; 
@@ -404,6 +405,7 @@ public class Player implements Drawable,Serializable{
 					break;}
 					break;
 				case "Energy":
+					energy--;
 					switch (ownedTiles.get(i).getType()){
 					case "R": 
 						energyP+=2; 
@@ -422,6 +424,7 @@ public class Player implements Drawable,Serializable{
 					break;}
 					break;
 				case "Smithore":
+					energy--;
 					switch (ownedTiles.get(i).getType()){
 					case "P": 
 						oreP+=1; 
@@ -437,6 +440,7 @@ public class Player implements Drawable,Serializable{
 					break;}
 					break;
 				case "Crystite":
+					energy--;
 					switch (ownedTiles.get(i).getType()){
 					case "P": 
 						crystiteP+=2; 
@@ -452,7 +456,8 @@ public class Player implements Drawable,Serializable{
 					break;}
 					break;
 				}
-			}
+			}else
+				return "No energy! Nothing was produced.";
 		}
 		if(foodP>0){
 			food+=foodP;
