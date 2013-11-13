@@ -67,7 +67,8 @@ public class PlayerSetup extends JPanel {
 		add(lblColor);
 
 		raceBox = new JComboBox();
-		raceBox.setModel(new DefaultComboBoxModel(new String[] {"Flapper", "Human", "Bonzoid", "Ugaite", "Buzzite"}));
+		raceBox.setModel(new DefaultComboBoxModel(new String[] {"Flapper", "Human", "Bonzoid", "Ugaite", "Buzzite", 
+				"John","Chris","Sung Hye","Wongoo", "Yuna" }));
 		raceBox.setFont(new Font("Narkisim", Font.BOLD, 13));
 		raceBox.setBounds(351, 488, 104, 27);
 		add(raceBox);
