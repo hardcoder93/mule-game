@@ -1,5 +1,3 @@
-import java.io.Serializable;
-
 /**
  * The GameState class creates a static singleton object which can be 
  * accessed at any point in the program; it keeps track of the current 
@@ -27,7 +25,6 @@ import java.io.Serializable;
  * @author Chris Jenkins (cjenkins36)
  *
  */
-@SuppressWarnings("serial")
 public class GameState{
 	//GAMESTATE CONSTANTS
 	public static final String MENU = "MENU";

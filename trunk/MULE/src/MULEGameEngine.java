@@ -385,15 +385,15 @@ public class MULEGameEngine implements Serializable{
 			}
 			else if (event==2) {
 				active.randomEvent3(m);
-				return ("THE MUSEUM BOUGHT YOUR ANTIQUE PERSONAL COMPUTER FOR $ 8*m.");
+				return ("THE MUSEUM BOUGHT YOUR ANTIQUE PERSONAL COMPUTER FOR $"+8*m+".");
 			}
 			else if (event==3) {
 				active.randomEvent4(m);
-				return ("YOU FOUND A DEAD MOOSE RAT AND SOLD THE HIDE FOR $2*m.");
+				return ("YOU FOUND A DEAD MOOSE RAT AND SOLD THE HIDE FOR $"+2*m+".");
 			}
 			else if (event==4) {
 				active.randomEvent5(m);
-				return ("FLYING CAT-BUGS ATE THE ROOF OFF YOUR HOUSE. REPAIRS COST $4*m.");
+				return ("FLYING CAT-BUGS ATE THE ROOF OFF YOUR HOUSE. REPAIRS COST $"+4*m+".");
 			}
 			else if (event==5) {
 				active.randomEvent6();
@@ -401,12 +401,12 @@ public class MULEGameEngine implements Serializable{
 			}
 			else {
 				active.randomEvent7(m);
-				return("YOUR SPACE GYPSY INLAWS MADE A MESS OF THE TOWN. IT COST YOU $6*m TO CLEAN IT UP.");
+				return("YOUR SPACE GYPSY INLAWS MADE A MESS OF THE TOWN. IT COST YOU $"+6*m+" TO CLEAN IT UP.");
 				
 			}
 		}else{ 
 			System.out.println("3");
-			return("NO RANDOM EVENT HAPPENED");
+			return("");
 		}
 	
 		
@@ -429,16 +429,16 @@ public class MULEGameEngine implements Serializable{
 			}
 			else if (event==2) {
 				active.randomEvent3(m);
-				return("THE MUSEUM BOUGHT YOUR ANTIQUE PERSONAL COMPUTER FOR $ 8*m.");
+				return("THE MUSEUM BOUGHT YOUR ANTIQUE PERSONAL COMPUTER FOR $"+8*m+".");
 			}
 			else{
 				active.randomEvent4(m);
-				return("YOU FOUND A DEAD MOOSE RAT AND SOLD THE HIDE FOR $2*m.");
+				return("YOU FOUND A DEAD MOOSE RAT AND SOLD THE HIDE FOR $"+2*m+".");
 			}
 			
 		}
 		else 
-				return("NO RANDOM EVENT HAPPENED");
+			return("");
 				
 		
 		
