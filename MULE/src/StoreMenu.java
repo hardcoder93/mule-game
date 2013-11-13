@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 
+@SuppressWarnings("serial")
 public class StoreMenu extends BuildingMenu implements Serializable{
 	private JLabel menuLabel, errorMessage;
 	private JLabel[] comboBoxLabels;

@@ -8,6 +8,7 @@ import java.io.Serializable;
  * 
  * @author John Certusi (jcertusi3)
  */
+@SuppressWarnings("serial")
 public class Store implements Serializable{
 	private Goods food, energy, smithore, crystite, mules;		//goods that can be sold
 	

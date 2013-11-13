@@ -31,7 +31,6 @@ public class Tile implements Drawable,Serializable{
 	private boolean raised;			//true if should be drawn raised
 	@SuppressWarnings("unused")
 	private char direction;			//direction (used for river)
-	//private Image tileImage;		//image for tile
 	private ImageIcon tileImage;		//image for tile
 	private int value;
 	public String productionType;

@@ -1,6 +1,5 @@
 import java.awt.Dimension;
 import java.awt.Image;
-import java.io.Serializable;
 
 import javax.swing.ImageIcon;
 
@@ -10,7 +9,6 @@ import javax.swing.ImageIcon;
  * 
  * @author John Certusi
  */
-@SuppressWarnings("serial")
 public class MapImages{
 	
 	//Town Map File

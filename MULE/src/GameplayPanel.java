@@ -595,7 +595,7 @@ public class GameplayPanel extends JPanel {
 		if(!message.equals("Game Saved"))
 			locX=this.getWidth()/2-messageLabel.getWidth()/2;
 		messageLabel.setLocation(locX, 0);
-		Timer hider = new Timer(time, new MessageLabelHider());
+		Timer hider = new Timer(time, new MessageLabelHider(1));
 		hider.setRepeats(false);
 		messageLabel.setVisible(true);
 		hider.start();
@@ -616,12 +616,12 @@ public class GameplayPanel extends JPanel {
 	}
 	
 	public void showProductionMessage(String message, int time){
-		int locX=this.getWidth()/2-messageLabel.getWidth()/2;
 		messageLabel2.setText(message);
 		messageLabel2.setSize(messageLabel2.getPreferredSize());
+		int locX=this.getWidth()/2-messageLabel2.getWidth()/2;
 		
 		messageLabel2.setLocation(locX, 25);
-		Timer hider1 = new Timer(time, new MessageLabelHider());
+		Timer hider1 = new Timer(time, new MessageLabelHider(2));
 		hider1.setRepeats(false);
 		messageLabel2.setVisible(true);
 		hider1.start();
@@ -635,10 +635,21 @@ public class GameplayPanel extends JPanel {
 	 *
 	 */
 	private class MessageLabelHider implements ActionListener{
+		int id;
+		
+		private MessageLabelHider(int id){
+			this.id=id;
+		}
+		
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			GameplayPanel.this.messageLabel.setVisible(false);
-			GameplayPanel.this.messageLabel.setText("");
+			if(id==1){
+				GameplayPanel.this.messageLabel.setVisible(false);
+				GameplayPanel.this.messageLabel.setText("");
+			}else if(id==2){
+				GameplayPanel.this.messageLabel2.setVisible(false);
+				GameplayPanel.this.messageLabel2.setText("");
+			}
 		}
 	}
 
