@@ -34,6 +34,8 @@ public class Player implements Drawable,Serializable{
 	 * every player. If we leave them static, then every time money is added to one player
 	 * it will be added to all the players in the game.
 	 */
+	private String message;
+	
 	private int money;
 	private int food;
 	private int energy;
@@ -373,66 +375,67 @@ public class Player implements Drawable,Serializable{
 	}
 	
 
-	public void calculateProduction(){
+	public String calculateProduction(){
 		String type = null;
-
+		message = "";
 		for (int i=0; i<ownedTiles.size();i++){
 			type = ownedTiles.get(i).productionType;
 			if (energy>0)
 				switch (type) {
 				case "Food":
 					switch (ownedTiles.get(i).getType()){
-					case "R": food+=4;
+					case "R": food+=4; message += "Food +4 ";
 					break;
-					case "P": food+=2;
+					case "P": food+=2; message += "Food +2 ";
 					break;
-					case "M1": food+=1;
+					case "M1": food+=1; message += "Food +1 ";
 					break;
-					case "M2": food+=1;
+					case "M2": food+=1; message += "Food +1 ";
 					break;
-					case "M3": food+=1;
+					case "M3": food+=1; message += "Food +1 ";
 					break;}
 					break;
 				case "Energy":
 					switch (ownedTiles.get(i).getType()){
-					case "R": energy+=2;
+					case "R": energy+=2; message += "Energy +2 ";
 					break;
-					case "P": energy+=3;
+					case "P": energy+=3; message += "Energy +3 ";
 					break;
-					case "M1": energy+=1;
+					case "M1": energy+=1; message += "Energy +1 ";
 					break;
-					case "M2": energy+=1;
+					case "M2": energy+=1; message += "Energy +1 ";
 					break;
-					case "M3": energy+=1;
+					case "M3": energy+=1; message += "Energy +1 ";
 					break;}
 					break;
 				case "Smithore":
 					switch (ownedTiles.get(i).getType()){
-					case "P": ore+=1;
+					case "P": ore+=1; message += "Ore +1 ";
 					break;
-					case "M1": ore+=2;
+					case "M1": ore+=2; message += "Ore +2 ";
 					break;
-					case "M2": ore+=3;
+					case "M2": ore+=3; message += "Ore +3 ";
 					break;
-					case "M3": ore+=4;
+					case "M3": ore+=4; message += "Ore +4 ";
 					break;}
 					break;
 				case "Crystite":
 					switch (ownedTiles.get(i).getType()){
-					case "P": crystite+=2;
+					case "P": crystite+=2; message += "Crystite +2 ";
 					break;
-					case "M1": crystite+=2;
+					case "M1": crystite+=2; message += "Crystite +2 ";
 					break;
-					case "M2": crystite+=2;
+					case "M2": crystite+=2; message += "Crystite +2 ";
 					break;
-					case "M3": crystite+=2;
+					case "M3": crystite+=2; message += "Crystite +2 ";
 					break;}
 					break;
 				}
 		}
+		return message;
 	}
 	
-	
+
 	public void randomEvent1() {
 		food+=3;
 		energy+=2;
