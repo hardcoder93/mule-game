@@ -11,6 +11,12 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 
+/**
+ * This panel sets up number of player,difficulty, and map type at the beginning of the game. .
+ * 
+ * @author Sung Hye Jeon (sjeon40)
+ *
+ */
 
 @SuppressWarnings("serial")
 public class GameSetup extends JPanel {

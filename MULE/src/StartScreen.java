@@ -6,6 +6,13 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * This panel is the first screen of this game.
+ * There are two buttons to choose; load game and start a new game. 
+ * 
+ * @author Sung Hye Jeon (sjeon40)
+ *
+ */
 
 @SuppressWarnings("serial")
 public class StartScreen extends JPanel {
