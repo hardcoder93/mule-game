@@ -468,6 +468,7 @@ public class MULEMainPanel extends JPanel{
 	 */
 	private void startNextTurn() {
 		removeKeyListener(spaceBar);
+		System.out.print(engine.getActivePlayer().getScore() + "\n");
 		GameState.setState(GameState.START_TURN);
 		gameplayPanel.setActivePlayer(engine.getActivePlayer());
 		gameplayPanel.displayNextTurn();
