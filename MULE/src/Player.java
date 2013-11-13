@@ -377,7 +377,7 @@ public class Player implements Drawable,Serializable{
 
 	public String calculateProduction(){
 		String type = null;
-		message = "";
+		message = "Production: ";
 		for (int i=0; i<ownedTiles.size();i++){
 			type = ownedTiles.get(i).productionType;
 			if (energy>0)
