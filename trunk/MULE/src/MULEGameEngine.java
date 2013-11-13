@@ -25,6 +25,7 @@ public class MULEGameEngine implements Serializable{
 	private int roundBonus;
 	private Store store;
 	private int event;
+	private int poss;
 	private boolean wampusCaught = false;
 	
 	/**
@@ -243,25 +244,6 @@ public class MULEGameEngine implements Serializable{
 		nextState = GameState.START_ROUND;
 	}
 	public int getLowestScore() {
-		landGrantOrder.clear();
-		playerTurnOrder.clear();
-		landGrantOrder.add(0);
-		playerTurnOrder.add(0);
-		for (int i = 1; i < players.length; i++)
-			for (int j = 0; j < playerTurnOrder.size(); j++){
-				if (players[i].getScore() < players[playerTurnOrder.get(j)].getScore()){
-					playerTurnOrder.add(j,i);
-					landGrantOrder.add(j,i);
-					break;
-				}
-				if (j == playerTurnOrder.size() - 1){
-					playerTurnOrder.add(i);
-					landGrantOrder.add(i);
-					break;
-				}
-			}
-		lowestScore = playerTurnOrder.get(0);
-		
 		return lowestScore;
 	}
 	public boolean nextActivePlayerIndex() {
@@ -380,64 +362,84 @@ public class MULEGameEngine implements Serializable{
 		return m;
 	}
 	
-	public void randomEvent(){
+	public String randomEvent(){
 		Player active = players[activePlayerInd];
 		Random rand = new Random();
+		Random rand2= new Random();
 		event= rand.nextInt(7);
+		poss= rand2.nextInt(100);
 		int m = determinant();
-		if ((Math.random() * 100) < 27) {
+		System.out.println("1");
+		if (poss < 28) {
+			System.out.println("2");
 			if (event == 0) {
 				active.randomEvent1();
-				System.out.println(1);
+				return ("YOU JUST RECEIVED A PACKAGE FROM THE GT ALUMNI CONTAINING 3 FOOD AND 2 ENERGY UNITS.");
+			
 			}
+			
+			
 			else if (event==1) {
 				active.randomEvent2();
-				System.out.println(2);
+				return ("A WANDERING TECH STUDENT REPAID YOUR HOSPITALITY BY LEAVING TWO BARS OF ORE.");
 			}
 			else if (event==2) {
 				active.randomEvent3(m);
-				System.out.println(3);
+				return ("THE MUSEUM BOUGHT YOUR ANTIQUE PERSONAL COMPUTER FOR $ 8*m.");
 			}
 			else if (event==3) {
 				active.randomEvent4(m);
-				System.out.println(4);
+				return ("YOU FOUND A DEAD MOOSE RAT AND SOLD THE HIDE FOR $2*m.");
 			}
 			else if (event==4) {
 				active.randomEvent5(m);
-				System.out.println(5);
+				return ("FLYING CAT-BUGS ATE THE ROOF OFF YOUR HOUSE. REPAIRS COST $4*m.");
 			}
 			else if (event==5) {
 				active.randomEvent6();
-				System.out.println(6);
+				return("MISCHIEVOUS UGA STUDENTS BROKE INTO YOUR STORAGE SHED AND STOLE HALF YOUR FOOD.");
 			}
 			else {
 				active.randomEvent7(m);
-				System.out.println(7);
+				return("YOUR SPACE GYPSY INLAWS MADE A MESS OF THE TOWN. IT COST YOU $6*m TO CLEAN IT UP.");
+				
 			}
+		}else{ 
+			System.out.println("3");
+			return("NO RANDOM EVENT HAPPENED");
 		}
+	
+		
 	}	
-	public void randomEventForLoser(){
+	public String randomEventForLoser(){
 		int m=determinant();
 		Player active = players[activePlayerInd];
 		Random rand = new Random();
-		event= rand.nextInt(3);
-		if ((Math.random() * 100) < 27) {
+		Random rand2= new Random();
+		event= rand.nextInt(4);
+		poss=rand2.nextInt(100);
+		if (poss < 28) {
 			if (event == 0) {
 				active.randomEvent1();
-				System.out.println(1);
+				return("YOU JUST RECEIVED A PACKAGE FROM THE GT ALUMNI CONTAINING 3 FOOD AND 2 ENERGY UNITS.");
 			}
 			else if (event==1) {
 				active.randomEvent2();
-				System.out.println(2);
+				return("A WANDERING TECH STUDENT REPAID YOUR HOSPITALITY BY LEAVING TWO BARS OF ORE.");
 			}
 			else if (event==2) {
 				active.randomEvent3(m);
-				System.out.println(3);
+				return("THE MUSEUM BOUGHT YOUR ANTIQUE PERSONAL COMPUTER FOR $ 8*m.");
 			}
-			else {
+			else{
 				active.randomEvent4(m);
+				return("YOU FOUND A DEAD MOOSE RAT AND SOLD THE HIDE FOR $2*m.");
 			}
-		}		
+			
+		}
+		else 
+				return("NO RANDOM EVENT HAPPENED");
+				
 		
 		
 	
