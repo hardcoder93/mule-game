@@ -12,6 +12,12 @@ import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 
+/**
+ * This panel sets up color, player's race, and name of player at the beginning of the game. 
+ * 
+ * @author Sung Hye Jeon (sjeon40)
+ *
+ */
 
 @SuppressWarnings("serial")
 public class PlayerSetup extends JPanel {
