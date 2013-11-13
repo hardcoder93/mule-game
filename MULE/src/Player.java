@@ -255,6 +255,7 @@ public class Player implements Drawable,Serializable{
 				crystite * store.getCurrentPrice("Crystite");
 		for (int i = 0; i < ownedTiles.size(); i++)
 			score += ownedTiles.get(i).getValue();
+		score += money;
 	}
 	
 	public int getScore(){
