@@ -474,7 +474,6 @@ public class MULEMainPanel extends JPanel{
 		gameplayPanel.repaint();
 		cardLayout.show(MULEMainPanel.this, gameplayID);
 		addKeyListener(spaceBar);
-		
 	}
 
 	/**
@@ -525,8 +524,13 @@ public class MULEMainPanel extends JPanel{
 		cardLayout.show(MULEMainPanel.this, gameplayID);
 		countDown = engine.calculateActivePlayerTurnTime();
 		turnTime.setText("" + countDown);
-		engine.getActivePlayer().calculateProduction();
+		
+		  /////////////////////////// check
+		gameplayPanel.showProductionMessage(engine.getActivePlayer().calculateProduction());
 		gameplayPanel.updateScoreboard();
+		
+		
+		
 		runGameLoop();
 	}
 
@@ -555,17 +559,13 @@ public class MULEMainPanel extends JPanel{
 	}
 	// checks for the randomTurnEvent in the beginning of the turn
 	private void randomTurnEvent() {
-		
-	
-		if (GameState.getState().equals (GameState.START_TURN) ){
+		if (GameState.getState().equals (GameState.PLAYING_MAP) ){
 			if (engine.getActivePlayerIndex()==engine.getLowestScore()) {
-				
-				gameplayPanel.showMessage(engine.randomEventForLoser());
+				engine.randomEventForLoser();
 				gameplayPanel.updateScoreboard();
 			}
 			else {
-				
-				gameplayPanel.showMessage(engine.randomEvent());
+				engine.randomEvent();
 				gameplayPanel.updateScoreboard();
 			}
 		}
@@ -608,7 +608,6 @@ public class MULEMainPanel extends JPanel{
 					if (engine.getNextState().equals(GameState.LANDGRANT)){
 						startLandGrant();
 					} else {
-						randomTurnEvent();
 						startGameLoop();
 					}
 				}
