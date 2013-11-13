@@ -612,19 +612,19 @@ public class GameplayPanel extends JPanel {
 	}
 	
 	public void showProductionMessage(String message){
-		showMessage(message, 5000);
+		showProductionMessage(message, 5000);
 	}
 	
 	public void showProductionMessage(String message, int time){
-		int locX=0;
+		int locX=this.getWidth()/2-messageLabel.getWidth()/2;
 		messageLabel2.setText(message);
 		messageLabel2.setSize(messageLabel2.getPreferredSize());
 		
-		messageLabel2.setLocation(locX, 0);
-		Timer hider = new Timer(time, new MessageLabelHider());
-		hider.setRepeats(false);
+		messageLabel2.setLocation(locX, 25);
+		Timer hider1 = new Timer(time, new MessageLabelHider());
+		hider1.setRepeats(false);
 		messageLabel2.setVisible(true);
-		hider.start();
+		hider1.start();
 	}
 	
 	/**
