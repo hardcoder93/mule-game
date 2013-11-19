@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
+import javax.swing.text.*;
 
 /**
  * This panel sets up color, player's race, and name of player at the beginning
@@ -49,6 +50,10 @@ public class PlayerSetup extends JPanel {
 
 		textField = new JTextField();
 		textField.setBounds(351, 435, 153, 28);
+		// The next line adds a custom filter to the text field that only allows
+		// 20 characters to be entered.
+		((AbstractDocument) textField.getDocument())
+				.setDocumentFilter(new NameFieldFilter());
 		add(textField);
 		textField.setColumns(10);
 
@@ -144,8 +149,15 @@ public class PlayerSetup extends JPanel {
 		return textField.getText();
 	}
 
+	/**
+	 * Gets the race that the user selected from the race box. Returns the
+	 * selection as a String, with all spaces removed so the String will match
+	 * the approriate image filename.
+	 * 
+	 * @return Selected race with no spaces.
+	 */
 	public String getPlayerRace() {
-		return raceBox.getSelectedItem().toString();
+		return raceBox.getSelectedItem().toString().replaceAll(" ", "");
 	}
 
 	public String getPlayerColor() {
@@ -158,5 +170,36 @@ public class PlayerSetup extends JPanel {
 
 	public void focusNameBox() {
 		textField.requestFocusInWindow();
+	}
+
+	/**
+	 * This private inner class is used as a filter by the name field. It makes
+	 * sure that the user enters no more than 20 characters in the name field.
+	 * 
+	 * @author Chris Jenkins
+	 */
+	private class NameFieldFilter extends DocumentFilter {
+		@Override
+		public void insertString(DocumentFilter.FilterBypass fb, int offset,
+				String string, AttributeSet attr) throws BadLocationException {
+			if (fb.getDocument().getLength() + string.length() > 20)
+				return;
+			fb.insertString(offset, string, attr);
+		}
+
+		@Override
+		public void remove(DocumentFilter.FilterBypass fb, int offset,
+				int length) throws BadLocationException {
+			fb.remove(offset, length);
+		}
+
+		@Override
+		public void replace(DocumentFilter.FilterBypass fb, int offset,
+				int length, String text, AttributeSet attrs)
+				throws BadLocationException {
+			if (fb.getDocument().getLength() + text.length()-length > 20)
+				return;
+			fb.replace(offset, length, text, attrs);
+		}
 	}
 }

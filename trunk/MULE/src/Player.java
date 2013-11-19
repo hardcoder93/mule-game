@@ -1,5 +1,7 @@
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -109,8 +111,12 @@ public class Player implements Drawable, Serializable {
 	 * Sets the player's image based on the player's race and color.
 	 */
 	public void setImage() {
-		pImage = new ImageIcon("IMAGES/" + race + "_" + color.toLowerCase()
-				+ ".png");
+		String imgStr = "IMAGES/" + race + "_" + color.toLowerCase()
+				+ ".png";
+		if(new File(imgStr).isFile())
+			pImage = new ImageIcon(imgStr);
+		else
+			pImage = null;
 	}
 
 	/**
@@ -184,8 +190,15 @@ public class Player implements Drawable, Serializable {
 		if (hasMule())
 			g.drawImage(mImage.getImage(), muleX, muleY, PLAYER_WIDTH,
 					PLAYER_HEIGHT, null, null);
-		g.drawImage(pImage.getImage(), xCoord, yCoord, PLAYER_WIDTH,
-				PLAYER_HEIGHT, null, null);
+		if(pImage!=null)
+			g.drawImage(pImage.getImage(), xCoord, yCoord, PLAYER_WIDTH,
+					PLAYER_HEIGHT, null, null);
+		else{
+			g.setColor(Color.BLACK);
+			g.fillRect(xCoord, yCoord, PLAYER_WIDTH, PLAYER_HEIGHT);
+			g.setColor(Color.WHITE);
+			g.drawString("NO IMG", xCoord+5, yCoord+30);
+		}
 	}
 
 	/**
