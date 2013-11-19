@@ -8,5 +8,9 @@
 4)	Singleton class GameState implemented
 5)	Used theme for game (MULE at GT)
 6)  Pivotal Tracker
-7)	Round Random Events
+7)	(Round Random Events)
 8)  Five additional Player races: ("John", "Chris", "Sung Hye", "Wongoo", "Yuna")
+9)	Multiple Observer classes used (PlayerControls, NextListener, etc.)
+10)	(Land Office?)
+11)	Custom graphics images created for all visual components
+12) Model-View-Controller architecture design used (MULEGameEngine-Screens-MULEMainPanel)
