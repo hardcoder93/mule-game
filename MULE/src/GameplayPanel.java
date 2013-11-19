@@ -45,9 +45,6 @@ public class GameplayPanel extends JPanel {
 	private JLabel messageLabel2;
 	private String buildingDisplayed;
 
-	// Screen States
-	private String panelState;
-
 	private JLabel screenLabel1;
 	private JLabel spaceBarLabel;
 
@@ -59,7 +56,6 @@ public class GameplayPanel extends JPanel {
 	public GameplayPanel() {
 		setBackground(Color.LIGHT_GRAY);
 		setLayout(null);
-		panelState = "init";
 		buildingDisplayed = NONE;
 
 		storeMenu = new StoreMenu(Color.BLUE, Color.YELLOW, this);

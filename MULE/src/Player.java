@@ -72,12 +72,14 @@ public class Player implements Drawable, Serializable {
 		case "Flapper":
 			money = 1600;
 			break;
-		case "Bonzoid":
+		case "Bonzoid": // All 3 of these races have same initial money, so no
+						// break lines needed.
 		case "Ugaite":
 		case "Buzzite":
 			money = 1000;
 			break;
-		case "Human":
+		case "Human": // Human and all "team member" races have same initial
+						// money value, so don't want a break line here.
 		default:
 			money = 600;
 			break;
@@ -96,9 +98,6 @@ public class Player implements Drawable, Serializable {
 			energy = 4;
 			break;
 		case "Standard":
-			food = 4;
-			energy = 2;
-			break;
 		case "Tournament":
 			food = 4;
 			energy = 2;
