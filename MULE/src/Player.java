@@ -59,10 +59,12 @@ public class Player implements Drawable, Serializable {
 		this.ore = 0;
 		this.ownedTiles = new ArrayList<Tile>();
 		mule = NO_MULE;
+		
+		if (!"Test".equals(level)){
 		setMoney();
 		setResources();
 		setImage();
-		calculateScore(store);
+		calculateScore(store);}
 	}
 
 	public void setMoney() {
@@ -496,14 +498,19 @@ public class Player implements Drawable, Serializable {
 			ore += oreP;
 			message += " Ore+" + oreP;
 		}
-		if (crystiteP > 0) {
-			crystite += crystiteP;
-			message += "Crystite+" + crystiteP;
+		
+		if(crystiteP>0){
+			crystite+=crystiteP;
+			message+=" Crystite+"+crystiteP;
 		}
 		if (!message.equals("Production: "))
 			return message;
 		return "";
 	}
+	public void setEnergy(int energy){
+		this.energy = energy;
+	}
+	
 
 	public void randomEvent1() {
 		food += 3;
