@@ -17,8 +17,8 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
-
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputListener;
@@ -47,8 +47,7 @@ public class MULEMainPanel extends JPanel {
 	private JLabel turnTime = new JLabel();
 	private int countDown;
 	// The screen IDs are used to tell the CardLayout which screen to display,
-	// and to tell the
-	// button listeners which button was pressed.
+	// and to tell the button listeners which button was pressed.
 	private final String startID = "START";
 	private final String loadID = "LOAD";
 	private final String gameSetupID = "GAMESETUP";
@@ -99,19 +98,16 @@ public class MULEMainPanel extends JPanel {
 		landGrantBtn.addActionListener(new NextListener(gameplayID));
 		menuButton.addActionListener(storeListener);
 
-		//
 		startBtn.addKeyListener(new EnterKeyListener(startID));
 		gameSetupBtn.addKeyListener(new EnterKeyListener(gameSetupID));
 
 		playerSetupBtn.addKeyListener(new EnterKeyListener(playerSetupID));
 		landGrantBtn.addKeyListener(new EnterKeyListener(gameplayID));
 		landGrantBtn.addActionListener(new LandGrantButton());
-		// menuButton.addActionListener(storeListener);
 
 		arrowKeys = new PlayerControls();
 		spaceBar = new NextScreen();
 		setFocusable(true);
-
 	}
 
 	/**
@@ -128,6 +124,12 @@ public class MULEMainPanel extends JPanel {
 			updater.start();
 	}
 
+	/**
+	 * KeyListener class for menu screens which allows the user to press enter
+	 * instead of clicking the next button.
+	 * 
+	 * @author Yuna Lee
+	 */
 	private class EnterKeyListener implements KeyListener {
 		String ID2;
 
@@ -143,7 +145,6 @@ public class MULEMainPanel extends JPanel {
 				NextListener go = new NextListener(ID2);
 				go.actionPerformed(null);
 			}
-
 		}
 
 		public void keyReleased(KeyEvent e) {
@@ -174,10 +175,12 @@ public class MULEMainPanel extends JPanel {
 			case loadID:
 				engine = load(SAVE_FILE);
 				// GameState.setState(GameState.PLAYING_MAP);
-				gameplayPanel.setMapAndPlayers(engine.getMap(),
-						engine.getPlayers(), engine.getStore());
-				gameplayPanel.setStore(engine.getStore());
-				startRoundOrTurn(false);
+				if(engine!=null){
+					gameplayPanel.setMapAndPlayers(engine.getMap(),
+							engine.getPlayers(), engine.getStore());
+					gameplayPanel.setStore(engine.getStore());
+					startRoundOrTurn(false);
+				}
 				break;
 			case gameSetupID: // If the game setup button is pressed, create
 								// game engine and show player screen.
@@ -227,7 +230,6 @@ public class MULEMainPanel extends JPanel {
 				}
 			}
 		}
-
 	}
 
 	/**
@@ -236,7 +238,6 @@ public class MULEMainPanel extends JPanel {
 	 * the arrow keys or WASD, as well as pause/un-pause the game.
 	 * 
 	 * @author Chris Jenkins (cjenkins36)
-	 * 
 	 */
 	private class PlayerControls implements KeyListener {
 		@SuppressWarnings("static-access")
@@ -270,8 +271,6 @@ public class MULEMainPanel extends JPanel {
 				case KeyEvent.VK_ESCAPE:
 					save(SAVE_FILE);
 					gameplayPanel.showMessage("Game Saved", 2000);
-					// GameState.setState(GameState.WAITING);
-					// gameplayPanel.repaint();
 				case KeyEvent.VK_SPACE:
 					tryPlaceMule();
 				}
@@ -280,10 +279,8 @@ public class MULEMainPanel extends JPanel {
 				if (engine.getMap().getActiveMap()
 						.equals(engine.getMap().BIG_MAP))
 					GameState.setState(GameState.PLAYING_MAP);
-				else {
+				else
 					GameState.setState(GameState.PLAYING_TOWN);
-				}
-
 				updater.stop();
 				runGameLoop();
 
@@ -329,15 +326,18 @@ public class MULEMainPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * ActionListener class used to keep track of the remaining turn time and
+	 * display it on the screen.
+	 * 
+	 * @author John Certusi
+	 */
 	private class TurnUpdater implements ActionListener {
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (countDown > 0) {
-
 				turnTime.setText(String.valueOf(countDown--));
 				gameplayPanel.updateTimerLabel(turnTime);
-
 			} else {
 				turnTimer.stop();
 				endTurn(false);
@@ -345,8 +345,13 @@ public class MULEMainPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * ActionListener class used to make the game automatically move to the next
+	 * player's turn.
+	 * 
+	 * @author John Certusi
+	 */
 	private class ScreenDelay implements ActionListener {
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (countDown > 0) {
@@ -364,8 +369,13 @@ public class MULEMainPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * The ActionListener for the transaction button in the store menu.
+	 * Initiates the actual transaction between the player and store.
+	 * 
+	 * @author John Certusi
+	 */
 	private class StorePurchaseAction implements ActionListener {
-
 		ArrayList<Object> menuEntries;
 
 		@Override
@@ -381,7 +391,6 @@ public class MULEMainPanel extends JPanel {
 				gameplayPanel.updateScoreboard();
 			}
 		}
-
 	}
 
 	/**
@@ -392,7 +401,6 @@ public class MULEMainPanel extends JPanel {
 	 * 
 	 */
 	private class Mouse implements MouseInputListener {
-
 		private boolean pickedTile = false;
 
 		@Override
@@ -550,7 +558,7 @@ public class MULEMainPanel extends JPanel {
 
 	/**
 	 * startGameLoop initializes the game loop (player moving around map). It
-	 * adds the keyListener and displays the map.
+	 * adds the keyListener, displays the map, and calculates production.
 	 */
 	private void startGameLoop() {
 		removeKeyListener(spaceBar);
@@ -565,7 +573,6 @@ public class MULEMainPanel extends JPanel {
 		countDown = engine.calculateActivePlayerTurnTime();
 		turnTime.setText("" + countDown);
 
-		// ///////////////////////// check
 		gameplayPanel.showProductionMessage(engine.getActivePlayer()
 				.calculateProduction());
 		gameplayPanel.updateScoreboard();
@@ -573,6 +580,11 @@ public class MULEMainPanel extends JPanel {
 		runGameLoop();
 	}
 
+	/**
+	 * Tries to place a mule on a player's property. If the player does not have
+	 * a mule nothing happens, if the player is on an unowned property, the mule
+	 * is lost.
+	 */
 	private void tryPlaceMule() {
 		if (GameState.getState() == GameState.PLAYING_MAP) {
 			Player active = engine.getActivePlayer();
@@ -598,7 +610,9 @@ public class MULEMainPanel extends JPanel {
 		}
 	}
 
-	// checks for the randomTurnEvent in the beginning of the turn
+	/**
+	 * checks for the randomTurnEvent in the beginning of the turn
+	 */
 	private void randomTurnEvent() {
 		if (GameState.getState().equals(GameState.START_TURN)) {
 			if (engine.getActivePlayerIndex() == engine.getLowestScore()) {
@@ -629,6 +643,11 @@ public class MULEMainPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * Ends the land grant turn when the user presses the pass button.
+	 * 
+	 * @author John Certusi
+	 */
 	private class LandGrantButton implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
@@ -636,6 +655,11 @@ public class MULEMainPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * Performs the necessary action when the user presses space to start turn.
+	 * 
+	 * @author John Certusi
+	 */
 	private class NextScreen implements KeyListener {
 
 		@Override
@@ -665,11 +689,24 @@ public class MULEMainPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * Shows the wampus message to the player using the gameplay panel's
+	 * showMessage method.
+	 * 
+	 * @param reward
+	 *            The amount of money the player received.
+	 */
 	private void showWampusMessage(int reward) {
 		gameplayPanel.showMessage("You caught the wambuzz! He gave you $"
 				+ reward + " as a reward!");
 	}
 
+	/**
+	 * Saves the game using serialization.
+	 * 
+	 * @param The
+	 *            name of the save file to be written to.
+	 */
 	private void save(String filename) {
 		try {
 			/*
@@ -693,14 +730,18 @@ public class MULEMainPanel extends JPanel {
 			out.close();
 		} catch (FileNotFoundException e) {
 			gameplayPanel.showMessage("Error: Save file not found!");
-			//System.out.println("Save file not found, Error:" + e);
 		} catch (IOException e) {
 			e.printStackTrace();
-			// System.out.println("IO error on saving, Error:"+e);
 		}
-
 	}
 
+	/**
+	 * Loads a saved game from the designated save file via serialization.
+	 * 
+	 * @param filename
+	 *            The file from which to get the saved data.
+	 * @return The game engine object saved to the file.
+	 */
 	private MULEGameEngine load(String filename) {
 		MULEGameEngine eng = null;
 		try {
@@ -712,14 +753,18 @@ public class MULEMainPanel extends JPanel {
 			eng = (MULEGameEngine) in.readObject();
 			in.close();
 		} catch (FileNotFoundException e) {
-			System.out.println("No saved game file found, error:\n" + e);
+			JOptionPane.showMessageDialog(null,
+					"No saved game file found, error:\n" + e, "Loading Error",
+					JOptionPane.INFORMATION_MESSAGE);
 		} catch (IOException e) {
-			e.printStackTrace();
-			// System.out.println("IO error on loading, error:\n"+e);
+			JOptionPane.showMessageDialog(null,
+					e.getStackTrace(), "Loading Error",
+					JOptionPane.INFORMATION_MESSAGE);
 		} catch (ClassNotFoundException e) {
-			System.out
-					.println("MULEGameEngine class not found on loading, error:\n"
-							+ e);
+			JOptionPane.showMessageDialog(null,
+					"Game engine object not found on loading, "
+							+ "error:\n" + e, "Loading Error",
+					JOptionPane.INFORMATION_MESSAGE);
 		}
 		return eng;
 	}
