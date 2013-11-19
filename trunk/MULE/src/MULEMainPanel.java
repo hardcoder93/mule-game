@@ -692,7 +692,8 @@ public class MULEMainPanel extends JPanel {
 			out.writeObject(engine);
 			out.close();
 		} catch (FileNotFoundException e) {
-			System.out.println("Save file not found, Error:" + e);
+			gameplayPanel.showMessage("Error: Save file not found!");
+			//System.out.println("Save file not found, Error:" + e);
 		} catch (IOException e) {
 			e.printStackTrace();
 			// System.out.println("IO error on saving, Error:"+e);

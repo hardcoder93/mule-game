@@ -398,34 +398,30 @@ public class MULEGameEngine implements Serializable {
 		event = rand.nextInt(7);
 		poss = rand2.nextInt(100);
 		int m = determinant();
-		System.out.println("1");
 		if (poss < 28) {
-			System.out.println("2");
-			if (event == 0) {
+			switch(event){
+			case 0:
 				active.randomEvent1();
 				return ("YOU JUST RECEIVED A PACKAGE FROM THE GT ALUMNI CONTAINING 3 FOOD AND 2 ENERGY UNITS.");
-
-			}
-
-			else if (event == 1) {
+			case 1:
 				active.randomEvent2();
 				return ("A WANDERING TECH STUDENT REPAID YOUR HOSPITALITY BY LEAVING TWO BARS OF ORE.");
-			} else if (event == 2) {
+			case 2:
 				active.randomEvent3(m);
 				return ("THE MUSEUM BOUGHT YOUR ANTIQUE PERSONAL COMPUTER FOR $"
 						+ 8 * m + ".");
-			} else if (event == 3) {
+			case 3:
 				active.randomEvent4(m);
 				return ("YOU FOUND A DEAD MOOSE RAT AND SOLD THE HIDE FOR $"
 						+ 2 * m + ".");
-			} else if (event == 4) {
+			case 4:
 				active.randomEvent5(m);
 				return ("FLYING CAT-BUGS ATE THE ROOF OFF YOUR HOUSE. REPAIRS COST $"
 						+ 4 * m + ".");
-			} else if (event == 5) {
+			case 5:
 				active.randomEvent6();
 				return ("MISCHIEVOUS UGA STUDENTS BROKE INTO YOUR STORAGE SHED AND STOLE HALF YOUR FOOD.");
-			} else {
+			default:
 				active.randomEvent7(m);
 				return ("YOUR SPACE GYPSY INLAWS MADE A MESS OF THE TOWN. IT COST YOU $"
 						+ 6 * m + " TO CLEAN IT UP.");
