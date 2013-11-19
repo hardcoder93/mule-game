@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -169,15 +170,21 @@ public class GameplayPanel extends JPanel {
 		JLabel playerOre_1 = null;
 		JLabel playerOre_2 = null;
 		JLabel playerOre_3 = null;
-
+		
+		JLabel playerName = null;
+		JLabel playerName_1 = null;
+		JLabel playerName_2 = null;
+		JLabel playerName_3 = null;
+		
+		
 		if (playerList.length == 2) {
 			JLabel Name = new JLabel("Name:");
 			JLabel Money = new JLabel("Money:");
 			JLabel Energy = new JLabel("Energy:");
 			JLabel Food = new JLabel("Food:");
 			JLabel Ore = new JLabel("Ore:");
-			JLabel playerName = new JLabel("" + playerList[0].getName());
-			JLabel playerName_1 = new JLabel("" + playerList[1].getName());
+			playerName = new JLabel("" + playerList[0].getName());
+			playerName_1 = new JLabel("" + playerList[1].getName());
 			playerMoney = new JLabel("" + "" + playerList[0].getMoney());
 			playerMoney_1 = new JLabel("" + playerList[1].getMoney());
 			playerEnergy = new JLabel("" + playerList[0].getEnergy());
@@ -235,9 +242,9 @@ public class GameplayPanel extends JPanel {
 			JLabel Energy = new JLabel("Energy:");
 			JLabel Food = new JLabel("Food:");
 			JLabel Ore = new JLabel("Ore:");
-			JLabel playerName = new JLabel("" + playerList[0].getName());
-			JLabel playerName_1 = new JLabel("" + playerList[1].getName());
-			JLabel playerName_2 = new JLabel("" + playerList[2].getName());
+			playerName = new JLabel("" + playerList[0].getName());
+			playerName_1 = new JLabel("" + playerList[1].getName());
+			playerName_2 = new JLabel("" + playerList[2].getName());
 			playerMoney = new JLabel("" + playerList[0].getMoney());
 			playerMoney_1 = new JLabel("" + playerList[1].getMoney());
 			playerMoney_2 = new JLabel("" + playerList[2].getMoney());
@@ -311,10 +318,10 @@ public class GameplayPanel extends JPanel {
 			JLabel Food = new JLabel("Food:");
 			JLabel Ore = new JLabel("Ore:");
 
-			JLabel playerName = new JLabel("" + playerList[0].getName());
-			JLabel playerName_1 = new JLabel("" + playerList[1].getName());
-			JLabel playerName_2 = new JLabel("" + playerList[2].getName());
-			JLabel playerName_3 = new JLabel("" + playerList[3].getName());
+			playerName = new JLabel("" + playerList[0].getName());
+			playerName_1 = new JLabel("" + playerList[1].getName());
+			playerName_2 = new JLabel("" + playerList[2].getName());
+			playerName_3 = new JLabel("" + playerList[3].getName());
 			playerMoney = new JLabel("" + playerList[0].getMoney());
 			playerMoney_1 = new JLabel("" + playerList[1].getMoney());
 			playerMoney_2 = new JLabel("" + playerList[2].getMoney());
@@ -396,6 +403,8 @@ public class GameplayPanel extends JPanel {
 			add(playerOre_2);
 			playerOre_3.setBounds(610, 540, 180, 100);
 			add(playerOre_3);
+		
+		
 		}
 
 		moneyLabels[0] = playerMoney;
@@ -425,6 +434,8 @@ public class GameplayPanel extends JPanel {
 			oreLabels[2] = playerOre_2;
 		if (playerMoney_3 != null)
 			oreLabels[3] = playerOre_3;
+	
+		
 	}
 
 	/**
