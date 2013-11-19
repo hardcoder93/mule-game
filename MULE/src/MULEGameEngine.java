@@ -40,21 +40,24 @@ public class MULEGameEngine implements Serializable {
 	 *            The number of players in the game.
 	 */
 	public MULEGameEngine(String difficulty, String mapType, int numPlayers) {
-		this.difficulty = difficulty;
+		if ((difficulty!=null) && (mapType!=null) && (numPlayers!=0)){
+			this.difficulty = difficulty;
 
-		switch (mapType) {
-		case "Standard":
-			map = new MULEMap(mapType);
-			break;
-		case "Random":
-			map = new MULEMap(mapType);
-			break;
-		}
+			switch (mapType) {
+			case "Standard":
+				map = new MULEMap(mapType);
+				break;
+			case "Random":
+				map = new MULEMap(mapType);
+				break;
+			}
+		
 
 		players = new Player[numPlayers];
 		store = new Store(difficulty);
 		playerTurnOrder = new ArrayList<Integer>();
 		landGrantOrder = new ArrayList<Integer>();
+		}
 	}
 
 	/**
