@@ -404,6 +404,17 @@ public class Player implements Drawable, Serializable {
 			;
 		mule = NO_MULE;
 	}
+	
+	/**
+	 * Subtracts a given quantity of the player's food; in the game, this is
+	 * done when calculating the time of the player's turn.
+	 * 
+	 * @param quantity The amount to be consumed.
+	 */
+	public void consumeFood(int quantity){
+		food-=quantity;
+		if(food<0) food=0;
+	}
 
 	public boolean ownsTile(Tile tile) {
 		return (ownedTiles.contains(tile));

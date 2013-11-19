@@ -315,12 +315,16 @@ public class MULEGameEngine implements Serializable {
 	 */
 	public int calculateActivePlayerTurnTime() {
 		int activePlayersFood = players[activePlayerInd].getFood();
+		int amountReqd = ((currentRound - 1) / 4) + 3;
 		if (activePlayersFood < 1)
 			return 5;
-		else if (activePlayersFood < (((currentRound - 1) / 4) + 3))
+		else if (activePlayersFood < amountReqd){
+			players[activePlayerInd].consumeFood(activePlayersFood);
 			return 30;
-		else
+		}else{
+			players[activePlayerInd].consumeFood(amountReqd);
 			return 50;
+		}
 	}
 
 	// Method for adding money after gambling - wongoo-
