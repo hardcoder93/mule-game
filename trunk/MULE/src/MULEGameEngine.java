@@ -385,6 +385,7 @@ public class MULEGameEngine implements Serializable {
 
 	}
 
+	// public method to get determinant (round bonus) depending on the current round.
 	public int determinant() {
 		int m;
 		if (getCurrentRound() > 0 && getCurrentRound() < 4)
@@ -397,7 +398,9 @@ public class MULEGameEngine implements Serializable {
 			m = 100;
 		return m;
 	}
-
+	/* public method for random event to happen in the game
+	 *and it is possible to happen each turn for each player.
+	 */
 	public String randomEvent() {
 		Player active = players[activePlayerInd];
 		Random rand = new Random();
@@ -439,7 +442,7 @@ public class MULEGameEngine implements Serializable {
 		}
 
 	}
-
+    // public method for RandomEvent that only happens to the player who has the lowest score.
 	public String randomEventForLoser() {
 		int m = determinant();
 		Player active = players[activePlayerInd];
