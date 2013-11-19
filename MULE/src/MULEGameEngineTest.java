@@ -19,6 +19,7 @@ public class MULEGameEngineTest {
      * The method generates random bonuses depending on timeleft and currentround
      * This JUnit test check if the method works correctly under random numbers in boundary 
      * for time and currentRound. 
+     * @author WongooShim
      */
 	@Test
 	public final void testGetGambleMoney() {
