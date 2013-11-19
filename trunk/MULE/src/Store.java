@@ -22,6 +22,7 @@ public class Store implements Serializable {
 	public Store(String difficulty) {
 		switch (difficulty) {
 		case "Beginner": // beginner difficulty
+					//price , quantity
 			food = new Goods(30, 16);
 			energy = new Goods(25, 16);
 			smithore = new Goods(50, 0);
