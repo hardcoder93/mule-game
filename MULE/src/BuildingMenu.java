@@ -13,69 +13,70 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 
-public class BuildingMenu implements Drawable{
-	
+public class BuildingMenu implements Drawable {
+
 	private final int menuBorderSize = 8;
 	private final int xPOS = 150;
 	private final int yPOS = 25;
 	private final int WIDTH = 600;
 	private final int HEIGHT = 250;
-	
+
 	private Color border, background;
 	private boolean divider;
-	
+
 	private String type;
 	private JPanel parentPanel;
 	private JLabel welcomeMessage;
-	
-	public BuildingMenu(String type, Color background, Color border, boolean divider, JPanel parent){
-		
+
+	public BuildingMenu(String type, Color background, Color border,
+			boolean divider, JPanel parent) {
+
 		this.type = type;
 		this.parentPanel = parent;
 		this.background = background;
 		this.border = border;
 		this.divider = divider;
-		
-        welcomeMessage = new JLabel("Welcome to the " + type + "!");
-        welcomeMessage.setBounds(xPOS, yPOS + 5, WIDTH, 30);
-        welcomeMessage.setHorizontalAlignment(JLabel.CENTER);
-        welcomeMessage.setForeground(border);
-        welcomeMessage.setFont(new Font("Narkisim", Font.BOLD, 20));
+
+		welcomeMessage = new JLabel("Welcome to the " + type + "!");
+		welcomeMessage.setBounds(xPOS, yPOS + 5, WIDTH, 30);
+		welcomeMessage.setHorizontalAlignment(JLabel.CENTER);
+		welcomeMessage.setForeground(border);
+		welcomeMessage.setFont(new Font("Narkisim", Font.BOLD, 20));
 	}
-	
-	public int getHeight(){
+
+	public int getHeight() {
 		return HEIGHT;
 	}
-	
-	public int getWidth(){
+
+	public int getWidth() {
 		return WIDTH;
 	}
-	
-	public int getX(){
+
+	public int getX() {
 		return xPOS;
 	}
-	
-	public int getY(){
+
+	public int getY() {
 		return yPOS;
 	}
-	
-	public JLabel getWelcomeMessage(){
+
+	public JLabel getWelcomeMessage() {
 		return welcomeMessage;
 	}
-	
-	public JPanel getParentPanel(){
+
+	public JPanel getParentPanel() {
 		return parentPanel;
 	}
-	
-	
+
 	@Override
 	public void draw(Graphics g) {
-    	g.setColor(background);
-    	g.fillRect(xPOS, yPOS, WIDTH, HEIGHT);
-    	g.setColor(border);
-    	if (divider)
-    		g.fillRect(xPOS + WIDTH/2 - 3, yPOS + 60, 6, HEIGHT - 105);
-    	for (int i = 1; i <= menuBorderSize; i++)
-    		g.drawRect(xPOS-i, yPOS-i, WIDTH+2*i-1, HEIGHT+2*i-1);	
-    }
+		g.setColor(background);
+		g.fillRect(xPOS, yPOS, WIDTH, HEIGHT);
+		g.setColor(border);
+		if (divider)
+			g.fillRect(xPOS + WIDTH / 2 - 3, yPOS + 60, 6, HEIGHT - 105);
+		for (int i = 1; i <= menuBorderSize; i++)
+			g.drawRect(xPOS - i, yPOS - i, WIDTH + 2 * i - 1, HEIGHT + 2 * i
+					- 1);
+	}
 }
