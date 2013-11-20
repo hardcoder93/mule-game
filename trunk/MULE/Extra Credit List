@@ -13,4 +13,4 @@
 9)	Multiple Observer classes used (PlayerControls, NextListener, etc.)
 10)	(Land Office?)
 11)	Custom graphics images created for all visual components
-12) Model-View-Controller architecture design used (MULEGameEngine-Screens-MULEMainPanel)
+12) Model-View-Presenter architecture design used (MULEGameEngine-Screens-MULEMainPanel)
