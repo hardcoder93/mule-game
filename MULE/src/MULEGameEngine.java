@@ -40,7 +40,7 @@ public class MULEGameEngine implements Serializable {
 	 *            The number of players in the game.
 	 */
 	public MULEGameEngine(String difficulty, String mapType, int numPlayers) {
-		if ((difficulty!=null) && (mapType!=null) && (numPlayers!=0)){
+		if ((difficulty != null) && (mapType != null) && (numPlayers != 0)) {
 			this.difficulty = difficulty;
 
 			switch (mapType) {
@@ -51,12 +51,11 @@ public class MULEGameEngine implements Serializable {
 				map = new MULEMap(mapType);
 				break;
 			}
-		
 
-		players = new Player[numPlayers];
-		store = new Store(difficulty);
-		playerTurnOrder = new ArrayList<Integer>();
-		landGrantOrder = new ArrayList<Integer>();
+			players = new Player[numPlayers];
+			store = new Store(difficulty);
+			playerTurnOrder = new ArrayList<Integer>();
+			landGrantOrder = new ArrayList<Integer>();
 		}
 	}
 
@@ -125,6 +124,11 @@ public class MULEGameEngine implements Serializable {
 		return players[activePlayerInd];
 	}
 
+	/**
+	 * Gets the index of the active player
+	 * 
+	 * @return The index.
+	 */
 	public int getActivePlayerIndex() {
 		return activePlayerInd;
 	}
@@ -247,6 +251,10 @@ public class MULEGameEngine implements Serializable {
 		return players[activePlayerInd].purchaseTile(tile, currentRound);
 	}
 
+	/**
+	 * Sets the order of the players in the game based on the order of their
+	 * scores.
+	 */
 	public void setPlayerTurnOrder() {
 		landGrantOrder.clear();
 		playerTurnOrder.clear();
@@ -272,10 +280,21 @@ public class MULEGameEngine implements Serializable {
 		nextState = GameState.START_ROUND;
 	}
 
+	/**
+	 * Gets the current index of the player with the lowest score. Must be 
+	 * called after setPlayerTurnOrder method.
+	 * 
+	 * @return Index of the player with the lowest score.
+	 */
 	public int getLowestScore() {
 		return lowestScore;
 	}
 
+	/**
+	 * Moves to the next active player and returns that player's index.
+	 * 
+	 * @return The index of the next active player.
+	 */
 	public boolean nextActivePlayerIndex() {
 		if (!landGrantOrder.isEmpty()) {
 			activePlayerInd = landGrantOrder.remove(0);
@@ -295,6 +314,12 @@ public class MULEGameEngine implements Serializable {
 		return nextState;
 	}
 
+	/**
+	 * Raises a tile based on the passed in location.
+	 * 
+	 * @param currentLocation Location of the tile to raise.
+	 * @param raise
+	 */
 	public void raiseTile(Point currentLocation, boolean raise) {
 		if (map.isBuyable(currentLocation))
 			map.raiseTile(currentLocation, raise);
@@ -318,10 +343,10 @@ public class MULEGameEngine implements Serializable {
 		int amountReqd = ((currentRound - 1) / 4) + 3;
 		if (activePlayersFood < 1)
 			return 5;
-		else if (activePlayersFood < amountReqd){
+		else if (activePlayersFood < amountReqd) {
 			players[activePlayerInd].consumeFood(activePlayersFood);
 			return 30;
-		}else{
+		} else {
 			players[activePlayerInd].consumeFood(amountReqd);
 			return 50;
 		}
@@ -383,16 +408,16 @@ public class MULEGameEngine implements Serializable {
 		}
 		return 0;
 	}
-	
+
 	/**
 	 * Checks whether the active player is in last place or not and then calls
 	 * the appropriate random event method.
 	 * 
 	 * @return The random event message as a String.
 	 */
-	public String randomTurnEvent(){
+	public String randomTurnEvent() {
 		if (GameState.getState().equals(GameState.START_TURN)) {
-			if (activePlayerInd == lowestScore) 
+			if (activePlayerInd == lowestScore)
 				return randomEventForLoser();
 			else
 				return randomEvent();
@@ -400,7 +425,8 @@ public class MULEGameEngine implements Serializable {
 		return null;
 	}
 
-	// public method to get determinant (round bonus) depending on the current round.
+	// public method to get determinant (round bonus) depending on the current
+	// round.
 	public int determinant() {
 		int m;
 		if (getCurrentRound() > 0 && getCurrentRound() < 4)
@@ -413,8 +439,10 @@ public class MULEGameEngine implements Serializable {
 			m = 100;
 		return m;
 	}
-	/* public method for random event to happen in the game
-	 *and it is possible to happen each turn for each player.
+
+	/*
+	 * public method for random event to happen in the gameand it is possible to
+	 * happen each turn for each player.
 	 */
 	public String randomEvent() {
 		Player active = players[activePlayerInd];
@@ -424,7 +452,7 @@ public class MULEGameEngine implements Serializable {
 		poss = rand2.nextInt(100);
 		int m = determinant();
 		if (poss < 28) {
-			switch(event){
+			switch (event) {
 			case 0:
 				active.randomEvent1();
 				return ("YOU JUST RECEIVED A PACKAGE FROM THE GT ALUMNI CONTAINING 3 FOOD AND 2 ENERGY UNITS.");
@@ -457,7 +485,9 @@ public class MULEGameEngine implements Serializable {
 		}
 
 	}
-    // public method for RandomEvent that only happens to the player who has the lowest score.
+
+	// public method for RandomEvent that only happens to the player who has the
+	// lowest score.
 	public String randomEventForLoser() {
 		int m = determinant();
 		Player active = players[activePlayerInd];
