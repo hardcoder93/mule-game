@@ -382,7 +382,22 @@ public class MULEGameEngine implements Serializable {
 			store.buyGoods(type, Integer.parseInt(quantity));
 		}
 		return 0;
-
+	}
+	
+	/**
+	 * Checks whether the active player is in last place or not and then calls
+	 * the appropriate random event method.
+	 * 
+	 * @return The random event message as a String.
+	 */
+	public String randomTurnEvent(){
+		if (GameState.getState().equals(GameState.START_TURN)) {
+			if (activePlayerInd == lowestScore) 
+				return randomEventForLoser();
+			else
+				return randomEvent();
+		}
+		return null;
 	}
 
 	// public method to get determinant (round bonus) depending on the current round.
@@ -472,6 +487,12 @@ public class MULEGameEngine implements Serializable {
 
 	}
 
+	/**
+	 * Returns the boolean value that represents whether the wampus has already
+	 * been caught this turn.
+	 * 
+	 * @return True if wampus has been caught, false if not.
+	 */
 	public boolean hasWampusBeenCaught() {
 		return wampusCaught;
 	}
