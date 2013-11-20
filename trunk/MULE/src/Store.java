@@ -152,9 +152,13 @@ public class Store implements Serializable {
 		}
 
 		private void sellQuantity(int quantity) {
-			this.quantity -= quantity;
+			if(this.quantity < quantity){
+				return;
+			}
+			else{
+				this.quantity -= quantity;
+			}
 		}
-
 		private void buyQuantity(int quantity) {
 			this.quantity += quantity;
 		}
