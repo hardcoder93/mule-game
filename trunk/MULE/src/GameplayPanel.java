@@ -139,7 +139,7 @@ public class GameplayPanel extends JPanel {
 	public void setButtonText(String text) {
 		landGrantPass.setText(text);
 	}
-
+	// this method sets up the scoreboard which contains user datas
 	public void setUpScoreboard() {
 
 		JLabel lblNewLabel = new JLabel("");
@@ -470,7 +470,7 @@ public class GameplayPanel extends JPanel {
 		if (!landGrantPass.isEnabled())
 			landGrantPass.setEnabled(true);
 	}
-
+	// this method updates resources in the scoreboard
 	public void updateScoreboard() {
 		for (int i = 0; i < playerList.length; i++) {
 			moneyLabels[i].setText("" + playerList[i].getMoney());
