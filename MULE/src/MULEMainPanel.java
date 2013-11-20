@@ -611,18 +611,11 @@ public class MULEMainPanel extends JPanel {
 	}
 
 	/**
-	 * checks for the randomTurnEvent in the beginning of the turn
+	 * Initiates a random turn event for the active player and prints the
+	 * message to the gameplayPanel message label.
 	 */
 	private void randomTurnEvent() {
-		if (GameState.getState().equals(GameState.START_TURN)) {
-			if (engine.getActivePlayerIndex() == engine.getLowestScore()) {
-				gameplayPanel.showMessage(engine.randomEventForLoser());
-				gameplayPanel.updateScoreboard();
-			} else {
-				gameplayPanel.showMessage(engine.randomEvent());
-				gameplayPanel.updateScoreboard();
-			}
-		}
+		gameplayPanel.showMessage(engine.randomTurnEvent());
 	}
 
 	/**
