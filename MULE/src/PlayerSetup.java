@@ -1,8 +1,11 @@
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.HeadlessException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -27,14 +30,19 @@ public class PlayerSetup extends JPanel {
 	// private JPanel contentPane;
 	private JLabel playerNumberLabel;
 	private static JTextField textField;
-	private JButton btnNewButton;
+	private JButton nextButton;
+	private JButton randomizeBtn;
 	private static JComboBox<String> raceBox;
 	private static JComboBox<String> colorBox;
 	private String[] colorOptions = { "Red", "Blue", "Green", "Yellow" };
 	private JLabel noInputLabel;
 
 	public JButton getButton() {
-		return btnNewButton;
+		return nextButton;
+	}
+	
+	public JButton getRandomizeButton(){
+		return randomizeBtn;
 	}
 
 	/**
@@ -57,11 +65,18 @@ public class PlayerSetup extends JPanel {
 		add(textField);
 		textField.setColumns(10);
 
-		btnNewButton = new JButton("Next");
-		btnNewButton.setFont(new Font("Narkisim", Font.BOLD, 13));
-		btnNewButton.setBounds(777, 543, 117, 29);
-		btnNewButton.setBackground(new Color(255, 255, 255, 150));
-		add(btnNewButton);
+		nextButton = new JButton("Next");
+		nextButton.setFont(new Font("Narkisim", Font.BOLD, 13));
+		nextButton.setBounds(777, 543, 117, 29);
+		nextButton.setBackground(new Color(255, 255, 255, 150));
+		add(nextButton);
+		
+		randomizeBtn = new JButton("Randomize");
+		randomizeBtn.setFont(new Font("Narkisim", Font.BOLD, 13));
+		randomizeBtn.setBounds(77, 543, 100, 25);
+		randomizeBtn.setBackground(new Color(255, 255, 255, 150));
+		randomizeBtn.addActionListener(new RandomizePlayer());
+		add(randomizeBtn);
 
 		JLabel lblNameOfPlayer = new JLabel("Name of Player");
 		lblNameOfPlayer.setFont(new Font("Narkisim", Font.BOLD, 17));
@@ -170,6 +185,38 @@ public class PlayerSetup extends JPanel {
 
 	public void focusNameBox() {
 		textField.requestFocusInWindow();
+	}
+	
+	/**
+	 * This is an ActionListener class used by the randomize button. When
+	 * called it will fill the player attribute selection fields with a random
+	 * name, race, and color.
+	 * 
+	 * @author Chris Jenkins (cjenkins36)
+	 *
+	 */
+	private class RandomizePlayer implements ActionListener{
+		private String[] adjectives = {"Tired","Smart","Drunk",
+									   "Awkward","Hungry","Angry","Happy",
+									   "Studying","Greek","Funny","Paranoid",
+									   "Worried","Frantic","Hung-Over"};
+		private String[] nouns = {"Student","CS Major","AE Major",
+								  "EE Major","Professor","TA","Buzz",
+								  "Ramblin' Wreck","Freshman","Sophomore",
+								  "Junior","Senior","Sixth-Year"};
+		
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			Random rand = new Random();
+			int adjInd = rand.nextInt(adjectives.length);
+			int nounInd = rand.nextInt(nouns.length);
+			int raceInd = rand.nextInt(raceBox.getItemCount());
+			int colorInd = rand.nextInt(colorBox.getItemCount());
+			
+			textField.setText(adjectives[adjInd]+" "+nouns[nounInd]);
+			raceBox.setSelectedIndex(raceInd);
+			colorBox.setSelectedIndex(colorInd);
+		}
 	}
 
 	/**
