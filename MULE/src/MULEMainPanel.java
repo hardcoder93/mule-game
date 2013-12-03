@@ -685,6 +685,13 @@ public class MULEMainPanel extends JPanel {
 	private void randomTurnEvent() {
 		gameplayPanel.showMessage(engine.randomTurnEvent());
 	}
+	/**
+	 * Initiates a random round event for the active players and prints the
+	 * message to the gameplayPanel message label.
+	 */
+	private void randomRoundEvent() {
+		gameplayPanel.showMessage(engine.randomRoundLotteryEvent());
+	}
 
 	/**
 	 * Starts the next turn/round if the input is true. If the input is false,
@@ -730,6 +737,7 @@ public class MULEMainPanel extends JPanel {
 			case KeyEvent.VK_SPACE:
 				if (currState.equals(GameState.START_ROUND)) {
 					startRoundOrTurn(true);
+					randomRoundEvent();
 				} else if (currState.equals(GameState.START_TURN)) {
 					if (engine.getNextState().equals(GameState.LANDGRANT)) {
 						startLandGrant();

@@ -35,11 +35,6 @@ public class Player implements Drawable, Serializable {
 	private Point goal;
 	private String goalMap;
 
-	/*
-	 * These can't be static. Static means that these values will be the same
-	 * for every player. If we leave them static, then every time money is added
-	 * to one player it will be added to all the players in the game.
-	 */
 	private String message;
 
 	private int money;
@@ -550,8 +545,11 @@ public class Player implements Drawable, Serializable {
 	public void setEnergy(int energy){
 		this.energy = energy;
 	}
+	// list of random Round event, and turn event that could happen
+	public void randomLotteryEvent(){
+		money += 500;
+	}
 	
-
 	public void randomEvent1() {
 		food += 3;
 		energy += 2;
@@ -613,4 +611,6 @@ public class Player implements Drawable, Serializable {
 	public String getPurpose() {
 		return purpose;
 	}
+
+	
 }

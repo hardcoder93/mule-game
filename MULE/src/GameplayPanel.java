@@ -674,6 +674,8 @@ public class GameplayPanel extends JPanel {
 				GameplayPanel.this.messageLabel2.setText("");
 			}
 		}
+		
+		//Αρ 
 	}
 	
 	public JButton getLandSellButton(){
