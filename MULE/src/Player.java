@@ -32,6 +32,8 @@ public class Player implements Drawable, Serializable {
 	private String race;
 	private String color;
 	private String type;
+	private Point goal;
+	private String goalMap;
 
 	/*
 	 * These can't be static. Static means that these values will be the same
@@ -54,6 +56,7 @@ public class Player implements Drawable, Serializable {
 	private int mule;
 	private int muleX = xCoord;
 	private int muleY = yCoord;
+	private String purpose;
 
 	public Player(String name, String level, String race, String color,
 			Store store, String type) {
@@ -312,7 +315,7 @@ public class Player implements Drawable, Serializable {
 	}
 
 	public void resetPosition() {
-		xCoord = 500;
+		xCoord = 550;
 		yCoord = 250;
 	}
 
@@ -584,5 +587,30 @@ public class Player implements Drawable, Serializable {
 
 	public boolean isAI(){
 		return AI.equals(type);
+	}
+	
+	public ArrayList<Tile> getOwnedTiles(){
+		return ownedTiles;
+	}
+	
+	public void setGoal(Point point, String map){
+		goal = point;
+		goalMap = map;
+	}
+	
+	public Point getGoal(){
+		return goal;
+	}
+	
+	public String getGoalMap(){
+		return goalMap;
+	}
+
+	public void setPurpose(String task) {
+		purpose = task;
+	}
+	
+	public String getPurpose() {
+		return purpose;
 	}
 }

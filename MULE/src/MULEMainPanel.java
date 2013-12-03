@@ -256,7 +256,7 @@ public class MULEMainPanel extends JPanel {
 	private class PlayerControls implements KeyListener {
 		@SuppressWarnings("static-access")
 		public void keyPressed(KeyEvent e) {
-			if (GameState.playing()) {
+			if ((GameState.playing()) && (!engine.getActivePlayer().isAI())) {
 				switch (e.getKeyCode()) {
 				case KeyEvent.VK_UP:
 				case KeyEvent.VK_W:
@@ -323,10 +323,27 @@ public class MULEMainPanel extends JPanel {
 	 * 
 	 */
 	private class GameUpdater implements ActionListener {
-
+		int count = 0;
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			Point aiMove;
 			if (GameState.playing()) {
+				if (engine.getActivePlayer().isAI()){
+					if (count == 0){
+						aiMove = AI.movePlayer(engine.getActivePlayer(), 
+								engine.getMap().getActiveMap());
+						engine.movePlayer(aiMove.x, aiMove.y);
+						System.out.print(engine.getActivePlayer().getY() + " " + AI.STORE_POINT.y + "\n");
+						if (aiMove.x == 0 && aiMove.y == 0){
+							if (!engine.getActivePlayer().getGoal().equals(AI.PUB_POINT) && turnTimer.isRunning()){
+								fulfillPurpose();
+							}
+						}
+						count = 2;
+					} else {
+						count--;
+					}
+				}
 				engine.updateWampus();
 				gameplayPanel.updateScoreboard();
 				gameplayPanel.repaint();
@@ -526,6 +543,9 @@ public class MULEMainPanel extends JPanel {
 		int gamblingMoney = 0;
 		engine.getActivePlayer().setMule(Player.NO_MULE);
 		engine.resetWampus();
+		if (engine.getActivePlayer().isAI()){
+			engine.getActivePlayer().setGoal(null, null);
+		}
 		if (gamble) {
 			gamblingMoney = engine.getGambleMoney(countDown);
 			engine.getActivePlayer().addMoney(gamblingMoney);
@@ -611,6 +631,7 @@ public class MULEMainPanel extends JPanel {
 	private void startGameLoop() {
 		removeKeyListener(spaceBar);
 		GameState.setState(GameState.PLAYING_MAP);
+		engine.getMap().setActiveMap(MULEMap.BIG_MAP);
 		gameplayPanel.removeScreenLabel();
 		gameplayPanel.setActivePlayer(engine.getActivePlayer());
 		engine.getActivePlayer().resetPosition();
@@ -618,11 +639,10 @@ public class MULEMainPanel extends JPanel {
 		addKeyListener(arrowKeys);
 		addMouseListener(landGrantMouse);
 		cardLayout.show(MULEMainPanel.this, gameplayID);
-		countDown = engine.calculateActivePlayerTurnTime();
-		turnTime.setText("" + countDown);
-
 		gameplayPanel.showProductionMessage(engine.getActivePlayer()
 				.calculateProduction());
+		countDown = engine.calculateActivePlayerTurnTime();
+		turnTime.setText("" + countDown);
 		gameplayPanel.updateScoreboard();
 
 		runGameLoop();
@@ -857,6 +877,16 @@ public class MULEMainPanel extends JPanel {
 				screenTimer.start();
 			}
 		}
-		
+	}
+	
+	private void fulfillPurpose(){
+		switch (engine.getActivePlayer().getPurpose()) {
+		case AI.PLACE_MULE :
+			tryPlaceMule();
+			break;
+		default :
+			engine.fulfillPurpose();
+		}
+		engine.getActivePlayer().setGoal(null, null);
 	}
 }
