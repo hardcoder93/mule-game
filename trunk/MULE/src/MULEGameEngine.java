@@ -183,6 +183,7 @@ public class MULEGameEngine implements Serializable {
 		final int fastSpeed = 7;
 		int newX;
 		int newY;
+		
 
 		if (onRiverTile() || onMountainTile()) {
 			newX = active.getX() + slowSpeed * distX;
@@ -191,7 +192,7 @@ public class MULEGameEngine implements Serializable {
 			newX = active.getX() + fastSpeed * distX;
 			newY = active.getY() + fastSpeed * distY;
 		}
-
+		
 		if (map.isValidLocation(newX, newY)) {
 			if (GameState.getState().equals(GameState.PLAYING_TOWN) && // Player
 																		// is
@@ -634,5 +635,19 @@ public class MULEGameEngine implements Serializable {
 		players[activePlayerInd].sellTile(tile);
 		tile.removeOwner();
 		players[activePlayerInd].addMoney(landSellPrice);
+	}
+	
+	public void fulfillPurpose(){
+		switch (getActivePlayer().getPurpose()){
+		case AI.BUY_ENERGY_MULE :
+			storeTransaction(true, "Mules", "Energy Mule");
+			break;
+		case AI.BUY_FOOD_MULE :
+			storeTransaction(true, "Mules", "Food Mule");
+			break;
+		case AI.BUY_ORE_MULE :
+			storeTransaction(true, "Mules", "Smithore Mule");
+			break;
+		}
 	}
 }
