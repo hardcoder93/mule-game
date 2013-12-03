@@ -34,6 +34,7 @@ public class PlayerSetup extends JPanel {
 	private JButton randomizeBtn;
 	private static JComboBox<String> raceBox;
 	private static JComboBox<String> colorBox;
+	private static JComboBox<String> humanAI;
 	private String[] colorOptions = { "Red", "Blue", "Green", "Yellow" };
 	private JLabel noInputLabel;
 
@@ -101,6 +102,12 @@ public class PlayerSetup extends JPanel {
 		raceBox.setFont(new Font("Narkisim", Font.BOLD, 13));
 		raceBox.setBounds(351, 488, 104, 27);
 		add(raceBox);
+		
+		humanAI = new JComboBox();
+		humanAI.setModel(new DefaultComboBoxModel(new String[] {"HUMAN", "AI"}));
+		humanAI.setFont(new Font("Narkisim", Font.BOLD, 13));
+		humanAI.setBounds(150, 435, 104, 27);
+		add(humanAI);
 
 		JLabel lblRace = new JLabel("Race:");
 		lblRace.setFont(new Font("Narkisim", Font.BOLD, 17));
@@ -177,6 +184,10 @@ public class PlayerSetup extends JPanel {
 
 	public String getPlayerColor() {
 		return colorBox.getSelectedItem().toString();
+	}
+	
+	public String getPlayerType(){
+		return humanAI.getSelectedItem().toString();
 	}
 
 	public String getName() {

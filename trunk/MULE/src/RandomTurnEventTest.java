@@ -24,7 +24,7 @@ public class RandomTurnEventTest {
 	public void init(int numPlayers, String difficulty, String mapType){
 		engine = new MULEGameEngine(difficulty, mapType, numPlayers);
 		for (int i = 0; i < numPlayers; i++){
-			engine.addPlayer(Integer.toString(i), colors[i], race[i]);
+			engine.addPlayer(Integer.toString(i), colors[i], race[i], "HUMAN");
 		}
 		map = engine.getMap();
 		tiles = map.getTiles();

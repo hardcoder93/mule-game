@@ -216,7 +216,8 @@ public class MULEMainPanel extends JPanel {
 				playerSetupPanel.clearNoInputLabel();
 				engine.addPlayer(playerSetupPanel.getPlayerName(),
 						playerSetupPanel.getPlayerColor(),
-						playerSetupPanel.getPlayerRace());
+						playerSetupPanel.getPlayerRace(), 
+						playerSetupPanel.getPlayerType());
 				int currPlayer = engine.getNextPlayerSlot();
 				if (currPlayer != -1) {
 					playerSetupPanel.removeColor(playerSetupPanel

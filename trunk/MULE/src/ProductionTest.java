@@ -8,7 +8,7 @@ public class ProductionTest {
 
 	@Test
 	public void testCalculateProductionSimple() {
-		Player player = new Player("SW", "Test", "Test", "Test", null);
+		Player player = new Player("SW", "Test", "Test", "Test", null, "HUMAN");
 		Tile tile = new Tile("R", 0, 0, 0); // tile type "P" "R" "M1" "M2" "M3"
 		tile.setProductionType("Food"); // prod type "Food" "Energy" "Smithore" "Crystite" "None"
 		player.setEnergy(0);
@@ -18,7 +18,7 @@ public class ProductionTest {
 
 	@Test
 	public void testCalculateProductionSimple2() {
-		Player player = new Player("SW", "Test", "Test", "Test", null);
+		Player player = new Player("SW", "Test", "Test", "Test", null, "HUMAN");
 		Tile tile = new Tile("R", 0, 0, 0); // tile type "P" "R" "M1" "M2" "M3"
 		tile.setProductionType("Food"); // prod type "Food" "Energy" "Smithore" "Crystite" "None"
 		player.setEnergy(10);
@@ -28,14 +28,14 @@ public class ProductionTest {
 	
 	@Test
 	public void testCalculateProductionSimple3() {
-		Player player = new Player("SW", "Test", "Test", "Test", null);
+		Player player = new Player("SW", "Test", "Test", "Test", null, "HUMAN");
 		player.setEnergy(10);
 		assertEquals("", player.calculateProduction());
 	}
 	
 	@Test
 	public void testCalculateProduction() {
-		Player player = new Player("SW", "Test", "Test", "Test", null);
+		Player player = new Player("SW", "Test", "Test", "Test", null, "HUMAN");
 		Tile tile1 = new Tile("P", 0, 0, 0); // tile type "P" "R" "M1" "M2" "M3"
 		tile1.setProductionType("Food"); // prod type "Food" "Energy" "Smithore" "Crystite" "None"
 		player.purchaseTile(tile1, 1);
@@ -51,7 +51,7 @@ public class ProductionTest {
 	
 	@Test
 	public void testCalculateProduction2() {
-		Player player = new Player("SW", "Test", "Test", "Test", null);
+		Player player = new Player("SW", "Test", "Test", "Test", null, "HUMAN");
 		Tile tile1 = new Tile("P", 0, 0, 0); // tile type "P" "R" "M1" "M2" "M3"
 		tile1.setProductionType("Food"); // prod type "Food" "Energy" "Smithore" "Crystite" "None"
 		player.purchaseTile(tile1, 1);
