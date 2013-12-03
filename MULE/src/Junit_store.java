@@ -26,7 +26,7 @@ public class Junit_store {
  	
 	public void init(int numPlayers, String difficulty, String mapType){
 		engine = new MULEGameEngine(difficulty, mapType, numPlayers);
-		engine.addPlayer("dummy Player", "Red", "Flapper");
+		engine.addPlayer("dummy Player", "Red", "Flapper", "HUMAN");
 	}
 
 	@Test

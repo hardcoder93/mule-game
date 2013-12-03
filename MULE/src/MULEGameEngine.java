@@ -74,11 +74,11 @@ public class MULEGameEngine implements Serializable {
 	 *            The player's race.
 	 * @return True if player was inserted, false if the list is full.
 	 */
-	public boolean addPlayer(String name, String color, String race) {
+	public boolean addPlayer(String name, String color, String race, String type) {
 		int index = getNextPlayerSlot();
 		if (index == -1)
 			return false;
-		players[index] = new Player(name, difficulty, race, color, store);
+		players[index] = new Player(name, difficulty, race, color, store, type);
 		return true;
 	}
 

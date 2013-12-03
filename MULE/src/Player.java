@@ -23,12 +23,15 @@ public class Player implements Drawable, Serializable {
 	public static final int FOOD_MULE = 1;
 	public static final int ENERGY_MULE = 2;
 	public static final int ORE_MULE = 3;
+	public static final String HUMAN = "HUMAN";
+	public static final String AI = "AI";
 
 	// Instance Data
 	private String name;
 	private String level;
 	private String race;
 	private String color;
+	private String type;
 
 	/*
 	 * These can't be static. Static means that these values will be the same
@@ -53,13 +56,14 @@ public class Player implements Drawable, Serializable {
 	private int muleY = yCoord;
 
 	public Player(String name, String level, String race, String color,
-			Store store) {
+			Store store, String type) {
 		this.name = name;
 		this.level = level;
 		this.race = race;
 		this.color = color;
 		this.ore = 0;
 		this.ownedTiles = new ArrayList<Tile>();
+		this.type = type;
 		mule = NO_MULE;
 		
 		if (!"Test".equals(level)){
@@ -578,4 +582,7 @@ public class Player implements Drawable, Serializable {
 		ownedTiles.remove(tile);
 	}
 
+	public boolean isAI(){
+		return AI.equals(type);
+	}
 }
