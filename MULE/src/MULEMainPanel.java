@@ -33,7 +33,7 @@ import javax.swing.event.MouseInputListener;
 public class MULEMainPanel extends JPanel {
 	// Instance Data
 	private MULEGameEngine engine;
-	private Timer updater, turnTimer, screenTimer;
+	private Timer updater, turnTimer, screenTimer, aiTimer;
 	// game startup screen.
 	private StartScreen startPanel = new StartScreen();
 	// The panel that allows choice of game type.
@@ -569,19 +569,24 @@ public class MULEMainPanel extends JPanel {
 		removeKeyListener(spaceBar);
 		GameState.setState(GameState.LANDGRANT);
 		gameplayPanel.removeScreenLabel();
-		if (landMenuState == "NONE"){
-			gameplayPanel.setLandGrantLabel(engine.getCurrentRound());
-			gameplayPanel.addLandGrantLabel(true);
-			gameplayPanel.addButton();
-			addMouseListener(landGrantMouse);
-			addMouseMotionListener(landGrantMouse);
+		if (engine.getActivePlayer().isAI()){
+			aiTimer = new Timer(1000, new AITimerListener());
+			aiTimer.start();
 		} else {
-			gameplayPanel.addLandMenuDoneBtn();
-			landGrantBtn.addActionListener(landMenuListener);
+			if (landMenuState == "NONE"){
+				gameplayPanel.setLandGrantLabel(engine.getCurrentRound());
+				gameplayPanel.addLandGrantLabel(true);
+				gameplayPanel.addButton();
+				addMouseListener(landGrantMouse);
+				addMouseMotionListener(landGrantMouse);
+			} else {
+				gameplayPanel.addLandMenuDoneBtn();
+				landGrantBtn.addActionListener(landMenuListener);
+			}
+			gameplayPanel.enableButton();
+			landGrantMouse.pickedTile = false;
 		}
-		gameplayPanel.enableButton();
 		gameplayPanel.repaint();
-		landGrantMouse.pickedTile = false;
 	}
 
 	/**
@@ -837,4 +842,21 @@ public class MULEMainPanel extends JPanel {
 			}
 		}
 	}	
+	
+	private class AITimerListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			aiTimer.stop();
+			if (GameState.getState().equals(GameState.LANDGRANT)){
+				AI.landGrant(engine.getActivePlayer(), engine.getMap(), 
+						engine.getCurrentRound());
+				gameplayPanel.repaint();
+				screenTimer = new Timer(1000, new ScreenDelay());
+				countDown = 1;
+				screenTimer.start();
+			}
+		}
+		
+	}
 }
