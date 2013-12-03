@@ -111,6 +111,7 @@ public class Tile implements Drawable, Serializable {
 	 * @return type of tile ("P","R","M1","M2", or "M3")
 	 */
 	public String getType() {
+		if("VHBTI".contains(type)) return "R";
 		return type;
 	}
 
