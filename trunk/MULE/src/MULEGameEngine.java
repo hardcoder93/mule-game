@@ -26,6 +26,8 @@ public class MULEGameEngine implements Serializable {
 	private Store store;
 	private int event;
 	private int poss;
+	private int possibility;
+	private int lotteryIndex;
 	private boolean wampusCaught = false;
 	private int landSellPrice, landBuyPrice;
 
@@ -457,7 +459,23 @@ public class MULEGameEngine implements Serializable {
 			m = 100;
 		return m;
 	}
-
+// public method for random Round event that could happen each round
+	
+	public String randomRoundLotteryEvent(){
+		Random rand = new Random();
+		Random rand2 = new Random();
+		lotteryIndex = rand.nextInt(players.length);
+		Player Active = players[lotteryIndex];
+		possibility = rand2.nextInt(100);
+		if (possibility < 10){
+			Active.randomLotteryEvent();
+			return ("Congrats anonymous person behind the veil won a lottery worth " + 500 + 
+					"$ for the Random Round Event");
+		}
+		else {
+			return ("No Random Round Event Happened");
+		}
+	}
 	/*
 	 * public method for random event to happen in the gameand it is possible to
 	 * happen each turn for each player.
@@ -531,6 +549,7 @@ public class MULEGameEngine implements Serializable {
 			}
 
 		} else
+	
 			return ("no random event happened");
 
 	}
