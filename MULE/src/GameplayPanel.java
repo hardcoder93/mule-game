@@ -26,9 +26,12 @@ public class GameplayPanel extends JPanel {
 	// Building Menus
 	private final String STORE = "STORE";
 	private final String PUB = "PUB";
+	private final String LAND = "LAND";
 	private final String NONE = "NONE";
 	private StoreMenu storeMenu;
 	private PubMenu pubMenu;
+	private LandMenu landMenu;
+	private JButton landMenuDoneBtn;
 
 	// Game play objects
 	private MULEMap gameMap; // map of game
@@ -60,6 +63,7 @@ public class GameplayPanel extends JPanel {
 
 		storeMenu = new StoreMenu(Color.BLUE, Color.YELLOW, this);
 		pubMenu = new PubMenu(Color.GREEN, Color.BLUE, this);
+		landMenu = new LandMenu(Color.RED, Color.GREEN, this);
 
 		landGrantPass = new JButton("PASS");
 		landGrantPass.setFont(new Font("Narkisim", Font.BOLD, 13));
@@ -67,6 +71,13 @@ public class GameplayPanel extends JPanel {
 		landGrantPass.setBackground(new Color(255, 255, 255, 150));
 		landGrantPass.setOpaque(true);
 		landGrantPass.setContentAreaFilled(true);
+		
+		landMenuDoneBtn = new JButton("DONE");
+		landMenuDoneBtn.setFont(new Font("Narkisim", Font.BOLD, 13));
+		landMenuDoneBtn.setBounds(783, 471, 117, 29);
+		landMenuDoneBtn.setBackground(new Color(255, 255, 255, 150));
+		landMenuDoneBtn.setOpaque(true);
+		landMenuDoneBtn.setContentAreaFilled(true);
 
 		screenLabel1 = new JLabel();
 		screenLabel1.setBounds(0, 0, 900, 600);
@@ -530,6 +541,8 @@ public class GameplayPanel extends JPanel {
 				storeMenu.draw(g);
 			else if (buildingDisplayed.equals(PUB))
 				pubMenu.draw(g);
+			else if (buildingDisplayed.equals(LAND))
+				landMenu.draw(g);
 		} else if (GameState.getState().equals(GameState.LANDGRANT)) {
 		}
 		if (screenLabel1.isVisible()) {
@@ -548,12 +561,19 @@ public class GameplayPanel extends JPanel {
 			storeMenu.removeStoreMenu();
 		else if (buildingDisplayed.equals(PUB))
 			pubMenu.removePub();
+		else if (buildingDisplayed.equals(LAND))
+			landMenu.removeLandMenu();
 		buildingDisplayed = NONE;
 	}
 
 	public void displayStoreMenu() {
 		buildingDisplayed = STORE;
 		storeMenu.displayStoreMenu(activePlayer, store);
+	}
+	
+	public void displayLandMenu(int buy, int sell){
+		buildingDisplayed = LAND;
+		landMenu.displayLandMenu(buy, sell);
 	}
 
 	public void setStore(Store store) {
@@ -654,6 +674,26 @@ public class GameplayPanel extends JPanel {
 				GameplayPanel.this.messageLabel2.setText("");
 			}
 		}
+	}
+	
+	public JButton getLandSellButton(){
+		return landMenu.getSellButton();
+	}
+	
+	public JButton getLandBuyButton(){
+		return landMenu.getBuyButton();
+	}
+	
+	public JButton getLandMenuDoneButton(){
+		return landMenuDoneBtn;
+	}
+
+	public void removeLandMenuDoneBtn() {
+		remove(landMenuDoneBtn);
+	}
+	
+	public void addLandMenuDoneBtn(){
+		add(landMenuDoneBtn);
 	}
 
 }

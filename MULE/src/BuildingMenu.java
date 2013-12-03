@@ -21,12 +21,12 @@ public class BuildingMenu implements Drawable {
 	private final int WIDTH = 600;
 	private final int HEIGHT = 250;
 
-	private Color border, background;
+	protected Color border, background;
 	private boolean divider;
 
 	private String type;
-	private JPanel parentPanel;
-	private JLabel welcomeMessage;
+	protected JPanel parentPanel;
+	protected JLabel welcomeMessage;
 
 	public BuildingMenu(String type, Color background, Color border,
 			boolean divider, JPanel parent) {
