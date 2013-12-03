@@ -274,6 +274,16 @@ public class Player implements Drawable, Serializable {
 		}
 		return false;
 	}
+	
+	public boolean purchaseTileOffice(Tile tile, int price){
+		if (money >= price){
+			tile.setOwner(this);
+			ownedTiles.add(tile);
+			money -= price;
+			return true;
+		}
+		return false;
+	}
 
 	/**
 	 * calculateScore sets the score based on: money: $1 = 1 point Land: 1 plot
@@ -562,6 +572,10 @@ public class Player implements Drawable, Serializable {
 
 	public void randomEvent7(int m) {
 		money -= (6 * m);
+	}
+
+	public void sellTile(Tile tile) {
+		ownedTiles.remove(tile);
 	}
 
 }

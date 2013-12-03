@@ -27,6 +27,7 @@ public class MULEGameEngine implements Serializable {
 	private int event;
 	private int poss;
 	private boolean wampusCaught = false;
+	private int landSellPrice, landBuyPrice;
 
 	/**
 	 * Builds a MULEGameEngine object, setting the difficulty of the game,
@@ -148,6 +149,7 @@ public class MULEGameEngine implements Serializable {
 	 */
 	public void nextRound() {
 		currentRound++;
+		calculateLandPrices();
 	}
 
 	/**
@@ -586,5 +588,36 @@ public class MULEGameEngine implements Serializable {
 			return 300;
 		else
 			return 400;
+	}
+	
+	public int getLandSellPrice(){
+		return landSellPrice;
+	}
+	
+	public int getLandBuyPrice(){
+		return landBuyPrice;
+	}
+	
+	private void calculateLandPrices(){
+		Random rand = new Random();
+		landSellPrice = 400 + rand.nextInt(201);
+		landBuyPrice = 300 + currentRound * rand.nextInt(101);
+	}
+
+	public boolean purchaseTileOffice(Point location) {
+		Tile tile = map.getTileFromLocation(location);
+		return players[activePlayerInd].purchaseTileOffice(tile, landBuyPrice);
+	}
+
+	public boolean owenedByActive(Point location) {
+		Tile tile = map.getTileFromLocation(location);
+		return players[activePlayerInd].ownsTile(tile);
+	}
+
+	public void sellTileOffice(Point location) {
+		Tile tile = map.getTileFromLocation(location);
+		players[activePlayerInd].sellTile(tile);
+		tile.removeOwner();
+		players[activePlayerInd].addMoney(landSellPrice);
 	}
 }

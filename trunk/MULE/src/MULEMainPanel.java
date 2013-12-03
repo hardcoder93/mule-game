@@ -56,13 +56,18 @@ public class MULEMainPanel extends JPanel {
 
 	private final String SAVE_FILE = "savedGame.dat";
 
-	private Mouse landGrantMouse;
+	private Mouse landGrantMouse = new Mouse();
 	private PlayerControls arrowKeys;
 	private NextScreen spaceBar;
 
 	private JButton landGrantBtn;
 	private JButton menuButton;
+	private JButton landMenuSellBtn, landMenuBuyBtn, landMenuDoneBtn;
 	private StorePurchaseAction storeListener;
+	private NextListener landGrantListener;
+	
+	private LandMenuButtons landMenuListener;
+	private String landMenuState = "NONE";
 
 	/**
 	 * Constructs a MULEMainPanel with a set size, adds the 4 game screens, and
@@ -89,6 +94,14 @@ public class MULEMainPanel extends JPanel {
 		menuButton = gameplayPanel.getMenuButton();
 
 		storeListener = new StorePurchaseAction();
+		
+		landMenuListener = new LandMenuButtons();
+		landMenuSellBtn = gameplayPanel.getLandSellButton();
+		landMenuBuyBtn = gameplayPanel.getLandBuyButton();
+		landMenuDoneBtn = gameplayPanel.getLandMenuDoneButton();
+		landMenuSellBtn.addActionListener(landMenuListener);
+		landMenuBuyBtn.addActionListener(landMenuListener);
+		landMenuDoneBtn.addActionListener(landMenuListener);
 
 		startBtn.addActionListener(new NextListener(startID));
 		loadBtn.addActionListener(new NextListener(loadID));
@@ -251,11 +264,14 @@ public class MULEMainPanel extends JPanel {
 													// left, so up is negative.
 						if (engine.isInBuilding() == 2)
 							gameplayPanel.displayStoreMenu();
+						else if (engine.isInBuilding() == 1)
+							gameplayPanel.displayLandMenu(engine.getLandBuyPrice(),
+									engine.getLandSellPrice());
 					}
 					break;
 				case KeyEvent.VK_DOWN:
 				case KeyEvent.VK_S:
-					if (engine.isInBuilding() == 2)
+					if (engine.isInBuilding() == 2 || engine.isInBuilding() == 1)
 						gameplayPanel.removeBuilding();
 					engine.movePlayer(0, 1); // Y coords start at upper left, so
 												// down is positive.
@@ -340,6 +356,9 @@ public class MULEMainPanel extends JPanel {
 				gameplayPanel.updateTimerLabel(turnTime);
 			} else {
 				turnTimer.stop();
+				if (landMenuState != "NONE"){
+					landMenuDoneBtn.doClick();
+				}
 				endTurn(false);
 			}
 		}
@@ -401,13 +420,16 @@ public class MULEMainPanel extends JPanel {
 	 * 
 	 */
 	private class Mouse implements MouseInputListener {
-		private boolean pickedTile = false;
+		public boolean pickedTile = false;
 
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
 			Point location = arg0.getPoint();
-			if (GameState.getState().equals(GameState.LANDGRANT)) {
-				if (!pickedTile) {
+			System.out.print("landMenu: " + landMenuState + "\n");
+			System.out.print(pickedTile);
+			if (GameState.getState().equals(GameState.LANDGRANT) && 
+					engine.getMap().isValidMouseClick(location)) {
+				if (landMenuState == "NONE" && !pickedTile){
 					if (engine.getMap().isBuyable(location)) {
 						if (engine.purchaseTile(location)) {
 							pickedTile = true;
@@ -419,6 +441,22 @@ public class MULEMainPanel extends JPanel {
 							countDown = 1;
 							screenTimer.start();
 						}
+					}
+				} else if (landMenuState == "BUY"){
+					if (engine.getMap().isBuyable(location)){
+						if (engine.purchaseTileOffice(location)){
+							engine.purchaseTileOffice(location);
+							gameplayPanel.updateScoreboard();
+							engine.raiseTile(location, true);
+							gameplayPanel.repaint();
+						}
+					}
+				} else if (landMenuState == "SELL"){
+					if (engine.owenedByActive(location)){
+						engine.sellTileOffice(location);
+						gameplayPanel.updateScoreboard();
+						engine.raiseTile(location, false);
+						gameplayPanel.repaint();
 					}
 				}
 			} else if (GameState.getState().equals(GameState.PLAYING_MAP)) {
@@ -483,7 +521,6 @@ public class MULEMainPanel extends JPanel {
 		removeKeyListener(arrowKeys);
 		removeMouseListener(landGrantMouse);
 		turnTime.setText("");
-		;
 		turnTimer.stop();
 		int gamblingMoney = 0;
 		engine.getActivePlayer().setMule(Player.NO_MULE);
@@ -530,15 +567,20 @@ public class MULEMainPanel extends JPanel {
 	private void startLandGrant() {
 		removeKeyListener(spaceBar);
 		GameState.setState(GameState.LANDGRANT);
-		gameplayPanel.addButton();
 		gameplayPanel.removeScreenLabel();
-		gameplayPanel.setLandGrantLabel(engine.getCurrentRound());
-		gameplayPanel.addLandGrantLabel(true);
+		if (landMenuState == "NONE"){
+			gameplayPanel.setLandGrantLabel(engine.getCurrentRound());
+			gameplayPanel.addLandGrantLabel(true);
+			gameplayPanel.addButton();
+			addMouseListener(landGrantMouse);
+			addMouseMotionListener(landGrantMouse);
+		} else {
+			gameplayPanel.addLandMenuDoneBtn();
+			landGrantBtn.addActionListener(landMenuListener);
+		}
 		gameplayPanel.enableButton();
 		gameplayPanel.repaint();
-		landGrantMouse = new Mouse();
-		addMouseListener(landGrantMouse);
-		addMouseMotionListener(landGrantMouse);
+		landGrantMouse.pickedTile = false;
 	}
 
 	/**
@@ -553,7 +595,7 @@ public class MULEMainPanel extends JPanel {
 		gameplayPanel.addLandGrantLabel(false);
 		gameplayPanel.removeButton();
 		engine.raiseTile(new Point(0, 0), false);
-		startRoundOrTurn(true);
+		startRoundOrTurn(true);			
 	}
 
 	/**
@@ -761,4 +803,37 @@ public class MULEMainPanel extends JPanel {
 		}
 		return eng;
 	}
+	
+	private class LandMenuButtons implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (e.getSource().equals(landMenuBuyBtn)){
+				landMenuState = "BUY";
+				addMouseMotionListener(landGrantMouse);
+				gameplayPanel.removeBuilding();
+				updater.stop();
+				startLandGrant();
+			} else if (e.getSource().equals(landMenuSellBtn)) {
+				landMenuState = "SELL";
+				addMouseMotionListener(landGrantMouse);
+				gameplayPanel.removeBuilding();
+				updater.stop();
+				startLandGrant();
+			} else if (e.getSource().equals(landMenuDoneBtn)) {
+				removeMouseMotionListener(landGrantMouse);
+				gameplayPanel.removeLandMenuDoneBtn();
+				gameplayPanel.addLandGrantLabel(false);
+				engine.raiseTile(new Point(0,0), false);
+				landMenuState = "NONE";
+				GameState.setState(GameState.PLAYING_TOWN);
+				if (turnTimer.isRunning()){
+					gameplayPanel.displayLandMenu(engine.getLandBuyPrice(), 
+							engine.getLandSellPrice());
+				} 
+				updater.restart();
+				//gameplayPanel.repaint();
+			}
+		}
+	}	
 }
