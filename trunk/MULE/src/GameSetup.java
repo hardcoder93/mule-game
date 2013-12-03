@@ -88,8 +88,8 @@ public class GameSetup extends JPanel {
 		mapTypeBox = new JComboBox();
 		mapTypeBox.setBounds(351, 488, 133, 27);
 		mapTypeBox.setFont(new Font("Narkisim", Font.BOLD, 13));
-		mapTypeBox.setModel(new DefaultComboBoxModel(new String[] { "Standard",
-				"Random" }));
+		mapTypeBox.setModel(new DefaultComboBoxModel(new String[] { "Standard", "Plain Map"
+				,"River Map", "Mountain Map","GangNamStyle Map", "Coordinate River Map", "Random" }));
 		add(mapTypeBox);
 
 		btnNewButton = new JButton("Next");

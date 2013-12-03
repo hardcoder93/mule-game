@@ -28,7 +28,9 @@ public class MapImages {
 	private final static String IMAGE_FILE_ORE_MULE = "IMAGES/ore.gif";
 	private final static String IMAGE_FILE_CRYSTITE_MULE = "IMAGES/mapCrystiteMule.png";
 	private final static String IMAGE_FILE_WAMPUS = "IMAGES/wampus.png";
-
+	private final static String IMAGE_FILE_RIVER2 = "IMAGES/River2.png";
+	private final static String IMAGE_FILE_RIVER3 = "IMAGES/River3.png";
+	
 	public final static Image MOUNTAIN1 = new ImageIcon(IMAGE_FILE_MOUNTAIN1)
 			.getImage();
 	public final static Image MOUNTAIN2 = new ImageIcon(IMAGE_FILE_MOUNTAIN2)
@@ -39,6 +41,11 @@ public class MapImages {
 			.getImage();
 	public final static Image RIVER = new ImageIcon(IMAGE_FILE_RIVER)
 			.getImage();
+	public final static Image RIVER2 = new ImageIcon(IMAGE_FILE_RIVER2)
+		.getImage();
+	public final static Image RIVER3 = new ImageIcon(IMAGE_FILE_RIVER3)
+	.getImage();
+	
 	public final static Image TOWN = new ImageIcon(IMAGE_FILE_TOWN).getImage();
 	public final static Dimension TILE_SIZE = new Dimension(
 			MOUNTAIN1.getWidth(null), MOUNTAIN1.getHeight(null));

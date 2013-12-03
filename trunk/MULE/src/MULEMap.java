@@ -29,8 +29,15 @@ public class MULEMap implements Drawable, Serializable {
 	private final String M3 = "M3";
 	private final String P = "P"; // Plain
 	private final String V = "V"; // Vertical River
-	private final String H = "H"; // Horizontal River
-	private final String B = "B"; // Intersecting Rivers
+	
+	// I made new horizontal river image and linked to T and I. 
+	// if it is not what you supposed to do, feel free to erase T and I.
+	private final String H = "H"; // Horizontal River??	
+	private final String B = "B"; // Intersecting Rivers??I made new intersecting River
+	
+	private final String T = "T"; // Horizontal River
+	private final String I = "I"; // Intersecting Rivers
+
 	private final String R = "R";
 	private final String TOWN = "Town";
 	public static String BIG_MAP = "BIGMAP";
@@ -49,7 +56,8 @@ public class MULEMap implements Drawable, Serializable {
 	 * randomly generated one
 	 * 
 	 * @param type
-	 *            the type of map; "Standard" or "Random"
+	 *            the type of map; "Standard", "River Map", "Plain Map" or 
+	 *            "GangNamStyle Map", "Coordinate River Map", "Random"
 	 */
 	public MULEMap(String type) {
 		int ID = 0;
@@ -57,8 +65,17 @@ public class MULEMap implements Drawable, Serializable {
 		alteredTiles = new ArrayList<Integer>();
 		mountainTiles = new ArrayList<Tile>();
 		raisedID = -1;
-		String[] mapArea = type.equals("Random") ? createRandomMap()
-				: createStandardMap();
+		String[] mapArea = createRandomMap();
+		
+		if( type.equals("Random"))  mapArea = createRandomMap();
+		else if ( type.equals("Standard"))  mapArea = createStandardMap();	
+		else if ( type.equals("River Map"))  mapArea =  createRiverMap();
+		else if ( type.equals("Mountain Map"))  mapArea = createMountainMap();
+		else if ( type.equals("Plain Map"))  mapArea = createPlainMap();
+		else if ( type.equals("GangNamStyle Map"))  mapArea = GangNamMap();
+		else if ( type.equals("Coordinate River Map"))  mapArea = createCoordinateMap();
+	
+		
 		for (int y = 0; y < HEIGHT; y++) {
 			for (int x = 0; x < WIDTH; x++) {
 				tileList.add(new Tile(mapArea[ID], ID, x, y));
@@ -78,6 +95,53 @@ public class MULEMap implements Drawable, Serializable {
 				+ "P,P,M2,P,V,P,P,P,M2";
 		return standMap.split(",");
 	}
+	
+	private String[] createRiverMap(){
+		String riverMap = "P,M2,V,P,V,P,V,P,P," 
+						+ "P,M1,V,P,V,P,V,P,M3,"
+						+ "M3,P,V,P,Town,P,V,P,M1," 
+						+ "P,M2,V,P,V,M3,V,P,P,"
+						+ "P,M1,V,P,V,P,V,P,M2";
+		return riverMap.split(",");
+	}
+	
+	private String[] createCoordinateMap(){
+		String riverMap = "P,M2,P,P,V,P,M1,P,P," 
+						+ "P,M1,P,P,V,P,M2,P,M3,"
+						+ "T,T,T,T,Town,T,T,T,T," 
+						+ "P,M2,P,P,V,M3,M1,P,P,"
+						+ "M2,M1,P,P,V,P,M3,P,M2";
+		return riverMap.split(",");
+	}
+	
+	
+	private String[] GangNamMap(){
+		String riverMap = 
+						"T,T,T,T,T,T,T,T,T," 
+						+ "P,M1,M2,P,P,P,M3,P,M3,"
+						+ "M3,P,M1,P,Town,P,P,P,M1," 
+						+ "P,M2,P,P,P,M3,P,P,P,"
+						+ "P,M2,P,P,P,P,M2,M1,P";
+			return riverMap.split(",");
+	}
+	
+	private String[] createMountainMap(){
+		String mountainMap = "M3,M2,M1,P,V,P,M3,M2,M3," 
+						+ "M2,M1,P,P,V,P,P,P,M2,"
+						+ "M3,P,P,P,Town,P,P,M1,M1," 
+						+ "M1,M2,P,P,V,P,M2,M1,M3,"
+						+ "M3,M1,M2,P,V,P,P,M1,M2";
+		return mountainMap.split(",");
+}
+	
+	private String[] createPlainMap(){
+		String plainMap = "P,P,P,P,V,P,M3,P,P," 
+				+ "P,P,P,P,V,P,P,P,M3,"
+				+ "M3,P,P,P,Town,P,P,P,M1," 
+				+ "P,P,P,P,V,P,M2,P,P,"
+				+ "P,P,P,P,V,P,P,P,M3";
+			return plainMap.split(",");
+}
 
 	/**
 	 * Sets the map to a randomly generated one.
@@ -106,7 +170,7 @@ public class MULEMap implements Drawable, Serializable {
 					mapArea[randInt] = type;
 				else if ((mapArea[randInt] != TOWN)
 						&& (mapArea[randInt] != type))
-					mapArea[randInt] = B;
+					mapArea[randInt] = B;		
 				randInt += type.equals(V) ? WIDTH : 1;
 			}
 		}
@@ -268,7 +332,7 @@ public class MULEMap implements Drawable, Serializable {
 	public boolean isRiverTile(int xLoc, int yLoc) {
 		if (GameState.getState().equals(GameState.PLAYING_MAP))
 			return (getTileFromLocation(xLoc, yLoc).getType().equals(R) || getTileFromLocation(
-					xLoc, yLoc).getType().equals(H));
+					xLoc, yLoc).getType().equals(H));		
 		return false;
 	}
 

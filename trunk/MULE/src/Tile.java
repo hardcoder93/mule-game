@@ -177,6 +177,13 @@ public class Tile implements Drawable, Serializable {
 		case "R":
 			tileImage = new ImageIcon(MapImages.RIVER);
 			break;
+		case "T":
+			tileImage = new ImageIcon(MapImages.RIVER2);
+			break;	
+		case "I":
+			tileImage = new ImageIcon(MapImages.RIVER3);
+			break;	
+		
 		case "Town":
 			tileImage = new ImageIcon(MapImages.TOWN);
 			break;
