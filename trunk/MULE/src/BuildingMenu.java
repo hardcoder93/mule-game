@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 
-public class BuildingMenu implements Drawable {
+public abstract class BuildingMenu implements Drawable {
 
 	private final int menuBorderSize = 8;
 	private final int xPOS = 150;

@@ -29,6 +29,7 @@ public class GameplayPanel extends JPanel {
 	private final String PUB = "PUB";
 	private final String LAND = "LAND";
 	private final String NONE = "NONE";
+	private BuildingFactory buildingFactory = new BuildingFactory();
 	private StoreMenu storeMenu;
 	private PubMenu pubMenu;
 	private LandMenu landMenu;
@@ -62,9 +63,9 @@ public class GameplayPanel extends JPanel {
 		setLayout(null);
 		buildingDisplayed = NONE;
 
-		storeMenu = new StoreMenu(Color.BLUE, Color.YELLOW, this);
-		pubMenu = new PubMenu(Color.GREEN, Color.BLUE, this);
-		landMenu = new LandMenu(Color.RED, Color.GREEN, this);
+		storeMenu = (StoreMenu)buildingFactory.factory("STORE", this);
+		pubMenu = (PubMenu)buildingFactory.factory("PUB", this);
+		landMenu = (LandMenu)buildingFactory.factory("LAND", this);
 
 		landGrantPass = new JButton("PASS");
 		landGrantPass.setFont(new Font("Narkisim", Font.BOLD, 13));
@@ -690,7 +691,7 @@ public class GameplayPanel extends JPanel {
 			}
 		}
 		
-		//Áñ 
+		//ï¿½ï¿½ 
 	}
 	
 	public JButton getLandSellButton(){
