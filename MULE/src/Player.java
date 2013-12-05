@@ -146,6 +146,10 @@ public class Player implements Drawable, Serializable {
 		return color;
 	}
 
+	public String getUpperLetteredColor() {
+		return color.toUpperCase();
+	}
+	
 	public int getMoney() {
 		return money;
 	}
