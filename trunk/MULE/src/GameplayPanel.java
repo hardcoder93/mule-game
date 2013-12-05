@@ -1,4 +1,5 @@
 import java.awt.Color;
+
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
@@ -11,7 +12,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-
+import java.lang.reflect.Field;
 /**
  * Jpanel object for M.U.L.E. game that displays everything that goes on during
  * the normal game play. 1) must use setMapAndPlayers(MULEMap, Players[]) before
@@ -222,7 +223,10 @@ public class GameplayPanel extends JPanel {
 			add(playerName);
 			playerName_1.setBounds(305, 460, 180, 100);
 			add(playerName_1);
-
+			
+			playerName.setForeground(stringToColor(playerList[0].getUpperLetteredColor()));
+			playerName_1.setForeground(stringToColor(playerList[1].getUpperLetteredColor()));
+			
 			playerMoney.setBounds(155, 480, 180, 100);
 			add(playerMoney);
 			playerMoney_1.setBounds(305, 480, 180, 100);
@@ -289,6 +293,11 @@ public class GameplayPanel extends JPanel {
 			playerName_2.setBounds(455, 460, 180, 100);
 			add(playerName_2);
 
+			playerName.setForeground(stringToColor(playerList[0].getUpperLetteredColor()));
+			playerName_1.setForeground(stringToColor(playerList[1].getUpperLetteredColor()));
+			playerName_2.setForeground(stringToColor(playerList[2].getUpperLetteredColor()));
+			
+			
 			playerMoney.setBounds(155, 480, 180, 100);
 			add(playerMoney);
 			playerMoney_1.setBounds(305, 480, 180, 100);
@@ -375,6 +384,12 @@ public class GameplayPanel extends JPanel {
 			playerName_3.setBounds(610, 460, 180, 100);
 			add(playerName_3);
 
+			playerName.setForeground(stringToColor(playerList[0].getUpperLetteredColor()));
+			playerName_1.setForeground(stringToColor(playerList[1].getUpperLetteredColor()));
+			playerName_2.setForeground(stringToColor(playerList[2].getUpperLetteredColor()));
+			playerName_3.setForeground(stringToColor(playerList[3].getUpperLetteredColor()));
+			
+			
 			playerMoney.setBounds(155, 480, 180, 100);
 			add(playerMoney);
 			playerMoney_1.setBounds(305, 480, 180, 100);
@@ -697,5 +712,27 @@ public class GameplayPanel extends JPanel {
 	public void addLandMenuDoneBtn(){
 		add(landMenuDoneBtn);
 	}
+	
+	// converts string to color
+	
+	public static Color stringToColor(final String value) {
+	    if (value == null) {
+	      return Color.black;
+	    }
+	    try {
+	      // get color by hex or octal value
+	      return Color.decode(value);
+	    } catch (NumberFormatException nfe) {
+	      // if we can't decode lets try to get it by name
+	      try {
+	        // try to get a color by name using reflection
+	        final Field f = Color.class.getField(value);
 
+	        return (Color) f.get(null);
+	      } catch (Exception ce) {
+	        // if we can't get any color return black
+	        return Color.black;
+	      }
+	    }
+	  }
 }
