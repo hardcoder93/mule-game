@@ -8,10 +8,10 @@
 4)	Singleton design pattern implemented in class GameState
 5)	Used theme for game (MULE at GT)
 6)  Pivotal Tracker
-7)	(Round Random Events) <-- WONGOO
+7)	Round Random Events <-- WONGOO
 8)  Five additional Player races: ("John", "Chris", "Sung Hye", "Wongoo", "Yuna")
 9)	Multiple Observer classes used (PlayerControls, NextListener, etc.)
-10)	(Land Office) <-- JOHN
+10)	Land Office <-- JOHN
 11)	Custom graphics created for game menu screens
 12) Model-View-Presenter architecture design used (MULEGameEngine-Screens-MULEMainPanel)
 13) Implemented use of WASD keys for movement in addition to arrow keys
@@ -20,13 +20,14 @@
 16) Created custom icon that displays instead of the default Java icon in the taskbar
 17) Scoreboard displays during gameplay that shows all players' and store resources
 18) (How to Play page) <-- JESSE
-19) (Multiple map-type options, in addition to standard and random) <-- SUNG HYE
+19) Multiple map-type options, in addition to standard and random <-- SUNG HYE
 20) Handmade MouseListener that "raises" tiles as user hovers over them in land grant
-21) (Random player generator on player setup screen) <-- CHRIS
+21) Random player attribute generator on player setup screen <-- CHRIS
 22) (Small squares that display on tiles with mules showing production levels) <-- CHRIS(maybe)
 23) (Factory design pattern, for creating Map/Tile objects) <-- JOHN
-24) ((((Wrote AI that controls computer players)))) <-- JOHN(maybe)
+24) Wrote AI that controls computer players <-- JOHN
 25) Custom graphics created for each map tile and mule
 26) Custom graphics created for town map
 27) Custom graphics created for each individual player race/color
 28) Flyweight design pattern used to create images in MapImages class
+29) Color coded end screen showing each players' place, resources/scores, picture, and name.
