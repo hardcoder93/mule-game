@@ -269,6 +269,7 @@ public class Player implements Drawable, Serializable {
 
 	public void subtractMoney(int i) {
 		money -= i;
+		if(money<0) money=0;
 	}
 
 	/**
