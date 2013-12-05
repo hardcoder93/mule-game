@@ -164,9 +164,10 @@ public class MULEGameEngine implements Serializable {
 	 * Increments the currentRound variable to signify that a new round has
 	 * started.
 	 */
-	public void nextRound() {
+	public int nextRound() {
 		currentRound++;
 		calculateLandPrices();
+		return currentRound;
 	}
 
 	/**
@@ -667,6 +668,12 @@ public class MULEGameEngine implements Serializable {
 		case AI.BUY_ORE_MULE :
 			storeTransaction(true, "Mules", "Smithore Mule");
 			break;
+		}
+	}
+	
+	public void updatePlayerScores(){
+		for(Player p:players){
+			p.calculateScore(store);
 		}
 	}
 }

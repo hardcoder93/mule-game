@@ -3,6 +3,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.io.File;
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -144,6 +145,15 @@ public class Player implements Drawable, Serializable {
 
 	public String getColor() {
 		return color;
+	}
+	
+	public Color getColorObject(){
+		try {
+			Field field = Color.class.getField(color.toUpperCase());
+			return (Color) field.get(null);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	public String getUpperLetteredColor() {

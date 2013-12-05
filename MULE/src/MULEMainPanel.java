@@ -42,6 +42,8 @@ public class MULEMainPanel extends JPanel {
 	private PlayerSetup playerSetupPanel = new PlayerSetup();
 	// The panel which displays main gameplay.
 	private GameplayPanel gameplayPanel = new GameplayPanel();
+	// The panel displayed at the end of the game.
+	private EndGamePanel endGamePanel = new EndGamePanel();
 	// CardLayout allows us to easily switch between screens.
 	private CardLayout cardLayout = new CardLayout();
 	private JLabel turnTime = new JLabel();
@@ -53,6 +55,7 @@ public class MULEMainPanel extends JPanel {
 	private final String gameSetupID = "GAMESETUP";
 	private final String playerSetupID = "PLAYERSETUP";
 	private final String gameplayID = "GAMEPLAY";
+	private final String endGameID = "ENDGAME";
 
 	private final String SAVE_FILE = "savedGame.dat";
 
@@ -81,6 +84,7 @@ public class MULEMainPanel extends JPanel {
 		add(gameSetupPanel, gameSetupID);
 		add(playerSetupPanel, playerSetupID);
 		add(gameplayPanel, gameplayID);
+		add(endGamePanel, endGameID);
 
 		turnTime.setFont(new Font("Narkisim", Font.BOLD, 20));
 		turnTime.setForeground(Color.RED);
@@ -92,6 +96,7 @@ public class MULEMainPanel extends JPanel {
 		JButton playerSetupBtn = playerSetupPanel.getButton();
 		landGrantBtn = gameplayPanel.getButton();
 		menuButton = gameplayPanel.getMenuButton();
+		JButton mainMenuBtn = endGamePanel.getBtnMainMenu();
 
 		storeListener = new StorePurchaseAction();
 		
@@ -110,6 +115,7 @@ public class MULEMainPanel extends JPanel {
 		playerSetupBtn.addActionListener(new NextListener(playerSetupID));
 		landGrantBtn.addActionListener(new NextListener(gameplayID));
 		menuButton.addActionListener(storeListener);
+		mainMenuBtn.addActionListener(new NextListener(endGameID));
 
 		startBtn.addKeyListener(new EnterKeyListener(startID));
 		gameSetupBtn.addKeyListener(new EnterKeyListener(gameSetupID));
@@ -242,6 +248,12 @@ public class MULEMainPanel extends JPanel {
 					engine.nextActivePlayerIndex();
 					startNextTurn();
 				}
+				break;
+			case endGameID: //if main menu button is pressed on the game over screen
+				gameplayPanel = new GameplayPanel();
+				add(gameplayPanel, gameplayID);
+				cardLayout.show(MULEMainPanel.this, startID);
+				break;
 			}
 		}
 	}
@@ -519,12 +531,25 @@ public class MULEMainPanel extends JPanel {
 	 * about to begin. It also sets up the next round in the game engine.
 	 */
 	private void startNextRound() {
-		GameState.setState(GameState.START_ROUND);
-		engine.nextRound();
-		engine.setPlayerTurnOrder();
-		gameplayPanel.displayNextRound(engine.getCurrentRound());
-		cardLayout.show(MULEMainPanel.this, gameplayID);
-		addKeyListener(spaceBar);
+		if(engine.nextRound()>12)
+			endGame();
+		else{
+			GameState.setState(GameState.START_ROUND);
+			engine.setPlayerTurnOrder();
+			gameplayPanel.displayNextRound(engine.getCurrentRound());
+			cardLayout.show(MULEMainPanel.this, gameplayID);
+			addKeyListener(spaceBar);
+		}
+	}
+	
+	/**
+	 * Ends the game by setting the game state
+	 */
+	private void endGame(){
+		GameState.setState(GameState.MENU);
+		engine.updatePlayerScores(); //make sure player scores are current.
+		endGamePanel.fillInfo(engine.getPlayers());
+		cardLayout.show(MULEMainPanel.this, endGameID);
 	}
 
 	/**
