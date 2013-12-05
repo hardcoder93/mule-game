@@ -24,7 +24,7 @@
 20) Handmade MouseListener that "raises" tiles as user hovers over them in land grant
 21) Random player attribute generator on player setup screen <-- CHRIS
 22) (Small squares that display on tiles with mules showing production levels) <-- CHRIS(maybe)
-23) (Factory design pattern, for creating Map/Tile objects) <-- JOHN
+23) Factory design pattern, for creating Building objects <-- JOHN
 24) Wrote AI that controls computer players <-- JOHN
 25) Custom graphics created for each map tile and mule
 26) Custom graphics created for town map
