@@ -7,7 +7,7 @@
 3)	Multiple difficulty settings(beginner, standard, tournament)
 4)	Singleton design pattern implemented in class GameState
 5)	Used theme for game (MULE at GT)
-6)  Pivotal Tracker
+6)  Pivotal Tracker 
 7)	Round Random Events <-- WONGOO
 8)  Five additional Player races: ("John", "Chris", "Sung Hye", "Wongoo", "Yuna")
 9)	Multiple Observer classes used (PlayerControls, NextListener, etc.)
