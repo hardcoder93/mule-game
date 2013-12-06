@@ -18,13 +18,15 @@ public class HowToPlayScreen extends JPanel {
 		
 		JLabel backgroundLabel = new JLabel();
 		backgroundLabel.setBounds(0,0,900,600);
-		backgroundLabel.setIcon(new ImageIcon("howToPlayImage.png"));
+		backgroundLabel.setIcon(new ImageIcon("IMAGES/instruction.jpg"));
+	
 		
 		btnToStartScreen = new JButton("Back to Main Menu");
 		btnToStartScreen.setFont(new Font("Narkisim", Font.BOLD, 15));
 		btnToStartScreen.setBounds(682, 555, 200, 30);
 		btnToStartScreen.setBackground(new Color(255, 255, 255, 150));
 		add(btnToStartScreen);
+		add(backgroundLabel);
 	}
 	
 	public JButton getToStartScreenButton(){
