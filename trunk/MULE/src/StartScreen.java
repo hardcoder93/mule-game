@@ -19,6 +19,7 @@ public class StartScreen extends JPanel {
 
 	private JButton btnNewGame;
 	private JButton btnLoadGame;
+	private JButton btnHowToPlay;
 
 	public JButton getNewGameButton() {
 		return btnNewGame;
@@ -26,6 +27,10 @@ public class StartScreen extends JPanel {
 
 	public JButton getLoadGameButton() {
 		return btnLoadGame;
+	}
+	
+	public JButton getHowToPlayButton(){
+		return btnHowToPlay;
 	}
 
 	/**
@@ -45,6 +50,12 @@ public class StartScreen extends JPanel {
 		btnLoadGame.setBounds(55, 497, 125, 30);
 		btnLoadGame.setBackground(new Color(255, 255, 255, 150));
 		add(btnLoadGame);
+		
+		btnHowToPlay = new JButton("How to Play");
+		btnHowToPlay.setFont(new Font("Narkisim", Font.BOLD, 15));
+		btnHowToPlay.setBounds(385, 560, 130, 30);
+		btnHowToPlay.setBackground(new Color(255, 255, 255, 150));
+		add(btnHowToPlay);
 
 		ImageIcon image = new ImageIcon("IMAGES/StartImage.png");
 		JLabel lblNewLabel = new JLabel(image);

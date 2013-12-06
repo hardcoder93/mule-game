@@ -44,6 +44,8 @@ public class MULEMainPanel extends JPanel {
 	private GameplayPanel gameplayPanel = new GameplayPanel();
 	// The panel displayed at the end of the game.
 	private EndGamePanel endGamePanel = new EndGamePanel();
+	// The panel that shows the user how to play the game.
+	private HowToPlayScreen howToPlayScreen = new HowToPlayScreen();
 	// CardLayout allows us to easily switch between screens.
 	private CardLayout cardLayout = new CardLayout();
 	private JLabel turnTime = new JLabel();
@@ -56,6 +58,8 @@ public class MULEMainPanel extends JPanel {
 	private final String playerSetupID = "PLAYERSETUP";
 	private final String gameplayID = "GAMEPLAY";
 	private final String endGameID = "ENDGAME";
+	private final String howToPlayID = "HOWTOPLAY";
+	private final String toStartScreenID = "TOSTARTSCREEN";
 
 	private final String SAVE_FILE = "savedGame.dat";
 
@@ -85,6 +89,7 @@ public class MULEMainPanel extends JPanel {
 		add(playerSetupPanel, playerSetupID);
 		add(gameplayPanel, gameplayID);
 		add(endGamePanel, endGameID);
+		add(howToPlayScreen, howToPlayID);
 
 		turnTime.setFont(new Font("Narkisim", Font.BOLD, 20));
 		turnTime.setForeground(Color.RED);
@@ -97,6 +102,8 @@ public class MULEMainPanel extends JPanel {
 		landGrantBtn = gameplayPanel.getButton();
 		menuButton = gameplayPanel.getMenuButton();
 		JButton mainMenuBtn = endGamePanel.getBtnMainMenu();
+		JButton mainMenuFromHowToBtn = howToPlayScreen.getToStartScreenButton();
+		JButton toHowToFromMainMenuBtn = startPanel.getHowToPlayButton();
 
 		storeListener = new StorePurchaseAction();
 		
@@ -116,6 +123,8 @@ public class MULEMainPanel extends JPanel {
 		landGrantBtn.addActionListener(new NextListener(gameplayID));
 		menuButton.addActionListener(storeListener);
 		mainMenuBtn.addActionListener(new NextListener(endGameID));
+		mainMenuFromHowToBtn.addActionListener(new NextListener(toStartScreenID));
+		toHowToFromMainMenuBtn.addActionListener(new NextListener(howToPlayID));
 
 		startBtn.addKeyListener(new EnterKeyListener(startID));
 		gameSetupBtn.addKeyListener(new EnterKeyListener(gameSetupID));
@@ -253,6 +262,12 @@ public class MULEMainPanel extends JPanel {
 				gameplayPanel = new GameplayPanel();
 				add(gameplayPanel, gameplayID);
 				cardLayout.show(MULEMainPanel.this, startID);
+				break;
+			case toStartScreenID:
+				cardLayout.show(MULEMainPanel.this, startID);
+				break;
+			case howToPlayID:
+				cardLayout.show(MULEMainPanel.this, howToPlayID);
 				break;
 			}
 		}
@@ -852,7 +867,7 @@ public class MULEMainPanel extends JPanel {
 					JOptionPane.INFORMATION_MESSAGE);
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(null,
-					e.getStackTrace(), "Loading Error",
+					"Could not find valid load file.", "Loading Error", //e.getStackTrace()
 					JOptionPane.INFORMATION_MESSAGE);
 		} catch (ClassNotFoundException e) {
 			JOptionPane.showMessageDialog(null,
